@@ -37,6 +37,17 @@ export function Hero() {
                     </Link>
                   </div>
                 </div>
+                {/* Nigerian Flag */}
+                <div className="mt-6 flex justify-center lg:justify-start">
+                  <div className="flex items-center space-x-2 text-sm text-gray-600">
+                    <div className="flex space-x-1">
+                      <div className="w-8 h-6 bg-green-600 rounded-sm"></div>
+                      <div className="w-8 h-6 bg-white rounded-sm"></div>
+                      <div className="w-8 h-6 bg-green-600 rounded-sm"></div>
+                    </div>
+                    <span className="font-medium">Made in Nigeria 🇳🇬</span>
+                  </div>
+                </div>
               </div>
             </div>
           </main>

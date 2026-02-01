@@ -132,6 +132,18 @@ export function Services() {
             <p className="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
               Our comprehensive platform handles all aspects of school money management.
             </p>
+            {/* Nigerian Flag Badge */}
+            <div className="mt-6 flex justify-center">
+              <div className="inline-flex items-center px-4 py-2 bg-primary rounded-full">
+                <div className="flex items-center space-x-2">
+                  <div className="flex space-x-px">
+                    <div className="w-4 h-4 bg-white rounded-full"></div>
+                    <div className="w-4 h-4 bg-white rounded-full"></div>
+                  </div>
+                  <div className="text-white font-bold text-sm">🇳🇬</div>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div className="mt-10">
