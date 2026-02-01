@@ -1,11 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8f9fa;
-  --foreground: #171717;
-  --primary: #0056b3;
-  --secondary: #28a745;
-  --accent: #ffc107;
+  --background: #ffffff;
+  --foreground: #1a1a1a;
+  --primary: #00875A; /* Nigerian Green */
+  --secondary: #D2691E; /* Coffee Red */
+  --accent: #2C5F2D; /* Dark Green */
+  --muted: #f5f5f5;
+  --border: #e5e5e5;
 }
 
 @theme inline {
@@ -14,6 +16,8 @@
   --color-primary: var(--primary);
   --color-secondary: var(--secondary);
   --color-accent: var(--accent);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -21,7 +25,9 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
-    --foreground: #ededed;
+    --foreground: #ffffff;
+    --primary: #00A878; /* Lighter Nigerian Green for dark mode */
+    --secondary: #E57373; /* Lighter Coffee Red for dark mode */
   }
 }
 
@@ -29,4 +35,29 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Custom Nigerian-themed utilities */
+.nigeria-green {
+  color: var(--primary);
+}
+
+.nigeria-green-bg {
+  background-color: var(--primary);
+}
+
+.coffee-red {
+  color: var(--secondary);
+}
+
+.coffee-red-bg {
+  background-color: var(--secondary);
+}
+
+.dark-green {
+  color: var(--accent);
+}
+
+.dark-green-bg {
+  background-color: var(--accent);
 }

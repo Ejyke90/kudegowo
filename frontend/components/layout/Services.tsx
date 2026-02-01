@@ -142,7 +142,7 @@ export function Services() {
                   className="relative"
                 >
                   {service.name === 'Cashless Payments' ? (
-                    <div className="p-4 rounded-lg border-2 border-blue-500 bg-white">
+                    <div className="p-4 rounded-lg border-2 border-primary bg-white">
                       <dt className="relative">
                         <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-primary text-white">
                           <service.icon className="h-6 w-6" aria-hidden="true" />
@@ -156,7 +156,7 @@ export function Services() {
                             e.preventDefault();
                             setShowPaymentForm(true);
                           }}
-                          className="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+                          className="bg-secondary text-white px-6 py-3 rounded-lg font-semibold hover:bg-accent transition-colors focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2"
                         >
                           💳 Pay Now
                         </button>
@@ -205,7 +205,7 @@ export function Services() {
                   value={paymentData.fullName}
                   onChange={handleInputChange}
                   required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                   placeholder="Enter your full name"
                 />
               </div>
@@ -220,7 +220,7 @@ export function Services() {
                   value={paymentData.email}
                   onChange={handleInputChange}
                   required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                   placeholder="Enter your email"
                 />
               </div>
@@ -235,7 +235,7 @@ export function Services() {
                   value={paymentData.phone}
                   onChange={handleInputChange}
                   required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                   placeholder="Enter your phone number"
                 />
               </div>
@@ -252,7 +252,7 @@ export function Services() {
                   required
                   min="100"
                   step="0.01"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                   placeholder="Enter amount"
                 />
               </div>
@@ -260,7 +260,7 @@ export function Services() {
               <div className="pt-4">
                 <button
                   type="submit"
-                  className="w-full bg-green-600 text-white py-3 px-4 rounded-md hover:bg-green-700 transition-colors font-medium disabled:bg-gray-400 disabled:cursor-not-allowed"
+                  className="w-full bg-primary text-white py-3 px-4 rounded-md font-medium hover:bg-accent transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
                   disabled={!paymentData.email || !paymentData.amount || !paymentData.fullName || !paymentData.phone || !paystackLoaded}
                 >
                   {paystackLoaded ? 'Pay Now with Paystack' : 'Loading Payment Gateway...'}

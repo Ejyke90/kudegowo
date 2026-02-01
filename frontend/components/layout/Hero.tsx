@@ -14,26 +14,28 @@ export function Hero() {
                 <span className="block text-primary xl:inline">Smart School Payments</span>
               </h1>
               <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
-                The leading cashless payment system for Nigerian schools. Manage meals, trips, clubs, and fees all in one place. Trusted by parents and schools nationwide.
+                Africa's leading digital payment platform for Nigerian schools. Manage meals, trips, clubs, and fees all in one place. Trusted by parents and schools nationwide.
               </p>
               <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
                 {features.enableAuth && (
                   <div className="rounded-md shadow">
                     <Link
                       href="/login"
-                      className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary hover:bg-blue-700 md:py-4 md:text-lg md:px-10"
+                      className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary hover:bg-accent md:py-4 md:text-lg md:px-10"
                     >
                       For Parents
                     </Link>
                   </div>
                 )}
                 <div className="mt-3 sm:mt-0 sm:ml-3">
-                  <Link
-                    href="#who-we-help"
-                    className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-primary bg-blue-100 hover:bg-blue-200 md:py-4 md:text-lg md:px-10"
-                  >
-                    For Schools <ArrowRight className="ml-2 h-5 w-5" />
-                  </Link>
+                  <div className="rounded-md shadow">
+                    <Link
+                      href="/register-school"
+                      className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-secondary hover:bg-accent md:py-4 md:text-lg md:px-10"
+                    >
+                      For Schools
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>

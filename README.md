@@ -1,6 +1,6 @@
 # KudiKlass
 
-A school payment platform similar to ParentPay, built for Nigerian schools. This application enables parents to pay for school meals, trips, uniforms, and other school-related expenses seamlessly.
+Africa's leading digital payment platform for Nigerian schools. This application enables parents to pay for school meals, trips, uniforms, and other school-related expenses seamlessly with secure, fast transactions.
 
 ## 🚀 Current Status
 
