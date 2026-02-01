@@ -29,12 +29,23 @@ export function Navbar() {
               About
             </Link>
             {features.enableAuth && (
-              <Link 
-                href="/login" 
-                className="bg-primary text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
-              >
-                Login
-              </Link>
+              <div className="flex items-center space-x-3">
+                <Link 
+                  href="/login" 
+                  className="bg-primary text-white px-4 py-2 rounded-md hover:bg-accent transition-colors"
+                >
+                  Login
+                </Link>
+                {/* Nigerian Flag */}
+                <div className="flex items-center space-x-2 text-sm text-gray-600">
+                  <div className="flex space-x-1">
+                    <div className="w-6 h-4 bg-green-600 rounded-sm"></div>
+                    <div className="w-6 h-4 bg-white rounded-sm"></div>
+                    <div className="w-6 h-4 bg-green-600 rounded-sm"></div>
+                  </div>
+                  <span className="font-medium">🇳🇬</span>
+                </div>
+              </div>
             )}
           </div>
 
