@@ -28,7 +28,23 @@ const services = [
 
 declare global {
   interface Window {
-    PaystackPop: any;
+    PaystackPop: {
+      setup: (config: {
+        key: string;
+        email: string;
+        amount: number;
+        currency: string;
+        ref: string;
+        metadata?: {
+          fullName: string;
+          phone: string;
+        };
+        callback: (response: { reference: string }) => void;
+        onClose: () => void;
+      }) => {
+        openIframe: () => void;
+      };
+    };
   }
 }
 
@@ -41,7 +57,6 @@ export function Services() {
     phone: '',
   });
   const [paystackLoaded, setPaystackLoaded] = useState(false);
-  const [testClick, setTestClick] = useState(0);
 
   const publicKey = 'pk_test_8dc6e561b7f6328c1d6a3b8a8c6f3e2a8d6c5e6f'; // Real Paystack test public key
 
@@ -62,10 +77,6 @@ export function Services() {
       }
     };
   }, []);
-
-  const handleCashlessPaymentClick = () => {
-    setShowPaymentForm(true);
-  };
 
   const handleClosePaymentForm = () => {
     setShowPaymentForm(false);
@@ -97,11 +108,11 @@ export function Services() {
         fullName: paymentData.fullName,
         phone: paymentData.phone,
       },
-      callback: function(response: any) {
+      callback: (response: { reference: string }) => {
         alert('Payment successful! Reference: ' + response.reference);
         handleClosePaymentForm();
       },
-      onClose: function() {
+      onClose: () => {
         alert('Payment window closed. Please try again.');
       }
     });
