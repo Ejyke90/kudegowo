@@ -18,13 +18,22 @@ export function Hero() {
               </p>
               <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
                 {features.enableAuth && (
-                  <div className="rounded-md shadow">
+                  <div className="rounded-md shadow flex items-center">
                     <Link
                       href="/login"
                       className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary hover:bg-accent md:py-4 md:text-lg md:px-10"
                     >
                       For Parents
                     </Link>
+                    {/* Nigerian Flag */}
+                    <div className="ml-3 flex items-center space-x-2 text-sm text-gray-600">
+                      <div className="flex space-x-1">
+                        <div className="w-6 h-4 bg-green-600 rounded-sm"></div>
+                        <div className="w-6 h-4 bg-white rounded-sm"></div>
+                        <div className="w-6 h-4 bg-green-600 rounded-sm"></div>
+                      </div>
+                      <span className="font-medium">Made in Nigeria 🇳🇬</span>
+                    </div>
                   </div>
                 )}
                 <div className="mt-3 sm:mt-0 sm:ml-3">
@@ -35,17 +44,6 @@ export function Hero() {
                     >
                       For Schools
                     </Link>
-                  </div>
-                </div>
-                {/* Nigerian Flag */}
-                <div className="mt-6 flex justify-center lg:justify-start">
-                  <div className="flex items-center space-x-2 text-sm text-gray-600">
-                    <div className="flex space-x-1">
-                      <div className="w-8 h-6 bg-green-600 rounded-sm"></div>
-                      <div className="w-8 h-6 bg-white rounded-sm"></div>
-                      <div className="w-8 h-6 bg-green-600 rounded-sm"></div>
-                    </div>
-                    <span className="font-medium">Made in Nigeria 🇳🇬</span>
                   </div>
                 </div>
               </div>
