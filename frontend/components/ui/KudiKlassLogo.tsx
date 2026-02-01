@@ -23,11 +23,8 @@ export function KudiKlassLogo({ size = "medium", className = "" }: { size?: "sma
 
   return (
     <div className={`relative ${sizeClasses[size]} ${className}`}>
-      {/* Logo Container */}
       <div className="w-full h-full relative">
-        {/* School Payment Background */}
         <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-500 to-blue-600">
-          {/* Graduation Cap Icon */}
           <div className="absolute top-1 left-1/2 transform -translate-x-1/2">
             <svg 
               width={iconSizes[size]} 
@@ -60,7 +57,6 @@ export function KudiKlassLogo({ size = "medium", className = "" }: { size?: "sma
             </svg>
           </div>
           
-          {/* Payment Card Icon */}
           <div className="absolute bottom-1 right-1">
             <svg 
               width={iconSizes[size]} 
@@ -76,9 +72,7 @@ export function KudiKlassLogo({ size = "medium", className = "" }: { size?: "sma
           </div>
         </div>
         
-        {/* KudiKlass Text Background */}
         <div className="absolute inset-x-1 top-1 bottom-1 bg-white rounded-full flex items-center justify-center">
-          {/* KudiKlass Text */}
           <div className="text-center">
             <div className="font-bold text-gray-800 leading-none" style={{ fontSize: textSizes[size] }}>
               KUDI
@@ -93,7 +87,6 @@ export function KudiKlassLogo({ size = "medium", className = "" }: { size?: "sma
   );
 }
 
-// Text-only version for headers
 export function KudiKlassTextLogo({ size = "medium", className = "" }: { size?: "small" | "medium" | "large", className?: string }) {
   const sizeClasses = {
     small: "text-lg",

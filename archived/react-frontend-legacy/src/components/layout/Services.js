@@ -100,7 +100,7 @@ export function Services() {
     <>
       <section className="services">
         <div className="container">
-          <h2>Why Choose Naija EazyPay?</h2>
+          <h2>Why Choose KudiKlass?</h2>
           <div className="services-grid">
             {services.map((service) => (
               <div 

@@ -30,6 +30,9 @@ export function Navbar() {
             <Link href="#about" className="text-gray-700 hover:text-primary transition-colors">
               About
             </Link>
+            <Link href="/wireframes" className="text-gray-700 hover:text-primary transition-colors">
+              Features
+            </Link>
             {features.enableAuth && (
               <div className="flex items-center space-x-3">
                 <Link 
@@ -78,6 +81,12 @@ export function Navbar() {
               className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-gray-50"
             >
               About
+            </Link>
+            <Link 
+              href="/wireframes" 
+              className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-gray-50"
+            >
+              Features
             </Link>
             {features.enableAuth && (
               <Link 

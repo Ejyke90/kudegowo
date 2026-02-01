@@ -15,7 +15,7 @@ export default function RegisterSchoolPage() {
               Register Your School
             </h3>
             <p className="mt-1 max-w-2xl text-sm text-blue-100">
-              Join the Naija Eazy Pay network and go cashless today.
+              Join the KudiKlass network and go cashless today.
             </p>
           </div>
           <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
@@ -133,7 +133,7 @@ export default function RegisterSchoolPage() {
         </div>
 
         <div className="mt-8 bg-blue-50 border border-blue-200 rounded-lg p-6">
-           <h4 className="text-lg font-medium text-blue-900 mb-4">Why join Naija Eazy Pay?</h4>
+           <h4 className="text-lg font-medium text-blue-900 mb-4">Why join KudiKlass?</h4>
            <ul className="space-y-3">
               <li className="flex items-start">
                  <CheckCircle className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" />
