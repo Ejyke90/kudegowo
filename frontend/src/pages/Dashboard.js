@@ -73,6 +73,9 @@ const Dashboard = () => {
         <h1>Naija EazyPay</h1>
         <div className="header-actions">
           <span>Welcome, {user.firstName}!</span>
+          {user.role === 'admin' && (
+            <button onClick={() => navigate('/admin')} className="btn-admin">Admin Panel</button>
+          )}
           <button onClick={handleLogout} className="btn-logout">Logout</button>
         </div>
       </header>

@@ -34,6 +34,17 @@
   font-size: 14px;
 }
 
+.btn-admin {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid white;
+  padding: 8px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  color: #667eea;
+  font-size: 14px;
+  font-weight: 600;
+}
+
 .btn-logout:hover {
   background: rgba(255, 255, 255, 0.3);
 }
