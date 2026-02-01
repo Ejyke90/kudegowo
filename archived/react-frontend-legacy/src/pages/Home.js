@@ -1,8 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { Services } from '../components/layout/Services';
 import './Home.css';
 
 const Home = () => {
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash) {
+      const element = document.querySelector(hash);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }, []);
+
   return (
     <div className="home">
       <header className="home-header">
@@ -69,6 +80,8 @@ const Home = () => {
         </div>
       </section>
 
+      <Services />
+
       <section className="how-it-works">
         <div className="container">
           <h2>How It Works</h2>
@@ -97,6 +110,22 @@ const Home = () => {
           <h2>Ready to Get Started?</h2>
           <p>Join thousands of parents using Naija EazyPay for hassle-free school payments</p>
           <Link to="/register" className="btn-primary">Create Free Account</Link>
+        </div>
+      </section>
+
+      <section id="about" className="about">
+        <div className="container">
+          <h2>About Naija EazyPay</h2>
+          <p>
+            Naija EazyPay is revolutionizing school payments in Nigeria by providing a secure, 
+            convenient platform for parents to manage their children's school expenses. Our mission 
+            is to make education more accessible and less stressful for families across the country.
+          </p>
+          <p>
+            Founded with the vision of simplifying school finance management, we work closely with 
+            schools to offer a seamless payment experience that benefits both parents and educational 
+            institutions.
+          </p>
         </div>
       </section>
 

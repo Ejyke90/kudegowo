@@ -2,6 +2,26 @@
 
 A school payment platform similar to ParentPay, built for Nigerian schools. This application enables parents to pay for school meals, trips, uniforms, and other school-related expenses seamlessly.
 
+## 🚀 Current Status
+
+**✅ ACTIVE VERSION**: Next.js 16 with modern UI and complete website
+**📦 ARCHIVED**: Legacy React version (moved to `/archived/react-frontend-legacy`)
+
+## 📁 Project Structure
+
+```
+naija-eazy-pay/
+├── frontend/              # Next.js 16 - ACTIVE VERSION
+│   ├── app/              # App Router pages
+│   ├── components/       # React components
+│   └── package.json      # Next.js dependencies
+├── backend/              # Express.js API (original)
+├── backend-nextjs/       # Next.js API routes (if needed)
+├── archived/             # Archived legacy code
+│   └── react-frontend-legacy/
+└── README.md
+```
+
 ## Features
 
 ### Parent Features
@@ -19,6 +39,13 @@ A school payment platform similar to ParentPay, built for Nigerian schools. This
 
 ## Technology Stack
 
+### Frontend (ACTIVE - Next.js)
+- **Next.js 16** with App Router
+- **React 19** with TypeScript
+- **Tailwind CSS 4** for styling
+- **Lucide React** for icons
+- **Paystack** for payment processing
+
 ### Backend
 - Node.js & Express
 - MongoDB with Mongoose
@@ -26,185 +53,120 @@ A school payment platform similar to ParentPay, built for Nigerian schools. This
 - bcryptjs for password hashing
 - CORS enabled for API access
 
-### Frontend
-- React.js
-- React Router for navigation
-- Axios for API calls
-- Context API for state management
-- Modern CSS with responsive design
+## 🎯 Key Features Implemented
 
-## Getting Started
+### ✅ Complete Website
+- **Navigation**: Services, Who We Help, About, Login
+- **Hero Section**: Professional landing with compelling messaging
+- **Services Section**: 4 core services with interactive payment
+- **Who We Help**: Target audience sections
+- **Footer**: Complete with links and legal information
+
+### ✅ Payment Integration
+- **Paystack Integration**: Direct SDK integration
+- **Payment Modal**: Modern, responsive payment form
+- **Nigerian Naira**: NGN currency support
+- **Secure Processing**: Industry-standard security
+
+## 🚀 Getting Started
 
 ### Prerequisites
-- Node.js (v14 or higher)
-- MongoDB (local or cloud instance)
-- npm or yarn
+- Node.js 18+ 
+- MongoDB
+- Paystack account (for payment processing)
 
 ### Installation
 
-1. Clone the repository:
+1. **Clone the repository**
 ```bash
-git clone https://github.com/Ejyke90/naija-eazy-pay.git
+git clone <repository-url>
 cd naija-eazy-pay
 ```
 
-2. Set up the backend:
+2. **Install dependencies**
 ```bash
-cd backend
+# Frontend (Next.js)
+cd frontend
+npm install
+
+# Backend
+cd ../backend
 npm install
 ```
 
-3. Create a `.env` file in the backend directory:
+3. **Environment Setup**
 ```bash
+# Frontend
+cp .env.example .env.local
+# Add your Paystack public key
+
+# Backend
 cp .env.example .env
+# Add your MongoDB URI and Paystack secret key
 ```
 
-4. Update the `.env` file with your configuration:
-```
-PORT=5000
-MONGODB_URI=mongodb://localhost:27017/naija-eazypay
-JWT_SECRET=your_jwt_secret_key_here
-PAYSTACK_SECRET_KEY=your_paystack_secret_key
-```
-
-5. Set up the frontend:
+4. **Run the application**
 ```bash
-cd ../frontend
-npm install
-```
+# Frontend (Next.js)
+cd frontend
+npm run dev
 
-6. Create a `.env` file in the frontend directory:
-```
-REACT_APP_API_URL=http://localhost:5000/api
-```
-
-### Running the Application
-
-1. Start MongoDB (if running locally):
-```bash
-mongod
-```
-
-2. Start the backend server:
-```bash
+# Backend (in separate terminal)
 cd backend
-npm start
+npm run dev
 ```
 
-The backend will run on `http://localhost:5000`
+5. **Access the application**
+- Frontend: http://localhost:3000
+- Backend API: http://localhost:5000
 
-3. Start the frontend development server:
+## 💳 Payment Testing
+
+To test the Paystack integration:
+
+1. **Click on "Cashless Payments"** in the Services section
+2. **Fill in the payment form** with test data
+3. **Use Paystack test cards** for testing:
+   - Card Number: `5060666666666666666`
+   - CVV: `123`
+   - Expiry: `09/32`
+   - PIN: `3310`
+
+## 📱 Responsive Design
+
+The application is fully responsive and works on:
+- Desktop browsers
+- Tablets
+- Mobile devices
+
+## 🔧 Development
+
+### Frontend Development
 ```bash
 cd frontend
-npm start
+npm run dev      # Development server
+npm run build    # Production build
+npm run start    # Production server
 ```
 
-The frontend will run on `http://localhost:3000`
-
-## API Endpoints
-
-### Authentication
-- `POST /api/auth/register` - Register a new user
-- `POST /api/auth/login` - Login user
-
-### Users
-- `GET /api/users/profile` - Get user profile
-- `PUT /api/users/profile` - Update user profile
-- `GET /api/users/balance` - Get user balance
-
-### Payment Items
-- `GET /api/items` - Get all payment items
-- `GET /api/items/:id` - Get single payment item
-- `POST /api/items` - Create payment item (admin only)
-- `PUT /api/items/:id` - Update payment item (admin only)
-- `DELETE /api/items/:id` - Delete payment item (admin only)
-
-### Payments
-- `GET /api/payments` - Get user transactions
-- `POST /api/payments/pay` - Make a payment
-- `POST /api/payments/topup` - Top up account balance
-- `GET /api/payments/:id` - Get transaction by ID
-
-## Usage Guide
-
-### For Parents
-
-1. **Register**: Create an account with your email and personal details
-2. **Login**: Access your dashboard using your credentials
-3. **Top Up**: Add funds to your account balance
-4. **Browse Items**: View available payment items for your school
-5. **Make Payments**: Pay for items directly from your balance
-6. **Track Transactions**: Monitor all your payment history
-
-### For School Admins
-
-1. **Register**: Create an account with role "School Admin"
-2. **Login**: Access the admin dashboard
-3. **Add Payment Items**: Create new payment items with categories and amounts
-4. **Manage Items**: Update or deactivate payment items as needed
-5. **Monitor Payments**: Track all transactions made by parents
-
-## Project Structure
-
-```
-naija-eazy-pay/
-├── backend/
-│   ├── middleware/
-│   │   └── auth.js
-│   ├── models/
-│   │   ├── User.js
-│   │   ├── PaymentItem.js
-│   │   └── Transaction.js
-│   ├── routes/
-│   │   ├── auth.js
-│   │   ├── users.js
-│   │   ├── items.js
-│   │   └── payments.js
-│   ├── .env.example
-│   ├── package.json
-│   └── server.js
-├── frontend/
-│   ├── public/
-│   ├── src/
-│   │   ├── components/
-│   │   │   └── PrivateRoute.js
-│   │   ├── contexts/
-│   │   │   └── AuthContext.js
-│   │   ├── pages/
-│   │   │   ├── Login.js
-│   │   │   ├── Register.js
-│   │   │   ├── Dashboard.js
-│   │   │   ├── Auth.css
-│   │   │   └── Dashboard.css
-│   │   ├── services/
-│   │   │   └── api.js
-│   │   ├── App.js
-│   │   └── index.js
-│   └── package.json
-└── README.md
+### Backend Development
+```bash
+cd backend
+npm run dev      # Development server
+npm start        # Production server
 ```
 
-## Future Enhancements
+## 📝 License
 
-- Payment gateway integration (Paystack, Flutterwave)
-- Email notifications for transactions
-- PDF receipt generation
-- Admin analytics dashboard
-- Mobile app (React Native)
-- SMS notifications
-- Bulk payment options
-- Parent-child account linking
-- School event management
-- Report cards and academic records
+This project is licensed under the MIT License.
 
-## Contributing
+## 🤝 Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Submit a pull request
 
-## License
+## 📞 Support
 
-This project is licensed under the ISC License.
-
-## Support
-
-For support, email support@naijaeazypay.com or create an issue in the repository.
+For support and questions, please open an issue in the repository.
