@@ -4,9 +4,10 @@ const { auth } = require('../middleware/auth');
 const Transaction = require('../models/Transaction');
 const User = require('../models/User');
 const PaymentItem = require('../models/PaymentItem');
+const { paymentLimiter, apiLimiter } = require('../middleware/rateLimiter');
 
 // Get all transactions for current user
-router.get('/', auth, async (req, res) => {
+router.get('/', auth, apiLimiter, async (req, res) => {
   try {
     const transactions = await Transaction.find({ user: req.userId })
       .populate('paymentItem')
@@ -18,7 +19,7 @@ router.get('/', auth, async (req, res) => {
 });
 
 // Create a new payment transaction
-router.post('/pay', auth, async (req, res) => {
+router.post('/pay', auth, paymentLimiter, async (req, res) => {
   try {
     const { paymentItemId, paymentMethod } = req.body;
 
@@ -62,7 +63,7 @@ router.post('/pay', auth, async (req, res) => {
 });
 
 // Top up balance
-router.post('/topup', auth, async (req, res) => {
+router.post('/topup', auth, paymentLimiter, async (req, res) => {
   try {
     const { amount, paymentMethod } = req.body;
 
@@ -99,7 +100,7 @@ router.post('/topup', auth, async (req, res) => {
 });
 
 // Get transaction by ID
-router.get('/:id', auth, async (req, res) => {
+router.get('/:id', auth, apiLimiter, async (req, res) => {
   try {
     const transaction = await Transaction.findOne({
       _id: req.params.id,

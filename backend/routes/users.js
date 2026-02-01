@@ -2,6 +2,10 @@ const express = require('express');
 const router = express.Router();
 const { auth } = require('../middleware/auth');
 const User = require('../models/User');
+const { apiLimiter } = require('../middleware/rateLimiter');
+
+// Apply rate limiter to all routes
+router.use(apiLimiter);
 
 // Get current user profile
 router.get('/profile', auth, async (req, res) => {

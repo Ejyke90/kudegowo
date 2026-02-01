@@ -2,6 +2,10 @@ const express = require('express');
 const router = express.Router();
 const { auth, isAdmin } = require('../middleware/auth');
 const PaymentItem = require('../models/PaymentItem');
+const { apiLimiter } = require('../middleware/rateLimiter');
+
+// Apply rate limiter to all routes
+router.use(apiLimiter);
 
 // Get all payment items
 router.get('/', auth, async (req, res) => {
