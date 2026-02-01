@@ -147,16 +147,13 @@ export function Services() {
                         <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-primary text-white">
                           <service.icon className="h-6 w-6" aria-hidden="true" />
                         </div>
-                        <p className="ml-16 text-lg leading-6 font-medium text-gray-900">
-                          {service.name}
-                        </p>
+                        <p className="ml-16 text-lg leading-6 font-medium text-gray-900">{service.name}</p>
                       </dt>
                       <dd className="mt-2 ml-16 text-base text-gray-500">{service.description}</dd>
                       <div className="mt-4 ml-16">
                         <button
                           onClick={(e) => {
                             e.preventDefault();
-                            console.log('PAY NOW BUTTON CLICKED!');
                             setShowPaymentForm(true);
                           }}
                           className="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
@@ -181,24 +178,6 @@ export function Services() {
             </dl>
           </div>
         </div>
-      </div>
-
-      {/* Debug Info - Can be removed in production */}
-      <div className="fixed top-4 right-4 bg-green-100 p-2 rounded text-xs z-50">
-        ✅ Paystack Integration Working!
-      </div>
-
-      {/* Quick Test Button */}
-      <div className="fixed bottom-4 right-4 z-50">
-        <button 
-          onClick={() => {
-            console.log('Test button clicked - opening modal');
-            setShowPaymentForm(true);
-          }}
-          className="bg-purple-500 text-white px-3 py-1 rounded text-sm hover:bg-purple-600"
-        >
-          Test Modal
-        </button>
       </div>
 
       {/* Paystack Payment Modal */}
