@@ -14,7 +14,7 @@ export function Navbar() {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link href="/" className="flex-shrink-0 flex items-center">
-              <span className="text-2xl font-bold text-primary">Naija Eazy Pay</span>
+              <span className="text-2xl font-bold text-primary">KudiKlass</span>
             </Link>
           </div>
           

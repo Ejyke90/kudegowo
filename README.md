@@ -1,4 +1,4 @@
-# Naija EazyPay
+# KudiKlass
 
 A school payment platform similar to ParentPay, built for Nigerian schools. This application enables parents to pay for school meals, trips, uniforms, and other school-related expenses seamlessly.
 
@@ -10,16 +10,16 @@ A school payment platform similar to ParentPay, built for Nigerian schools. This
 ## 📁 Project Structure
 
 ```
-naija-eazy-pay/
+kudiklass/
 ├── frontend/              # Next.js 16 - ACTIVE VERSION
 │   ├── app/              # App Router pages
 │   ├── components/       # React components
 │   └── package.json      # Next.js dependencies
-├── backend/              # Express.js API (original)
+├── backend/              # Express.js API
 ├── backend-nextjs/       # Next.js API routes (if needed)
 ├── archived/             # Archived legacy code
 │   └── react-frontend-legacy/
-└── README.md
+└── README.md             # ✅ Updated documentation
 ```
 
 ## Features
@@ -80,7 +80,7 @@ naija-eazy-pay/
 1. **Clone the repository**
 ```bash
 git clone <repository-url>
-cd naija-eazy-pay
+cd kudiklass
 ```
 
 2. **Install dependencies**

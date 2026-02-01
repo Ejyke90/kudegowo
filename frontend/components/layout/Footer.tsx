@@ -43,7 +43,7 @@ export function Footer() {
         </div>
 
         <div className="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
-          <p>&copy; {new Date().getFullYear()} Naija Eazy Pay. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} KudiKlass. All rights reserved.</p>
           <div className="mt-4 md:mt-0 flex space-x-4">
             {/* Social icons could go here */}
           </div>
