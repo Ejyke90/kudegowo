@@ -37,13 +37,8 @@ export function Navbar() {
                   Login
                 </Link>
                 {/* Nigerian Flag */}
-                <div className="flex items-center space-x-2 text-sm text-gray-600">
-                  <div className="flex space-x-1">
-                    <div className="w-6 h-4 bg-green-600 rounded-sm"></div>
-                    <div className="w-6 h-4 bg-white rounded-sm"></div>
-                    <div className="w-6 h-4 bg-green-600 rounded-sm"></div>
-                  </div>
-                  <span className="font-medium">🇳🇬</span>
+                <div className="text-6xl font-bold text-gray-600 leading-none">
+                  🇳🇬
                 </div>
               </div>
             )}
