@@ -29,9 +29,18 @@ const connectDB = async () => {
   }
 };
 
-// Routes
+// Health check endpoint
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', message: 'Naija EazyPay API is running' });
+  const healthCheck = {
+    status: 'ok',
+    message: 'Kudegowo API is running',
+    uptime: process.uptime(),
+    timestamp: Date.now(),
+    env: process.env.NODE_ENV || 'development',
+    port: process.env.PORT || 5000
+  };
+  
+  res.json(healthCheck);
 });
 
 // Import routes

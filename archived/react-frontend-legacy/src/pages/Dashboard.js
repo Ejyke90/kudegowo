@@ -70,7 +70,7 @@ const Dashboard = () => {
   return (
     <div className="dashboard">
       <header className="dashboard-header">
-        <h1>KudiKlass</h1>
+        <h1>Kudegowo</h1>
         <div className="header-actions">
           <span>Welcome, {user.firstName}!</span>
           {user.role === 'admin' && (

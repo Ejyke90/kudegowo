@@ -6,7 +6,9 @@ import { InstantMessagingWireframe } from './InstantMessaging';
 import { SmartReportingWireframe } from './SmartReporting';
 import { FlexiblePaymentsWireframe } from './FlexiblePayments';
 import { MultiSiteBankingWireframe } from './MultiSiteBanking';
-import { Utensils, MessageSquare, BarChart3, CreditCard, Building2, ArrowLeft, ArrowRight } from 'lucide-react';
+import { SchoolSafetyWireframe } from './SchoolSafety';
+import { FinancialLiteracyWireframe } from './FinancialLiteracy';
+import { Utensils, MessageSquare, BarChart3, CreditCard, Building2, Shield, PiggyBank, ArrowLeft, ArrowRight } from 'lucide-react';
 
 const wireframes = [
   {
@@ -43,6 +45,20 @@ const wireframes = [
     description: 'Manage funds across multiple school sites with centralized control',
     icon: Building2,
     component: MultiSiteBankingWireframe
+  },
+  {
+    id: 'safety',
+    title: 'School Safety Management',
+    description: 'Emergency alerts, attendance tracking, visitor management, and incident reporting',
+    icon: Shield,
+    component: SchoolSafetyWireframe
+  },
+  {
+    id: 'literacy',
+    title: 'Kids Financial Literacy',
+    description: 'Fun, interactive learning platform teaching kids about money, savings, and smart spending',
+    icon: PiggyBank,
+    component: FinancialLiteracyWireframe
   }
 ];
 
@@ -66,8 +82,8 @@ export function WireframeShowcase() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">KudiKlass Feature Wireframes</h1>
-              <p className="text-gray-600 mt-1">ParentPay-inspired features for the Nigerian market</p>
+              <h2 className="text-2xl font-bold text-gray-800 mb-2">Kudegowo Feature Showcase</h2>
+              <p className="text-gray-600">Interactive demonstrations of advanced features for Nigerian schools</p>
             </div>
             <div className="flex items-center space-x-4">
               <span className="text-sm text-gray-500">

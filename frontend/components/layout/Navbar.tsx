@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import { features } from '@/lib/features';
-import { KudiKlassLogo } from '@/components/ui/KudiKlassLogo';
+import { KudegowoLogo } from '@/components/ui/KudiKlassLogo';
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,8 +15,8 @@ export function Navbar() {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link href="/" className="flex-shrink-0 flex items-center space-x-3">
-              <KudiKlassLogo size="medium" />
-              <span className="text-2xl font-bold text-primary">KudiKlass</span>
+              <KudegowoLogo size="medium" />
+              <span className="text-2xl font-bold text-primary">Kudegowo</span>
             </Link>
           </div>
           

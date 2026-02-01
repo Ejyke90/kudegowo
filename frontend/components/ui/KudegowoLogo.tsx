@@ -95,10 +95,13 @@ export function KudegowoTextLogo({ size = "medium", className = "" }: { size?: "
   };
 
   return (
-    <div className={`flex items-center space-x-2 ${className}`}>
+    <div className={`flex flex-col items-center space-y-1 ${className}`}>
       <div className={`font-bold ${sizeClasses[size]} bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent`}>
         Kude
         <span className="text-secondary">gowo</span>
+      </div>
+      <div className="text-xs text-gray-600 font-medium">
+        Smart School Payments
       </div>
     </div>
   );

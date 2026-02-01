@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { KudiKlassLogo } from '@/components/ui/KudiKlassLogo';
+import { KudegowoLogo } from '@/components/ui/KudiKlassLogo';
 
 export function Footer() {
   return (
@@ -8,8 +8,8 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-1">
             <div className="flex items-center space-x-3 mb-4">
-              <KudiKlassLogo size="medium" />
-              <h3 className="text-xl font-bold">KudiKlass</h3>
+              <KudegowoLogo size="medium" />
+              <h3 className="text-xl font-bold">Kudegowo</h3>
             </div>
             <p className="text-gray-400 text-sm">
               Making school payments secure, simple, and cashless for Nigerian schools and parents.

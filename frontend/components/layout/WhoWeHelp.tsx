@@ -34,7 +34,7 @@ export function WhoWeHelp() {
             Solutions for every educational setting
           </p>
           <p className="mt-4 max-w-2xl text-xl text-gray-500 mx-auto">
-            Whether you are a small primary school or a large multi-academy trust, KudiKlass scales to meet your needs.
+            Whether you are a small primary school or a large multi-academy trust, Kudegowo scales to meet your needs.
           </p>
         </div>
 

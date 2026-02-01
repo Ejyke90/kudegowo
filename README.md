@@ -1,4 +1,4 @@
-# KudiKlass
+# Kudegowo
 
 Africa's leading digital payment platform for Nigerian schools. This application enables parents to pay for school meals, trips, uniforms, and other school-related expenses seamlessly with secure, fast transactions.
 
@@ -18,7 +18,7 @@ Africa's leading digital payment platform for Nigerian schools. This application
 - **Interactive Wireframes**: Live feature demonstrations at `/wireframes`
 
 ### ✅ Brand Updates
-- **Complete Rebranding**: Updated from "Naija Eazy Pay" to "KudiKlass"
+- **Complete Rebranding**: Updated from "Naija Eazy Pay" to "Kudegowo"
 - **Logo System**: Professional logo with variants and brand guidelines
 - **Nigerian Localization**: Local payment methods, cultural adaptations
 
