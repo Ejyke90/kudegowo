@@ -25,45 +25,68 @@ export function KudiKlassLogo({ size = "medium", className = "" }: { size?: "sma
     <div className={`relative ${sizeClasses[size]} ${className}`}>
       {/* Logo Container */}
       <div className="w-full h-full relative">
-        {/* Nigerian Flag Background Circle */}
-        <div className="absolute inset-0 rounded-full overflow-hidden">
-          <div className="h-full flex">
-            <div className="flex-1 bg-green-600"></div>
-            <div className="flex-1 bg-white"></div>
-            <div className="flex-1 bg-green-600"></div>
+        {/* School Payment Background */}
+        <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-500 to-blue-600">
+          {/* Graduation Cap Icon */}
+          <div className="absolute top-1 left-1/2 transform -translate-x-1/2">
+            <svg 
+              width={iconSizes[size]} 
+              height={iconSizes[size]} 
+              viewBox="0 0 24 24" 
+              fill="none" 
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path 
+                d="M22 10v6M2 10l10-5 10 5" 
+                stroke="white" 
+                strokeWidth="2" 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+              />
+              <path 
+                d="M6 12l-2 2" 
+                stroke="white" 
+                strokeWidth="2" 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+              />
+              <path 
+                d="M18 12l2 2" 
+                stroke="white" 
+                strokeWidth="2" 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+              />
+            </svg>
+          </div>
+          
+          {/* Payment Card Icon */}
+          <div className="absolute bottom-1 right-1">
+            <svg 
+              width={iconSizes[size]} 
+              height={iconSizes[size]} 
+              viewBox="0 0 24 24" 
+              fill="white" 
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect x="3" y="6" width="18" height="12" rx="2" />
+              <rect x="7" y="9" width="10" height="6" rx="1" fill="blue" />
+              <circle cx="9" cy="11" r="1" fill="white" />
+            </svg>
           </div>
         </div>
         
-        {/* White Text Background for Better Contrast */}
-        <div className="absolute inset-x-2 top-1 bottom-1 bg-white bg-opacity-90 rounded-full flex items-center justify-center">
-          {/* KudiKlass Text Overlay */}
+        {/* KudiKlass Text Background */}
+        <div className="absolute inset-x-1 top-1 bottom-1 bg-white rounded-full flex items-center justify-center">
+          {/* KudiKlass Text */}
           <div className="text-center">
-            <div className="font-bold text-primary leading-none" style={{ fontSize: textSizes[size] }}>
+            <div className="font-bold text-gray-800 leading-none" style={{ fontSize: textSizes[size] }}>
               KUDI
             </div>
-            <div className="font-bold text-primary leading-none" style={{ fontSize: textSizes[size] }}>
+            <div className="font-bold text-gray-800 leading-none" style={{ fontSize: textSizes[size] }}>
               KLASS
             </div>
           </div>
-        </div>
-        
-        {/* Payment Icon Overlay */}
-        <div className="absolute -bottom-1 -right-1 bg-white rounded-full p-1 shadow-md">
-          <svg 
-            width={iconSizes[size]} 
-            height={iconSizes[size]} 
-            viewBox="0 0 24 24" 
-            fill="none" 
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path 
-              d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" 
-              stroke="#00875A" 
-              strokeWidth="2" 
-              strokeLinecap="round" 
-              strokeLinejoin="round" 
-            />
-          </svg>
         </div>
       </div>
     </div>
