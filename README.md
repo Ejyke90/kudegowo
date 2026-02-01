@@ -25,7 +25,7 @@ Africa's leading digital payment platform for Nigerian schools. This application
 ## 📁 Project Structure
 
 ```
-kudiklass/
+kudegowo/
 ├── frontend/              # Next.js 16 - ACTIVE VERSION
 │   ├── app/              # App Router pages
 │   │   ├── wireframes/   # Interactive feature demonstrations
@@ -110,7 +110,7 @@ kudiklass/
 1. **Clone the repository**
 ```bash
 git clone <repository-url>
-cd kudiklass
+cd kudegowo
 ```
 
 2. **Install dependencies**
@@ -160,6 +160,8 @@ Visit `/wireframes` to explore advanced features:
 - **Smart Reporting**: Real-time financial dashboards
 - **Flexible Payments**: Multiple Nigerian payment methods
 - **Multi-Site Banking**: Campus management system
+- **School Safety Management**: Emergency alerts and incident reporting
+- **Kids Financial Literacy**: Interactive learning platform for children
 
 ## 💳 Payment Testing
 
@@ -197,7 +199,30 @@ npm run dev      # Development server
 npm start        # Production server
 ```
 
-## 📝 License
+## � Railway Deployment
+
+### Automatic Backend Deployment
+The backend is configured for automatic deployment to Railway via GitHub Actions:
+
+1. **Automatic Triggers**: Deploys on every push to the `backend/` directory
+2. **Health Monitoring**: Built-in health checks at `/api/health`
+3. **Environment Variables**: Configured via Railway dashboard
+4. **Zero Downtime**: Seamless deployments with rollback capability
+
+### Setup Instructions
+See `SETUP_RAILWAY.md` for detailed setup instructions:
+- Create Railway project
+- Configure environment variables
+- Set up GitHub secrets
+- Enable automatic deployments
+
+### Railway Configuration
+- **Config File**: `railway.toml`
+- **Workflow**: `.github/workflows/deploy-backend.yml`
+- **Health Check**: `/api/health` endpoint
+- **Port**: Automatically assigned by Railway
+
+## �📝 License
 
 This project is licensed under the MIT License.
 
