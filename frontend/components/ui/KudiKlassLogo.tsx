@@ -79,13 +79,9 @@ export function KudiKlassTextLogo({ size = "medium", className = "" }: { size?: 
 
   return (
     <div className={`flex items-center space-x-2 ${className}`}>
-      <div className="relative">
-        <div className={`font-bold ${sizeClasses[size]} bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent`}>
-          Kudi
-          <span className="text-secondary">Klass</span>
-        </div>
-        {/* Small flag indicator */}
-        <span className="absolute -top-2 -right-4 text-xs">🇳🇬</span>
+      <div className={`font-bold ${sizeClasses[size]} bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent`}>
+        Kudi
+        <span className="text-secondary">Klass</span>
       </div>
     </div>
   );
