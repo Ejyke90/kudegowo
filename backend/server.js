@@ -15,14 +15,17 @@ app.use(express.json());
 const connectDB = async () => {
   try {
     if (process.env.MONGODB_URI) {
-      await mongoose.connect(process.env.MONGODB_URI);
+      await mongoose.connect(process.env.MONGODB_URI, {
+        serverSelectionTimeoutMS: 5000, // Timeout after 5s instead of 30s
+      });
       console.log('MongoDB connected successfully');
     } else {
       console.log('MongoDB URI not configured, running without database');
     }
   } catch (error) {
     console.error('MongoDB connection error:', error.message);
-    process.exit(1);
+    console.log('Server will start without database. Authentication will not work until MongoDB is configured.');
+    console.log('Please install MongoDB locally or use MongoDB Atlas (https://www.mongodb.com/cloud/atlas)');
   }
 };
 
