@@ -34,13 +34,14 @@ export function KudiKlassLogo({ size = "medium", className = "" }: { size?: "sma
           </div>
         </div>
         
-        {/* KudiKlass Text Overlay */}
-        <div className="absolute inset-0 flex items-center justify-center">
+        {/* White Text Background for Better Contrast */}
+        <div className="absolute inset-x-2 top-1 bottom-1 bg-white bg-opacity-90 rounded-full flex items-center justify-center">
+          {/* KudiKlass Text Overlay */}
           <div className="text-center">
-            <div className="font-bold text-white leading-none" style={{ fontSize: textSizes[size] }}>
+            <div className="font-bold text-primary leading-none" style={{ fontSize: textSizes[size] }}>
               KUDI
             </div>
-            <div className="font-bold text-white leading-none" style={{ fontSize: textSizes[size] }}>
+            <div className="font-bold text-primary leading-none" style={{ fontSize: textSizes[size] }}>
               KLASS
             </div>
           </div>
