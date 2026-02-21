@@ -22,12 +22,86 @@ Africa's leading digital payment platform for Nigerian schools. This application
 - **Logo System**: Professional logo with variants and brand guidelines
 - **Nigerian Localization**: Local payment methods, cultural adaptations
 
-## 📁 Project Structure
+## � Investor Pitch Deck
+
+Kudegowo includes a fully interactive, browser-based pitch deck built as a Next.js route — no external tools or PDF required.
+
+### Viewing the Pitch Deck
+
+1. Start the frontend dev server (see [Getting Started](#-getting-started) below)
+2. Navigate to **`http://localhost:3000/pitch`**
+3. Use the **Prev / Next** buttons or click any slide label in the top nav to jump directly to a slide
+
+The deck has **9 slides**:
+
+| # | Slide | What it covers |
+|---|-------|----------------|
+| 1 | Cover | Mission, market size, mock wallet UI |
+| 2 | Problem | 4 core problems in Nigerian school finance |
+| 3 | Solution | 6 product pillars and how they connect |
+| 4 | Market | TAM/SAM/SOM analysis, why now, competitive landscape |
+| 5 | Product | Features for parents, schools & children + roadmap |
+| 6 | Revenue | 6 revenue streams + illustrative unit economics |
+| 7 | Traction | What's built, where we are, next milestones |
+| 8 | Technology | Architecture principles + competitive moat table |
+| 9 | The Ask | Funding ask, use of funds, milestones, deal terms |
+
+### Pitch Deck File Structure
+
+```
+frontend/app/pitch/
+├── page.tsx                  # Main shell — slide navigation & SLIDES array
+└── components/
+    ├── shared.tsx            # Shared UI: Tag, SlideWrap, H1, Check, StatBox
+    ├── SlideCover.tsx
+    ├── SlideProblem.tsx
+    ├── SlideSolution.tsx
+    ├── SlideMarket.tsx
+    ├── SlideProduct.tsx
+    ├── SlideRevenue.tsx
+    ├── SlideTraction.tsx
+    ├── SlideTechnology.tsx
+    ├── SlideTeam.tsx         # Exists but not currently in the deck
+    └── SlideAsk.tsx
+```
+
+### Contributing to the Pitch Deck
+
+**Editing an existing slide**
+- Each slide is a self-contained React component in `frontend/app/pitch/components/`
+- Edit the relevant `Slide*.tsx` file directly — changes hot-reload in the browser
+
+**Adding a new slide**
+1. Create `frontend/app/pitch/components/SlideYourName.tsx`
+2. Use `SlideWrap`, `Tag`, and `H1` from `./shared` to keep styling consistent
+3. Export a named function: `export function SlideYourName() { ... }`
+4. Import it in `frontend/app/pitch/page.tsx` and add an entry to the `SLIDES` array:
+   ```ts
+   import { SlideYourName } from './components/SlideYourName';
+   // ...
+   { label: 'Your Label', Component: SlideYourName },
+   ```
+
+**Removing or hiding a slide**
+- Comment out or delete the relevant entry in the `SLIDES` array in `page.tsx`
+- The slide component file can stay — it won't be rendered
+
+**Data integrity rule**
+All figures in the pitch deck must be either:
+- Sourced from a named public dataset (NBS, NCC, CBN), or
+- Clearly labelled as *illustrative* with a disclaimer
+
+Do not add invented statistics without a label.
+
+---
+
+## �📁 Project Structure
 
 ```
 kudegowo/
 ├── frontend/              # Next.js 16 - ACTIVE VERSION
 │   ├── app/              # App Router pages
+│   │   ├── pitch/        # Investor pitch deck (route: /pitch)
 │   │   ├── wireframes/   # Interactive feature demonstrations
 │   │   └── dashboard/    # User dashboard
 │   ├── components/       # React components
