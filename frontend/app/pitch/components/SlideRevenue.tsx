@@ -6,9 +6,10 @@ const streams = [
   { e: '💳', t: 'Per-Child Subscription', d: '₦500–₦1,500/child/month. Freemium → Premium.', p: 'Phase 1' },
   { e: '⚡', t: 'Transaction Fees', d: '0.5–1.5% on every payment processed through the platform.', p: 'Phase 1' },
   { e: '🏫', t: 'School Licence Fee', d: '₦50k–₦500k/year per school. Onboarding + dashboard included.', p: 'Phase 1' },
-  { e: '🔄', t: 'Digital Ajo Fees', d: '0.5% platform fee per cycle. School community trust = low default risk.', p: 'Phase 2' },
+  { e: '🔄', t: 'Community Finance *(tentative)*', d: '0.5% platform fee per cycle on rotating savings groups. Under consideration for future release.', p: 'Phase 3' },
   { e: '🏦', t: 'Bank Partner Revenue', d: 'Activation fee + revenue share on child savings deposits.', p: 'Phase 2' },
   { e: '🛒', t: 'Marketplace Commission', d: '5–15% affiliate commission. Textbooks, uniforms, edtech content.', p: 'Phase 3' },
+  { e: '📚', t: 'Tutor Marketplace Commission', d: 'Teachers offer virtual classes through the platform. Kudegowo takes a commission per session booked.', p: 'Phase 3' },
 ];
 
 const phaseColor: Record<string, string> = {
@@ -21,7 +22,7 @@ export function SlideRevenue() {
   return (
     <SlideWrap>
       <Tag>Business Model</Tag>
-      <H1>6 interlocking revenue streams</H1>
+      <H1>7 interlocking revenue streams</H1>
 
       <div className="grid grid-cols-3 gap-4 mb-7">
         {streams.map((s) => (

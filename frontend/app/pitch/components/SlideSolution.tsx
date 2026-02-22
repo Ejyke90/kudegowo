@@ -1,12 +1,12 @@
 'use client';
 
-import { CreditCard, PiggyBank, Users, MessageSquare, BarChart3, Star } from 'lucide-react';
+import { CreditCard, PiggyBank, Shield, MessageSquare, BarChart3, Star } from 'lucide-react';
 import { Tag, SlideWrap, H1 } from './shared';
 
 const cards = [
   { icon: <CreditCard className="w-5 h-5" />, col: 'emerald', t: 'Cashless School Payments', b: 'Parents pay tuition, meals, trips, and uniforms digitally. Schools receive funds instantly. No cash on premises.' },
   { icon: <PiggyBank className="w-5 h-5" />, col: 'blue', t: 'Child Wallet & Savings', b: 'Every child gets a spending wallet with parental controls and a savings account via our bank partner.' },
-  { icon: <Users className="w-5 h-5" />, col: 'purple', t: 'Digital Ajo', b: 'School-community rotating savings clubs — digitised, escrowed, and automated. Trust of Ajo, safety of a bank.' },
+  { icon: <Shield className="w-5 h-5" />, col: 'purple', t: 'Safe School', b: 'Digital passphrase entry, real-time attendance monitoring, and campus safety alerts. Every entry and exit is recorded. Parents notified instantly.' },
   { icon: <MessageSquare className="w-5 h-5" />, col: 'orange', t: 'Smart Notifications', b: 'Parents get SMS, WhatsApp, and push alerts for every transaction. Real-time visibility. Zero surprises.' },
   { icon: <BarChart3 className="w-5 h-5" />, col: 'pink', t: 'School Analytics', b: 'Admins get real-time revenue dashboards, meal tracking, and financial reports. Data-driven school management.' },
   { icon: <Star className="w-5 h-5" />, col: 'yellow', t: 'Financial Literacy', b: 'Gamified money lessons for children. KudiCoins, leaderboards, savings goals. Building the next generation.' },

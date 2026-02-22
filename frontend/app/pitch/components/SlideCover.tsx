@@ -17,7 +17,7 @@ export function SlideCover() {
             Yoruba — <em>"Let's manage our money together"</em>
           </p>
           <p className="text-2xl font-semibold leading-snug text-white/90 mb-4">
-            Africa's school payments &amp; child financial platform
+            Africa's school education &amp; payments platform
           </p>
           <p className="text-white/50 leading-relaxed mb-10">
             Digitising the ₦2.4 trillion Nigerian school payments market — starting with the cashless wallet every child deserves.

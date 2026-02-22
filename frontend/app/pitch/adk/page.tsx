@@ -2,31 +2,27 @@
 
 import { useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { SlideCover } from './components/SlideCover';
-import { SlideVision } from './components/SlideVision';
-import { SlideProblem } from './components/SlideProblem';
-import { SlideSolution } from './components/SlideSolution';
-import { SlideMarket } from './components/SlideMarket';
-import { SlideProduct } from './components/SlideProduct';
-import { SlideRevenue } from './components/SlideRevenue';
-import { SlideTraction } from './components/SlideTraction';
-import { SlideTechnology } from './components/SlideTechnology';
-import { SlideAsk } from './components/SlideAsk';
+import { AdkCover } from './components/AdkCover';
+import { AdkVision } from './components/AdkVision';
+import { AdkProblem } from './components/AdkProblem';
+import { AdkMarket } from './components/AdkMarket';
+import { AdkSolution } from './components/AdkSolution';
+import { AdkProduct } from './components/AdkProduct';
+import { AdkRevenue } from './components/AdkRevenue';
+import { AdkAsk } from './components/AdkAsk';
 
 const SLIDES = [
-  { label: 'Cover',      Component: SlideCover },
-  { label: 'Vision',     Component: SlideVision },
-  { label: 'Problem',    Component: SlideProblem },
-  { label: 'Solution',   Component: SlideSolution },
-  { label: 'Market',     Component: SlideMarket },
-  { label: 'Product',    Component: SlideProduct },
-  { label: 'Revenue',    Component: SlideRevenue },
-  { label: 'Traction',   Component: SlideTraction },
-  { label: 'Technology', Component: SlideTechnology },
-  { label: 'The Ask',    Component: SlideAsk },
+  { label: 'Cover',    Component: AdkCover },
+  { label: 'Vision',   Component: AdkVision },
+  { label: 'Problem',  Component: AdkProblem },
+  { label: 'Market',   Component: AdkMarket },
+  { label: 'Solution', Component: AdkSolution },
+  { label: 'Product',  Component: AdkProduct },
+  { label: 'Revenue',  Component: AdkRevenue },
+  { label: 'The Ask',  Component: AdkAsk },
 ];
 
-export default function PitchDeck() {
+export default function AdkDeck() {
   const [current, setCurrent] = useState(0);
 
   const prev = () => setCurrent((c) => Math.max(0, c - 1));
@@ -43,7 +39,7 @@ export default function PitchDeck() {
             K
           </div>
           <span className="font-bold tracking-tight">Kudegowo</span>
-          <span className="text-xs text-white/30 ml-1">· Seed Deck 2026</span>
+          <span className="text-xs text-white/30 ml-1">· For ADK</span>
         </div>
 
         <div className="flex items-center gap-1">
