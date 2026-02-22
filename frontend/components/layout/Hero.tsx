@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { features } from '@/lib/features';
-import { KudegowoTextLogo } from '@/components/ui/KudiKlassLogo';
+import { KudegowoTextLogo } from '@/components/ui/KudegowoLogo';
 
 export function Hero() {
   return (

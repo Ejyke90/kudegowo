@@ -13,13 +13,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "KudiKlass - Smart Payments for Nigerian Schools",
-  description: "KudiKlass is the leading digital payment platform for Nigerian schools. Manage tuition, meals, trips, and more with our secure, easy-to-use system.",
-  keywords: ["school payments", "Nigeria", "education", "fintech", "KudiKlass"],
-  authors: [{ name: "KudiKlass Team" }],
+  title: "Kudegowo - Smart Payments for Nigerian Schools",
+  description: "Kudegowo is the leading digital payment platform for Nigerian schools. Manage tuition, meals, trips, and more with our secure, easy-to-use system.",
+  keywords: ["school payments", "Nigeria", "education", "fintech", "Kudegowo"],
+  authors: [{ name: "Kudegowo Team" }],
   openGraph: {
-    title: "KudiKlass - Smart Payments for Nigerian Schools",
-    description: "Transform how Nigerian schools handle payments with KudiKlass",
+    title: "Kudegowo - Smart Payments for Nigerian Schools",
+    description: "Transform how Nigerian schools handle payments with Kudegowo",
     type: "website",
   },
 };
