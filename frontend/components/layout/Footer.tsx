@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { KudegowoLogo } from '@/components/ui/KudegowoLogo';
+import { SafeNetWordmark } from '@/components/ui/SafeNetMark';
 
 export function Footer() {
   return (
@@ -7,12 +7,11 @@ export function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-1">
-            <div className="flex items-center space-x-3 mb-4">
-              <KudegowoLogo size="medium" />
-              <h3 className="text-xl font-bold">Kudegowo</h3>
+            <div className="mb-4">
+              <SafeNetWordmark size="md" variant="full" />
             </div>
             <p className="text-gray-400 text-sm">
-              Making school payments secure, simple, and cashless for Nigerian schools and parents.
+              Nigeria's safety net for schools — payments, safety, and education in one platform.
             </p>
           </div>
           
@@ -47,7 +46,7 @@ export function Footer() {
         </div>
 
         <div className="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
-          <p>&copy; {new Date().getFullYear()} Kudegowo. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Kudegowo SafeNet. All rights reserved.</p>
           <div className="mt-4 md:mt-0 flex space-x-4">
             {/* Social icons could go here */}
           </div>

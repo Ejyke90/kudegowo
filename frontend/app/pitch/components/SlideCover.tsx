@@ -2,6 +2,7 @@
 
 import { Star } from 'lucide-react';
 import { Tag, SlideWrap, StatBox } from './shared';
+import { SafeNetWordmark } from '@/components/ui/SafeNetMark';
 
 export function SlideCover() {
   return (
@@ -10,12 +11,9 @@ export function SlideCover() {
         {/* Left */}
         <div>
           <Tag><Star className="w-3 h-3" /> Seed Round · 2026</Tag>
-          <h1 className="text-7xl font-black tracking-tight leading-none mb-3 text-white">
-            Kude<span className="text-emerald-400">gowo</span>
-          </h1>
-          <p className="text-white/40 italic text-sm mb-6">
-            Yoruba — <em>"Let's manage our money together"</em>
-          </p>
+          <div className="mb-4">
+            <SafeNetWordmark size="xl" variant="full" />
+          </div>
           <p className="text-2xl font-semibold leading-snug text-white/90 mb-4">
             Africa's school education &amp; payments platform
           </p>

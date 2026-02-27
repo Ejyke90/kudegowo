@@ -49,7 +49,7 @@ const phases = [
       { icon: '📹', t: 'Live Virtual Classes', b: 'Low-bandwidth video lessons for revision and remote learners. Auto-recorded.' },
       { icon: '📦', t: 'WAEC/NECO Exam Packs', b: 'Premium past question bundles sold directly to parents and SS students.' },
       { icon: '🌍', t: 'West Africa Expansion', b: 'Same paper-classroom gap in Ghana, Cameroon, Senegal. Same product. New markets.' },
-      { icon: '🏫', t: 'Public School Entry', b: 'Partner with state governments to bring KudiEko to public primary schools.' },
+      { icon: '🏫', t: 'Public School Entry', b: 'Partner with state governments to bring the Education Platform to public primary schools.' },
     ],
   },
 ];
@@ -120,7 +120,7 @@ export function EPRoadmap() {
         <div className="text-2xl">🔗</div>
         <div>
           <p className="font-bold text-sm text-white mb-0.5">All three phases run on the same Kudegowo platform</p>
-          <p className="text-white/40 text-xs">Schools using Kudegowo Payments and Safe School get KudiEko Phase 1 as an add-on today. Phases 2 and 3 unlock as the school grows digitally. One login. One parent app. Three products.</p>
+          <p className="text-white/40 text-xs">Schools using Kudegowo Payments and Safe School get the Education Platform Phase 1 as an add-on today. Phases 2 and 3 unlock as the school grows digitally. One login. One parent app. Three products.</p>
         </div>
       </div>
     </SlideWrap>

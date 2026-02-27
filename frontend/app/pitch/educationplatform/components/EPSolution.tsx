@@ -103,7 +103,7 @@ export function EPSolution() {
         <div>
           <p className="font-bold text-sm text-white mb-1">Integrated with Kudegowo School Payments & Safe School</p>
           <p className="text-white/50 text-xs leading-relaxed">
-            KudiEko is a module within the Kudegowo platform. Schools using payments and safety get education as an add-on. One login, one parent app, three products.
+            The Education Platform is a module within the Kudegowo platform. Schools using payments and safety get education as an add-on. One login, one parent app, three products.
           </p>
         </div>
       </div>

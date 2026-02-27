@@ -63,7 +63,7 @@ export function EPMarket() {
                 { e: '📱', t: 'Teachers already own Android phones — our MVP requires no laptop, no Wi-Fi, no IT setup. Just a phone and a SIM card.' },
                 { e: '💸', t: 'Private school fees rose 50–70% in 2024 — parents paying premium fees now demand visibility, not just a report card once a term.' },
                 { e: '🏛️', t: 'Federal EdTech Policy Framework 2023 — regulatory tailwind for digital tools in private schools. Government is pushing, not blocking.' },
-                { e: '�', t: 'Kudegowo already has school relationships via payments and Safe School — KudiEko is an add-on, not a cold start.' },
+                { e: '�', t: 'Kudegowo already has school relationships via payments and Safe School — the Education Platform is an add-on, not a cold start.' },
                 { e: '🌍', t: 'Same gap across West Africa — Ghana, Cameroon, Senegal all have private school markets with zero digital school records.' },
               ].map((item) => (
                 <div key={item.t} className="flex gap-3 items-start bg-white/5 border border-white/10 rounded-xl p-3">
@@ -93,7 +93,7 @@ export function EPMarket() {
               ))}
             </div>
             <div className="mt-3 pt-3 border-t border-white/10">
-              <p className="text-sky-400 text-xs font-semibold">→ No platform combines NERDC curriculum, tutor marketplace, and school integration for Nigeria. KudiEko is first.</p>
+              <p className="text-sky-400 text-xs font-semibold">→ No platform combines NERDC curriculum, tutor marketplace, and school integration for Nigeria. Kudegowo Education Platform is first.</p>
             </div>
           </div>
         </div>

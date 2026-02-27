@@ -3,7 +3,7 @@
 import { Tag, SlideWrap, H1 } from '../../components/shared';
 
 const useOfFunds = [
-  { pct: '50%', label: 'Product & Engineering', detail: 'KudiEko MVP: attendance, homework, scores, quizzes, exam results. Offline-first Android app.', col: 'bg-sky-500' },
+  { pct: '50%', label: 'Product & Engineering', detail: 'Education Platform MVP: attendance, homework, scores, quizzes, exam results. Offline-first Android app.', col: 'bg-sky-500' },
   { pct: '30%', label: 'School Pilots & Onboarding', detail: 'Onboard 5–10 Lagos private schools. In-person teacher training. Dedicated success manager.', col: 'bg-purple-500' },
   { pct: '20%', label: 'Operations & Awareness', detail: 'Parent WhatsApp campaigns, school network outreach, brand launch, admin infrastructure.', col: 'bg-orange-500' },
 ];
@@ -107,7 +107,7 @@ export function EPAsk() {
             {[
               { e: '�', t: '91,000+ schools still running on paper registers', b: 'No attendance app. No homework tracker. No digital scores. The gap is not complex — it is just unfilled.' },
               { e: '�', t: 'Teachers already have smartphones', b: 'The hardware is there. Our MVP needs no laptop, no Wi-Fi, no IT team. Just install and go.' },
-              { e: '🔗', t: 'Kudegowo already has school relationships', b: 'Schools using our payments and Safe School products get KudiEko as a natural add-on. Distribution is built in.' },
+              { e: '🔗', t: 'Kudegowo already has school relationships', b: 'Schools using our payments and Safe School products get the Education Platform as a natural add-on. Distribution is built in.' },
               { e: '🌍', t: 'Same gap across West Africa', b: 'Ghana, Cameroon, Senegal — same paper-based classrooms, same parent frustration, same zero competition.' },
             ].map((item) => (
               <div key={item.t} className="bg-white/5 border border-white/10 rounded-xl p-3 flex gap-3">
@@ -126,7 +126,7 @@ export function EPAsk() {
               Every Nigerian child deserves to learn — and for their parent to see it happening in real time.
             </p>
             <p className="text-white/50 text-xs leading-relaxed mb-4">
-              KudiEko is the infrastructure that makes this possible — starting with 91,252 private schools and 13.7 million children.
+              This Education Platform is the infrastructure that makes this possible — starting with 91,252 private schools and 13.7 million children.
             </p>
             <div className="flex items-center gap-3 flex-wrap">
               {[
@@ -139,7 +139,7 @@ export function EPAsk() {
                 <div key={i} className={`w-8 h-8 rounded-lg ${c} flex items-center justify-center font-black text-xs text-white`}>{i}</div>
               ))}
               <div className="ml-1">
-                <p className="text-xs font-bold text-white">kudegowo.com/kudieko</p>
+                <p className="text-xs font-bold text-white">kudegowo.com/education</p>
                 <p className="text-xs text-white/40">hello@kudegowo.com</p>
               </div>
             </div>

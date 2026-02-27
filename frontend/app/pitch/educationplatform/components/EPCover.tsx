@@ -2,6 +2,7 @@
 
 import { BookOpen } from 'lucide-react';
 import { Tag, SlideWrap, StatBox } from '../../components/shared';
+import { SafeNetWordmark } from '@/components/ui/SafeNetMark';
 
 export function EPCover() {
   return (
@@ -9,10 +10,10 @@ export function EPCover() {
       <div className="grid grid-cols-2 gap-16 items-center min-h-[520px]">
         <div>
           <Tag><BookOpen className="w-3 h-3" /> Education Platform · 2026</Tag>
-          <h1 className="text-6xl font-black tracking-tight leading-none mb-3 text-white">
-            Kudi<span className="text-sky-400">Eko</span>
-          </h1>
-          <p className="text-white/40 italic text-sm mb-6">by Kudegowo</p>
+          <div className="mb-2">
+            <SafeNetWordmark size="lg" variant="full" />
+          </div>
+          <p className="text-white/40 italic text-sm mb-4">Education Platform</p>
           <p className="text-2xl font-semibold leading-snug text-white/90 mb-4">
             Digital school records for every Nigerian classroom
           </p>

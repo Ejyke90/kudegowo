@@ -93,7 +93,7 @@ export function EPStandards() {
         </div>
 
         <div className="bg-gradient-to-br from-sky-900/30 to-gray-900 border border-sky-500/20 rounded-xl p-4">
-          <p className="text-xs font-bold text-white/40 uppercase tracking-widest mb-3">KudiEko vs. alternatives</p>
+          <p className="text-xs font-bold text-white/40 uppercase tracking-widest mb-3">Education Platform vs. alternatives</p>
           <div className="space-y-2 text-xs">
             {[
               { feature: 'Digital attendance tracking',    kude: true,  ulesson: false, prepclass: false },
@@ -111,7 +111,7 @@ export function EPStandards() {
             ))}
             <div className="grid grid-cols-4 gap-2 pt-2 border-t border-white/10 text-white/20 text-xs">
               <span className="col-span-2" />
-              <span className="text-center text-sky-400 font-bold">KudiEko</span>
+              <span className="text-center text-sky-400 font-bold">Kudegowo</span>
               <span className="text-center">ULesson</span>
             </div>
           </div>
