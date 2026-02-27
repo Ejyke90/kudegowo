@@ -1,4 +1,8 @@
+'use client';
+
 import { CheckCircle } from 'lucide-react';
+import { useEffect, useRef } from 'react';
+import gsap from 'gsap';
 
 export function Tag({ children }: { children: React.ReactNode }) {
   return (
@@ -9,8 +13,28 @@ export function Tag({ children }: { children: React.ReactNode }) {
 }
 
 export function SlideWrap({ children }: { children: React.ReactNode }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (containerRef.current) {
+      // Get all direct child elements
+      const children = containerRef.current.children;
+      // Set initial state: translate down 40px and opacity 0
+      gsap.set(children, { y: 40, opacity: 0 });
+
+      // Stagger animate from bottom with delay
+      gsap.to(children, {
+        y: 0,
+        opacity: 1,
+        duration: 0.6,
+        stagger: 0.1, // 100ms delay between each child
+        ease: 'power2.out',
+      });
+    }
+  }, []);
+
   return (
-    <div className="max-w-6xl mx-auto w-full px-14 py-10">
+    <div ref={containerRef} className="max-w-6xl mx-auto w-full px-14 py-10">
       {children}
     </div>
   );
