@@ -12,6 +12,8 @@ import { SlideRevenue } from './components/SlideRevenue';
 import { SlideTraction } from './components/SlideTraction';
 import { SlideTechnology } from './components/SlideTechnology';
 import { SlideAsk } from './components/SlideAsk';
+import { SlideCompetitors } from './components/SlideCompetitors';
+import { SlideGoToMarket } from './components/SlideGoToMarket';
 
 const SLIDES = [
   { label: 'Cover',      Component: SlideCover },
@@ -20,6 +22,8 @@ const SLIDES = [
   { label: 'Solution',   Component: SlideSolution },
   { label: 'Market',     Component: SlideMarket },
   { label: 'Product',    Component: SlideProduct },
+  { label: 'Competitors',    Component: SlideCompetitors },
+  { label: 'Leads Generation',    Component: SlideGoToMarket },
   { label: 'Revenue',    Component: SlideRevenue },
   { label: 'Traction',   Component: SlideTraction },
   { label: 'Technology', Component: SlideTechnology },
@@ -42,8 +46,8 @@ export default function PitchDeck() {
           <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-green-400 to-emerald-600 flex items-center justify-center font-black text-xs text-white">
             K
           </div>
-          <span className="font-bold tracking-tight">Kudegowo</span>
-          <span className="text-xs text-white/30 ml-1">· Seed Deck 2026</span>
+          <span className="font-bold tracking-tight">KudEgOwo</span>
+          {/* <span className="text-xs text-white/30 ml-1">· Seed Deck 2026</span> */}
         </div>
 
         <div className="flex items-center gap-1">
