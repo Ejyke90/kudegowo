@@ -15,7 +15,7 @@ export function SlideCover() {
             <SafeNetWordmark size="xl" variant="full" />
           </div>
           <p className="text-2xl font-semibold leading-snug text-white/90 mb-4">
-            Africa's school education &amp; payments platform
+            Africa&apos;s top rated school education &amp; payments platform
           </p>
           <p className="text-white/50 leading-relaxed mb-10">
             Digitising the ₦2.4 trillion Nigerian school payments market — starting with the cashless wallet every child deserves.
@@ -36,7 +36,7 @@ export function SlideCover() {
                 K
               </div>
               <div>
-                <div className="font-bold text-sm text-white">Amara's Wallet</div>
+                <div className="font-bold text-sm text-white">Amara&apos;s Wallet</div>
                 <div className="text-xs text-white/40">JSS 2 · Greenfield Academy</div>
               </div>
               <span className="ml-auto text-xs bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full">
