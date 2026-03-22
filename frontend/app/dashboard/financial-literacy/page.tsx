@@ -62,7 +62,7 @@ export default function FinancialLiteracyPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<'overview' | 'savings' | 'quizzes' | 'achievements'>('overview');
 
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api';
 
   useEffect(() => {
     fetchChildren();
