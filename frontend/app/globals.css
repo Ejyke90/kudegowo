@@ -67,3 +67,30 @@ body {
 .dark-green-bg {
   background-color: var(--accent);
 }
+
+/* Fix input field visibility - ensure text is always visible */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="tel"],
+input[type="url"],
+input[type="search"],
+input[type="date"],
+textarea,
+select {
+  color: #1f2937 !important; /* gray-800 */
+  background-color: #ffffff !important;
+}
+
+input[type="text"]::placeholder,
+input[type="email"]::placeholder,
+input[type="password"]::placeholder,
+input[type="number"]::placeholder,
+input[type="tel"]::placeholder,
+input[type="url"]::placeholder,
+input[type="search"]::placeholder,
+input[type="date"]::placeholder,
+textarea::placeholder {
+  color: #9ca3af !important; /* gray-400 */
+}
