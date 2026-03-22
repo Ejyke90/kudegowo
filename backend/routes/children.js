@@ -93,7 +93,8 @@ router.get('/', auth, validators.listChildren, validate, async (req, res) => {
     ]);
 
     res.json({
-      children,
+      status: true,
+      data: children,
       pagination: {
         page,
         limit,
