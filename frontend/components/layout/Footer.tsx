@@ -10,7 +10,7 @@ export function Footer() {
             <div className="mb-4">
               <div className="flex items-center gap-2.5">
                 <KudegowoLogo size="md" variant="on-dark" />
-                <span className="font-black tracking-tight text-white text-xl">Kudegowo</span>
+                <span className="font-black tracking-tight text-xl bg-gradient-to-r from-purple-600 via-blue-500 to-green-500 bg-clip-text text-transparent">KudEgOwo</span>
               </div>
             </div>
             <p className="text-gray-400 text-sm">
