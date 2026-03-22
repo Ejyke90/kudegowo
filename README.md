@@ -9,7 +9,24 @@ Africa's leading digital payment platform for Nigerian schools. This application
 
 ## 🎯 Latest Updates
 
-### ✅ New Features (ParentPay-Inspired)
+### ✅ KudEgOwo Comprehensive Demo (NEW)
+- **AI-Powered Onboarding**: LangGraph orchestrator with conversational onboarding flow
+- **Safe School Module**: Daily passphrases, attendance tracking, gate access logs, emergency alerts
+- **Financial Literacy (KudiCoins)**: Gamified savings goals, quizzes, achievements, leaderboards
+- **Meal Management**: Weekly menus, pre-ordering, dietary preferences, canteen QR payments
+- **Multi-Channel Notifications**: Email (Resend), SMS (Termii), WhatsApp, Push notifications
+- **Mock Paystack**: Test payment flows with simulated webhooks and test cards
+- **Demo Controls**: Database reset, event simulation, persona switching
+
+### ✅ Independent School Wallet Setup
+- **School Profiles**: Parents create and manage school profiles for their children's schools
+- **Child Management**: Add multiple children per school, transfer between schools, deactivate with cascade
+- **Fee Categories**: Define fees (tuition, meals, transport, etc.) with optional recurrence rules
+- **Scheduled Payments**: Automate recurring payments with retry logic and exponential backoff
+- **Payment Scheduler**: Background cron job processes due payments every 15 minutes
+- **Dashboard**: Dynamic overview with overdue alerts, upcoming obligations, and school summaries
+
+### ✅ ParentPay-Inspired Features
 - **Smart Meal Management**: Pre-order meals, dietary preferences, balance tracking
 - **Instant Messaging & Reminders**: SMS, Email, WhatsApp notifications
 - **Smart Reporting & Analytics**: Real-time financial dashboards and insights
@@ -103,19 +120,79 @@ kudegowo/
 │   ├── app/              # App Router pages
 │   │   ├── pitch/        # Investor pitch deck (route: /pitch)
 │   │   ├── wireframes/   # Interactive feature demonstrations
+│   │   ├── onboarding/   # AI-powered onboarding chat
+│   │   ├── demo/controls/# Demo control panel
 │   │   └── dashboard/    # User dashboard
+│   │       ├── schools/           # School profiles (list + detail)
+│   │       ├── scheduled-payments/# Scheduled payments management
+│   │       ├── safe-school/       # Passphrases & attendance
+│   │       ├── financial-literacy/# KudiCoins, savings, quizzes
+│   │       └── meals/             # Meal ordering & menus
 │   ├── components/       # React components
 │   │   ├── layout/       # Navigation, footer, sections
 │   │   ├── ui/           # Reusable UI components
+│   │   ├── chat/         # Chat window & rich cards
+│   │   ├── demo/         # Demo banner & controls
 │   │   └── wireframes/   # Feature wireframes
+│   ├── lib/api.ts        # Typed API client for school wallet feature
 │   └── package.json      # Next.js dependencies
 ├── backend/              # Express.js API
-├── backend-nextjs/       # Next.js API routes (if needed)
-├── openspec/             # Logo development and brand guidelines
-│   └── changes/logo-development-plan/
-├── archived/             # Archived legacy code
-│   └── react-frontend-legacy/
-└── README.md             # ✅ Updated documentation
+│   ├── models/           # Mongoose models
+│   │   ├── SchoolProfile.js   # Parent-owned school profiles
+│   │   ├── Child.js           # Children linked to schools
+│   │   ├── Attendance.js      # Daily attendance records
+│   │   ├── Passphrase.js      # Daily pickup passphrases
+│   │   ├── GateAccess.js      # Gate access logs
+│   │   ├── EmergencyAlert.js  # School emergency alerts
+│   │   ├── KudiCoin.js        # Child virtual currency
+│   │   ├── SavingsGoal.js     # Savings goals with milestones
+│   │   ├── Quiz.js            # Financial literacy quizzes
+│   │   ├── QuizAttempt.js     # Quiz attempt records
+│   │   ├── Achievement.js     # Gamification badges
+│   │   ├── Menu.js            # Weekly school menus
+│   │   ├── MealOrder.js       # Pre-ordered meals
+│   │   ├── DietaryPreference.js # Child dietary info
+│   │   ├── CanteenTransaction.js # Canteen purchases
+│   │   └── ScheduledPayment.js# Recurring payment scheduling
+│   ├── routes/           # Express route handlers
+│   │   ├── attendance.js      # /api/attendance
+│   │   ├── passphrase.js      # /api/passphrases
+│   │   ├── emergencyAlerts.js # /api/emergency-alerts
+│   │   ├── gateAccess.js      # /api/gate-access
+│   │   ├── kudiCoins.js       # /api/kudi-coins
+│   │   ├── savingsGoals.js    # /api/savings-goals
+│   │   ├── quizzes.js         # /api/quizzes
+│   │   ├── leaderboard.js     # /api/leaderboard
+│   │   ├── achievements.js    # /api/achievements
+│   │   ├── menus.js           # /api/menus
+│   │   ├── mealOrders.js      # /api/meal-orders
+│   │   ├── canteen.js         # /api/canteen
+│   │   ├── dietaryPreferences.js # /api/dietary-preferences
+│   │   ├── mockWebhook.js     # /api/mock-paystack
+│   │   ├── demoControls.js    # /api/demo
+│   │   └── scheduledPayments.js # /api/scheduled-payments
+│   ├── services/          # Business logic
+│   │   ├── paymentScheduler.js  # Cron-based payment engine
+│   │   ├── mockPaystack.js      # Mock payment simulation
+│   │   └── notifications/       # Multi-channel dispatcher
+│   │       ├── index.js, email.js, sms.js, whatsapp.js, push.js
+│   │       └── templates/index.js
+│   └── scripts/seed.js    # Demo data seeding
+├── ai-agent/             # FastAPI AI Agent Service
+│   ├── src/
+│   │   ├── main.py       # FastAPI app
+│   │   ├── config.py     # Settings
+│   │   ├── routers/      # health.py, chat.py
+│   │   └── agent/        # LangGraph orchestrator
+│   │       ├── orchestrator.py, memory.py, tools.py, llm_client.py
+│   └── pyproject.toml
+├── worker/               # Celery Worker Service
+│   ├── src/
+│   │   ├── celery_app.py # Celery configuration
+│   │   └── tasks/        # payment.py, notification.py, scheduled.py, reports.py
+│   └── pyproject.toml
+├── docker-compose.yml    # Full stack orchestration
+└── README.md
 ```
 
 ## Features
@@ -151,10 +228,12 @@ kudegowo/
 - **Paystack** for payment processing
 
 ### Backend
-- Node.js & Express
-- MongoDB with Mongoose
+- Node.js & Express 5
+- MongoDB with Mongoose 9
 - JWT for authentication
 - bcryptjs for password hashing
+- express-validator for input validation
+- node-cron for scheduled payment processing
 - CORS enabled for API access
 
 ## 🎯 Key Features Implemented
@@ -307,6 +386,102 @@ This project is licensed under the MIT License.
 3. Make your changes
 4. Submit a pull request
 
-## 📞 Support
+## 📖 School Wallet API Reference
+
+### School Profiles (`/api/school-profiles`)
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/` | Create school profile (max 10/parent) |
+| GET | `/` | List profiles (paginated, searchable) |
+| GET | `/:id` | Get detail + stats |
+| PUT | `/:id` | Update profile |
+| DELETE | `/:id` | Delete (guards: no active children/pending payments) |
+
+### Children (`/api/children`)
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/` | Add child to school (max 20/school) |
+| GET | `/` | List children (filter by school/active) |
+| GET | `/:id` | Detail + fee summary |
+| PUT | `/:id` | Update (school transfer cancels pending payments) |
+| DELETE | `/:id` | Deactivate + cascade cancel |
+
+### Fee Categories (`/api/fee-categories`)
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/` | Create fee (max 50/school, supports recurrence) |
+| GET | `/` | List (filter by school/category/date) |
+| GET | `/upcoming` | Aggregated upcoming obligations |
+| GET | `/:id` | Detail + per-child payment status |
+| PUT | `/:id` | Update (warns about pending payments) |
+| PUT | `/:id/update-future-payments` | Batch update pending amounts |
+| DELETE | `/:id` | Deactivate + cascade cancel |
+
+### Scheduled Payments (`/api/scheduled-payments`)
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/` | Schedule single payment |
+| POST | `/bulk` | Schedule for all applicable children |
+| GET | `/` | List (filter by status/child/date) + summary |
+| GET | `/:id` | Detail with populated refs |
+| PUT | `/:id/cancel` | Cancel pending payment |
+| PUT | `/:id/skip` | Skip + generate next occurrence |
+| POST | `/:id/pay-now` | Immediate execution with optimistic lock |
+
+### Background Jobs
+- **Payment Processor**: Runs every 15 min, processes due payments with atomic balance deduction
+- **Stale Lock Recovery**: Runs every 60 min, resets payments stuck in "processing" > 30 min
+- **Retry Policy**: Exponential backoff — 1h, 6h, 24h (max 3 retries)
+
+## � Docker Development
+
+### Quick Start with Docker Compose
+```bash
+# Start all services
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# Stop all services
+docker-compose down
+```
+
+### Services
+| Service | Port | Description |
+|---------|------|-------------|
+| Frontend | 3000 | Next.js application |
+| Backend | 5000 | Express.js API |
+| AI Agent | 8000 | FastAPI LangGraph orchestrator |
+| Worker | - | Celery background tasks |
+| Flower | 5555 | Celery monitoring |
+| MongoDB | 27017 | Database |
+| Redis | 6379 | Cache & message broker |
+
+### Demo Mode
+```bash
+# Seed demo data
+cd backend && npm run seed
+
+# Access demo credentials
+curl http://localhost:5000/api/demo/credentials
+```
+
+### Demo Credentials
+| Role | Email | Password |
+|------|-------|----------|
+| Parent 1 | ada.okonkwo@demo.com | Demo123! |
+| Parent 2 | chidi.eze@demo.com | Demo123! |
+| School Admin | admin@greensprings.demo.com | Demo123! |
+| Tutor | tutor@demo.com | Demo123! |
+
+### Test Cards (Mock Paystack)
+| Scenario | Card Number |
+|----------|-------------|
+| Success | 4084 0840 8408 4081 |
+| Insufficient Funds | 4084 0840 8408 4082 |
+| Declined | 4084 0840 8408 4083 |
+
+## �📞 Support
 
 For support and questions, please open an issue in the repository.

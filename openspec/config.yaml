@@ -1,20 +1,28 @@
 schema: spec-driven
 
-# Project context (optional)
-# This is shown to AI when creating artifacts.
-# Add your tech stack, conventions, style guides, domain knowledge, etc.
-# Example:
-#   context: |
-#     Tech stack: TypeScript, React, Node.js
-#     We use conventional commits
-#     Domain: e-commerce platform
+context: |
+  Tech stack:
+    Frontend: Next.js 16, React 19, TailwindCSS 4, Lucide React icons, TypeScript
+    Backend: Node.js, Express.js 5, MongoDB (Mongoose 9), JWT auth
+    Deployment: Railway (backend), Netlify (frontend candidate)
+  Domain: School payment platform for Nigerian schools (Kudegowo)
+  Conventions:
+    - RESTful API design with /api prefix
+    - Mongoose models in backend/models/
+    - Express routes in backend/routes/
+    - Middleware in backend/middleware/ (auth.js, rateLimiter.js)
+    - Frontend pages use Next.js App Router (app/ directory)
+    - Components in frontend/components/ (layout/, ui/, wireframes/)
+    - All amounts in Nigerian Naira (NGN)
 
-# Per-artifact rules (optional)
-# Add custom rules for specific artifacts.
-# Example:
-#   rules:
-#     proposal:
-#       - Keep proposals under 500 words
-#       - Always include a "Non-goals" section
-#     tasks:
-#       - Break tasks into chunks of max 2 hours
+rules:
+  proposal:
+    - Always include a "Non-goals" section
+    - Define clear success criteria with measurable targets
+  design:
+    - Include Mermaid diagrams for data models and sequences
+    - Document index strategy for all new collections
+    - Address both happy path and unhappy path
+  tasks:
+    - Break into phases (Foundation, API, Engine, Frontend, Hardening)
+    - Each task should be completable in under 2 hours

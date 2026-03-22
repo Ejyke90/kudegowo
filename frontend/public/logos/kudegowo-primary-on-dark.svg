@@ -1,0 +1,30 @@
+<svg width="240" height="240" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Kudegowo logo">
+  <title>Kudegowo Logo</title>
+  <desc>Abstract K mark with shield negative space — on-dark variant</desc>
+  <defs>
+    <clipPath id="shield-clip">
+      <path d="M120,18 L208,62 C212,64 214,68 214,72 L214,148 C214,152 212,156 208,159 L128,218 C124,221 118,221 114,218 L34,159 C30,156 28,152 28,148 L28,72 C28,68 30,64 34,62 Z"/>
+    </clipPath>
+  </defs>
+
+  <!-- Shield shape — white for dark backgrounds -->
+  <path d="M120,18 L208,62 C212,64 214,68 214,72 L214,148 C214,152 212,156 208,159 L128,218 C124,221 118,221 114,218 L34,159 C30,156 28,152 28,148 L28,72 C28,68 30,64 34,62 Z"
+        fill="white"/>
+
+  <!-- Adire-inspired diagonal texture -->
+  <g clip-path="url(#shield-clip)" opacity="0.08">
+    <line x1="40" y1="60" x2="200" y2="220" stroke="#E6A500" stroke-width="18" stroke-linecap="round"/>
+    <line x1="60" y1="40" x2="220" y2="200" stroke="#E6A500" stroke-width="18" stroke-linecap="round"/>
+    <line x1="20" y1="80" x2="180" y2="240" stroke="#E6A500" stroke-width="18" stroke-linecap="round"/>
+  </g>
+
+  <!-- Abstract K letterform — dark fill for contrast on white shield -->
+  <g fill="#003366">
+    <rect x="72" y="62" width="28" height="118" rx="4"/>
+    <polygon points="100,108 170,62 178,62 182,68 174,74 108,118"/>
+    <polygon points="170,56 190,56 182,68 170,62"/>
+    <polygon points="100,132 108,124 178,180 170,188"/>
+  </g>
+
+  <line x1="170" y1="56" x2="190" y2="56" stroke="#E6A500" stroke-width="3" stroke-linecap="round"/>
+</svg>

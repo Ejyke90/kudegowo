@@ -17,10 +17,16 @@ export const metadata: Metadata = {
   description: "Kudegowo is the leading digital payment platform for Nigerian schools. Manage tuition, meals, trips, and more with our secure, easy-to-use system.",
   keywords: ["school payments", "Nigeria", "education", "fintech", "Kudegowo"],
   authors: [{ name: "Kudegowo Team" }],
+  icons: {
+    icon: [
+      { url: "/logos/kudegowo-favicon-color.svg", type: "image/svg+xml" },
+    ],
+  },
   openGraph: {
     title: "Kudegowo - Smart Payments for Nigerian Schools",
     description: "Transform how Nigerian schools handle payments with Kudegowo",
     type: "website",
+    images: ["/logos/kudegowo-primary-color.svg"],
   },
 };
 

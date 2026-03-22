@@ -1,0 +1,187 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:7
+    container_name: kudegowo-mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      - MONGO_INITDB_DATABASE=kudegowo
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - kudegowo-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: kudegowo-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - kudegowo-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: kudegowo-backend
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=development
+      - PORT=5000
+      - MONGODB_URI=mongodb://mongodb:27017/kudegowo
+      - REDIS_URL=redis://redis:6379
+      - JWT_SECRET=${JWT_SECRET:-kudegowo-demo-secret-key-change-in-production}
+      - JWT_EXPIRES_IN=900
+      - JWT_REFRESH_EXPIRES_IN=604800
+      - DEMO_MODE=true
+      - MOCK_PAYSTACK=true
+      - MOCK_SMS=true
+      - MOCK_EMAIL=true
+      - MOCK_WEBHOOK_DELAY=1000
+      - RESEND_API_KEY=${RESEND_API_KEY:-}
+      - TERMII_API_KEY=${TERMII_API_KEY:-}
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    depends_on:
+      mongodb:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    networks:
+      - kudegowo-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: kudegowo-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - NEXT_PUBLIC_API_URL=http://localhost:5000/api
+      - NEXT_PUBLIC_AI_AGENT_URL=http://localhost:8000
+      - NEXT_PUBLIC_DEMO_MODE=true
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+      - /app/.next
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - kudegowo-network
+
+  ai-agent:
+    build:
+      context: ./ai-agent
+      dockerfile: Dockerfile
+    container_name: kudegowo-ai-agent
+    ports:
+      - "8000:8000"
+    environment:
+      - ENVIRONMENT=development
+      - BACKEND_URL=http://backend:5000/api
+      - REDIS_URL=redis://redis:6379
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - MOCK_LLM=${MOCK_LLM:-true}
+      - SENTRY_DSN=${SENTRY_DSN:-}
+    volumes:
+      - ./ai-agent:/app
+    depends_on:
+      redis:
+        condition: service_healthy
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    networks:
+      - kudegowo-network
+
+  worker:
+    build:
+      context: ./worker
+      dockerfile: Dockerfile
+    container_name: kudegowo-worker
+    environment:
+      - ENVIRONMENT=development
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=mongodb://mongodb:27017/kudegowo_celery
+      - BACKEND_URL=http://backend:5000/api
+      - SENTRY_DSN=${SENTRY_DSN:-}
+    volumes:
+      - ./worker:/app
+    depends_on:
+      redis:
+        condition: service_healthy
+      mongodb:
+        condition: service_healthy
+    networks:
+      - kudegowo-network
+
+  celery-beat:
+    build:
+      context: ./worker
+      dockerfile: Dockerfile
+    container_name: kudegowo-celery-beat
+    command: celery -A src.celery_app beat --loglevel=info
+    environment:
+      - ENVIRONMENT=development
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=mongodb://mongodb:27017/kudegowo_celery
+      - BACKEND_URL=http://backend:5000/api
+    volumes:
+      - ./worker:/app
+    depends_on:
+      - worker
+    networks:
+      - kudegowo-network
+
+  flower:
+    image: mher/flower:2.0
+    container_name: kudegowo-flower
+    ports:
+      - "5555:5555"
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+    depends_on:
+      - redis
+      - worker
+    networks:
+      - kudegowo-network
+
+volumes:
+  mongodb_data:
+  redis_data:
+
+networks:
+  kudegowo-network:
+    driver: bridge

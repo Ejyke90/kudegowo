@@ -2,7 +2,7 @@
 
 import { BookOpen } from 'lucide-react';
 import { Tag, SlideWrap, StatBox } from '../../components/shared';
-import { SafeNetWordmark } from '@/components/ui/SafeNetMark';
+import { KudegowoLogo } from '@/components/ui/KudegowoLogo';
 
 export function EPCover() {
   return (
@@ -11,7 +11,10 @@ export function EPCover() {
         <div>
           <Tag><BookOpen className="w-3 h-3" /> Education Platform · 2026</Tag>
           <div className="mb-2">
-            <SafeNetWordmark size="lg" variant="full" />
+            <div className="flex items-center gap-3">
+              <KudegowoLogo size="lg" variant="on-dark" />
+              <span className="font-black tracking-tight text-white text-2xl">Kudegowo</span>
+            </div>
           </div>
           <p className="text-white/40 italic text-sm mb-4">Education Platform</p>
           <p className="text-2xl font-semibold leading-snug text-white/90 mb-4">

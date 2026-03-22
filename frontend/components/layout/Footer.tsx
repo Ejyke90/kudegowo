@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { SafeNetWordmark } from '@/components/ui/SafeNetMark';
+import { KudegowoLogo } from '@/components/ui/KudegowoLogo';
 
 export function Footer() {
   return (
@@ -8,7 +8,10 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-1">
             <div className="mb-4">
-              <SafeNetWordmark size="md" variant="full" />
+              <div className="flex items-center gap-2.5">
+                <KudegowoLogo size="md" variant="on-dark" />
+                <span className="font-black tracking-tight text-white text-xl">Kudegowo</span>
+              </div>
             </div>
             <p className="text-gray-400 text-sm">
               Nigeria's safety net for schools — payments, safety, and education in one platform.

@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import { features } from '@/lib/features';
-import { SafeNetWordmarkDark } from '@/components/ui/SafeNetMark';
+import { KudegowoLogo } from '@/components/ui/KudegowoLogo';
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,7 +15,10 @@ export function Navbar() {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link href="/" className="flex-shrink-0 flex items-center">
-              <SafeNetWordmarkDark size="md" variant="full" />
+              <div className="flex items-center gap-2.5">
+                <KudegowoLogo size="md" variant="color" />
+                <span className="font-black tracking-tight text-gray-900 text-xl">Kudegowo</span>
+              </div>
             </Link>
           </div>
           

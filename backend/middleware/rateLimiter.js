@@ -28,4 +28,13 @@ const paymentLimiter = rateLimit({
   legacyHeaders: false,
 });
 
-module.exports = { apiLimiter, authLimiter, paymentLimiter };
+// Stricter rate limiter for school wallet creation endpoints
+const schoolWalletLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 30, // Limit each IP to 30 creation requests per windowMs
+  message: 'Too many school wallet requests, please try again later.',
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+module.exports = { apiLimiter, authLimiter, paymentLimiter, schoolWalletLimiter };

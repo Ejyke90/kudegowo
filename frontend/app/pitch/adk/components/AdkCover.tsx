@@ -2,7 +2,7 @@
 
 import { Star } from 'lucide-react';
 import { Tag, SlideWrap, StatBox } from '../../components/shared';
-import { SafeNetWordmark } from '@/components/ui/SafeNetMark';
+import { KudegowoLogo } from '@/components/ui/KudegowoLogo';
 
 export function AdkCover() {
   return (
@@ -12,7 +12,10 @@ export function AdkCover() {
         <div>
           <Tag><Star className="w-3 h-3" /> Confidential · 2026</Tag>
           <div className="mb-4">
-            <SafeNetWordmark size="xl" variant="full" />
+            <div className="flex items-center gap-3">
+              <KudegowoLogo size="xl" variant="on-dark" />
+              <span className="font-black tracking-tight text-white text-4xl">Kudegowo</span>
+            </div>
           </div>
           <p className="text-2xl font-semibold leading-snug text-white/90 mb-4">
             Nigeria's Education & Payments Platform
