@@ -32,6 +32,9 @@ export function Navbar() {
             <Link href="#about" className="text-gray-700 hover:text-primary transition-colors">
               About
             </Link>
+            <Link href="/onboarding" className="text-gray-700 hover:text-primary transition-colors">
+              AI Onboarding
+            </Link>
             <Link href="/demo/controls" className="text-gray-700 hover:text-primary transition-colors">
               Demo Controls
             </Link>
@@ -81,6 +84,12 @@ export function Navbar() {
               className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-gray-50"
             >
               About
+            </Link>
+            <Link 
+              href="/onboarding" 
+              className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-gray-50"
+            >
+              AI Onboarding
             </Link>
             <Link 
               href="/demo/controls" 
