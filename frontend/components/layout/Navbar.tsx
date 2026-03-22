@@ -32,23 +32,21 @@ export function Navbar() {
             <Link href="#about" className="text-gray-700 hover:text-primary transition-colors">
               About
             </Link>
-            <Link href="/wireframes" className="text-gray-700 hover:text-primary transition-colors">
-              Features
+            <Link href="/demo/controls" className="text-gray-700 hover:text-primary transition-colors">
+              Demo Controls
             </Link>
-            {features.enableAuth && (
-              <div className="flex items-center space-x-3">
-                <Link 
-                  href="/login" 
-                  className="bg-primary text-white px-4 py-2 rounded-md hover:bg-accent transition-colors"
-                >
-                  Login
-                </Link>
-                {/* Nigerian Flag */}
-                <div className="text-6xl font-bold text-gray-600 leading-none">
-                  🇳🇬
-                </div>
+            <div className="flex items-center space-x-3">
+              <Link 
+                href="/login" 
+                className="bg-primary text-white px-4 py-2 rounded-md hover:bg-accent transition-colors"
+              >
+                Login
+              </Link>
+              {/* Nigerian Flag */}
+              <div className="text-6xl font-bold text-gray-600 leading-none">
+                🇳🇬
               </div>
-            )}
+            </div>
           </div>
 
           <div className="flex items-center md:hidden">
@@ -85,19 +83,17 @@ export function Navbar() {
               About
             </Link>
             <Link 
-              href="/wireframes" 
+              href="/demo/controls" 
               className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-gray-50"
             >
-              Features
+              Demo Controls
             </Link>
-            {features.enableAuth && (
-              <Link 
-                href="/login" 
-                className="block w-full text-center mt-4 bg-primary text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
-              >
-                Login
-              </Link>
-            )}
+            <Link 
+              href="/login" 
+              className="block w-full text-center mt-4 bg-primary text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
+            >
+              Login
+            </Link>
           </div>
         </div>
       )}

@@ -1,7 +1,9 @@
 // API client for Kudegowo — matches NestJS backend contracts
 // All types are strongly typed TypeScript, mirroring backend DTOs
+import { getAuthHeaders } from './auth';
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+// API Base URL
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api';
 
 // --- Enums (mirrors backend enums) ---
 

@@ -1,6 +1,10 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Home, CreditCard, History, Users, User, LogOut, Building2, CalendarClock, Shield, Coins, UtensilsCrossed } from 'lucide-react';
 import { KudegowoLogo } from '@/components/ui/KudegowoLogo';
+import { getAuthUser, logout } from '@/lib/auth';
 
 const navigation = [
   { name: 'Overview', href: '/dashboard', icon: Home },
@@ -16,6 +20,18 @@ const navigation = [
 ];
 
 export function Sidebar() {
+  const [user, setUser] = useState<any>(null);
+
+  useEffect(() => {
+    setUser(getAuthUser());
+  }, []);
+
+  const handleLogout = () => {
+    if (confirm('Are you sure you want to sign out?')) {
+      logout();
+    }
+  };
+
   return (
     <div className="hidden md:flex md:flex-shrink-0">
       <div className="flex flex-col w-64">
@@ -43,24 +59,24 @@ export function Sidebar() {
             </nav>
           </div>
           <div className="flex-shrink-0 flex border-t border-gray-200 p-4">
-            <Link href="/login" className="flex-shrink-0 w-full group block">
+            <button onClick={handleLogout} className="flex-shrink-0 w-full group block text-left">
               <div className="flex items-center">
                 <div>
-                   <div className="inline-block h-9 w-9 rounded-full bg-gray-200 flex items-center justify-center">
-                       <User className="h-5 w-5 text-gray-500" />
+                   <div className="inline-block h-9 w-9 rounded-full bg-primary/10 flex items-center justify-center">
+                       <User className="h-5 w-5 text-primary" />
                    </div>
                 </div>
-                <div className="ml-3">
-                  <p className="text-sm font-medium text-gray-700 group-hover:text-gray-900">
-                    Parent User
+                <div className="ml-3 flex-1 min-w-0">
+                  <p className="text-sm font-medium text-gray-700 group-hover:text-gray-900 truncate">
+                    {user ? `${user.firstName} ${user.lastName}` : 'Loading...'}
                   </p>
-                  <p className="text-xs font-medium text-gray-500 group-hover:text-gray-700">
-                    Sign out
+                  <p className="text-xs font-medium text-gray-500 group-hover:text-gray-700 capitalize">
+                    {user?.role || 'User'}
                   </p>
                 </div>
-                <LogOut className="ml-auto h-5 w-5 text-gray-400 group-hover:text-gray-500" />
+                <LogOut className="ml-2 h-5 w-5 text-gray-400 group-hover:text-gray-500 flex-shrink-0" />
               </div>
-            </Link>
+            </button>
           </div>
         </div>
       </div>
