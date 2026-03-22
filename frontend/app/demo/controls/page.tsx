@@ -59,6 +59,20 @@ const JOURNEYS = [
     ],
   },
   {
+    title: 'Child Journey',
+    persona: 'Hope Sola (Child)',
+    icon: Users,
+    color: 'blue',
+    steps: [
+      { title: 'Morning Check-in', description: 'Child arrives at school, gives passphrase to teacher', icon: Shield },
+      { title: 'Attendance Recorded', description: 'Teacher marks attendance, parent gets notification', icon: CheckCircle },
+      { title: 'Lunch Time', description: 'Child uses pre-ordered meal or selects from menu', icon: UtensilsCrossed },
+      { title: 'Earn KudiCoins', description: 'Complete quizzes and good behavior to earn rewards', icon: Coins },
+      { title: 'Savings Goals', description: 'Track progress toward savings goals with parent', icon: Coins },
+      { title: 'Evening Check-out', description: 'Parent picks up child, attendance updated', icon: Shield },
+    ],
+  },
+  {
     title: 'School Admin Journey',
     persona: 'School Administrator',
     icon: School,
