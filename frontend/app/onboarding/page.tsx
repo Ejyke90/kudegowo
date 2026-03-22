@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import ChatWindow from '@/components/chat/ChatWindow';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
+import { KudegowoLogo } from '@/components/ui/KudegowoLogo';
 
 export default function OnboardingPage() {
   const router = useRouter();
@@ -24,9 +25,12 @@ export default function OnboardingPage() {
             <ArrowLeft className="w-5 h-5" />
             <span>Back</span>
           </Link>
-          <div className="flex items-center gap-2">
-            <span className="text-2xl">💚</span>
-            <span className="font-bold text-xl text-emerald-600">KudEgOwo</span>
+          <div className="flex items-center gap-3">
+            <KudegowoLogo size="sm" variant="color" />
+            <div className="flex flex-col leading-none">
+              <span className="font-bold text-lg text-gray-900">KudEgOwo</span>
+              <span className="text-xs text-gray-500 font-medium">Safe School Monitor</span>
+            </div>
           </div>
           <div className="w-20" /> {/* Spacer */}
         </div>
