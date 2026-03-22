@@ -149,6 +149,29 @@ router.post('/bulk', auth, validators.bulkCreateScheduledPayment, validate, asyn
   }
 });
 
+// Get summary statistics
+router.get('/summary', auth, async (req, res) => {
+  try {
+    const [pendingStats, failedCount, completedCount] = await Promise.all([
+      ScheduledPayment.aggregate([
+        { $match: { parent: req.userId, status: 'pending' } },
+        { $group: { _id: null, count: { $sum: 1 }, total: { $sum: '$amount' } } }
+      ]),
+      ScheduledPayment.countDocuments({ parent: req.userId, status: 'failed' }),
+      ScheduledPayment.countDocuments({ parent: req.userId, status: 'completed' })
+    ]);
+
+    res.json({
+      pendingCount: pendingStats[0]?.count || 0,
+      pendingAmount: pendingStats[0]?.total || 0,
+      failedCount,
+      completedCount
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // List scheduled payments
 router.get('/', auth, validators.listScheduledPayments, validate, async (req, res) => {
   try {
