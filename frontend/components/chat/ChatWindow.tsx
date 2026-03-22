@@ -55,10 +55,13 @@ export default function ChatWindow({ sessionId, onComplete }: ChatWindowProps) {
   const startConversation = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch(`${AI_AGENT_URL}/api/chat/start`, {
+      const response = await fetch(`${AI_AGENT_URL}/chat/message`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ session_id: sessionId }),
+        body: JSON.stringify({ 
+          session_id: sessionId,
+          message: 'Hello' 
+        }),
       });
 
       if (!response.ok) throw new Error('Failed to start conversation');
@@ -125,7 +128,7 @@ First, tell me - are you a **Parent**, **School Admin**, or **Tutor**?`,
     }]);
 
     try {
-      const response = await fetch(`${AI_AGENT_URL}/api/chat/stream`, {
+      const response = await fetch(`${AI_AGENT_URL}/chat/message`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -136,73 +139,35 @@ First, tell me - are you a **Parent**, **School Admin**, or **Tutor**?`,
 
       if (!response.ok) throw new Error('Failed to send message');
 
-      const reader = response.body?.getReader();
-      const decoder = new TextDecoder();
-      let fullContent = '';
-
-      if (reader) {
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-
-          const chunk = decoder.decode(value);
-          const lines = chunk.split('\n');
-
-          for (const line of lines) {
-            if (line.startsWith('data: ')) {
-              try {
-                const data = JSON.parse(line.slice(6));
-                
-                if (data.type === 'token') {
-                  fullContent += data.content;
-                  setMessages(prev => prev.map(msg =>
-                    msg.id === assistantMessageId
-                      ? { ...msg, content: fullContent }
-                      : msg
-                  ));
-                } else if (data.type === 'progress') {
-                  setProgress(data.progress);
-                } else if (data.type === 'done') {
-                  setMessages(prev => prev.map(msg =>
-                    msg.id === assistantMessageId
-                      ? { ...msg, isStreaming: false }
-                      : msg
-                  ));
-                  
-                  if (data.current_node === 'complete') {
-                    onComplete?.();
-                  }
-                }
-              } catch (e) {
-                // Non-JSON line, might be token content
-                if (line.slice(6).trim()) {
-                  fullContent += line.slice(6);
-                  setMessages(prev => prev.map(msg =>
-                    msg.id === assistantMessageId
-                      ? { ...msg, content: fullContent }
-                      : msg
-                  ));
-                }
-              }
-            }
-          }
-        }
-      }
-    } catch (error) {
-      console.error('Send message error:', error);
-      // Fallback response
-      setMessages(prev => prev.map(msg =>
-        msg.id === assistantMessageId
-          ? { 
-              ...msg, 
-              content: "I understand. Let me help you with that. Could you tell me more about what you'd like to do?",
-              isStreaming: false,
-            }
+      const data = await response.json();
+      
+      // Update the assistant message with the response
+      setMessages(prev => prev.map(msg => 
+        msg.id === assistantMessageId 
+          ? { ...msg, content: data.message, isStreaming: false }
           : msg
       ));
-    } finally {
+
+      if (data.progress) {
+        setProgress(data.progress);
+      }
+      
       setIsStreaming(false);
-      inputRef.current?.focus();
+    } catch (error) {
+      console.error('Send message error:', error);
+      setMessages(prev => prev.map(msg => 
+        msg.id === assistantMessageId 
+          ? { ...msg, content: 'Sorry, I encountered an error. Please try again.', isStreaming: false }
+          : msg
+      ));
+      setIsStreaming(false);
+    }
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (input.trim()) {
+      sendMessage(input);
     }
   };
 
@@ -210,34 +175,25 @@ First, tell me - are you a **Parent**, **School Admin**, or **Tutor**?`,
     sendMessage(action.value);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    sendMessage(input);
-  };
-
   return (
-    <div className="flex flex-col h-full bg-white rounded-xl shadow-lg overflow-hidden">
+    <div className="flex flex-col h-full bg-white rounded-lg shadow-lg overflow-hidden">
       {/* Header */}
-      <div className="bg-gradient-to-r from-emerald-600 to-emerald-500 px-6 py-4">
+      <div className="bg-gradient-to-r from-emerald-600 to-emerald-500 text-white p-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
-              <Sparkles className="w-5 h-5 text-white" />
+              <Sparkles className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-white font-semibold">KudEgOwo Assistant</h2>
-              <p className="text-emerald-100 text-sm">AI-powered onboarding</p>
+              <h3 className="font-semibold">KudEgOwo Assistant</h3>
+              <p className="text-sm text-emerald-50">AI-powered onboarding</p>
             </div>
           </div>
-          
-          {/* Progress indicator */}
-          <div className="flex items-center gap-2">
-            <div className="text-emerald-100 text-sm">
-              Step {progress.step}/{progress.total}
-            </div>
-            <div className="w-24 h-2 bg-white/20 rounded-full overflow-hidden">
+          <div className="text-right">
+            <p className="text-xs text-emerald-50">Step {progress.step}/{progress.total}</p>
+            <div className="w-24 h-1.5 bg-white/20 rounded-full mt-1 overflow-hidden">
               <div 
-                className="h-full bg-white transition-all duration-300"
+                className="h-full bg-white rounded-full transition-all duration-300"
                 style={{ width: `${progress.percentage}%` }}
               />
             </div>
@@ -250,32 +206,30 @@ First, tell me - are you a **Parent**, **School Admin**, or **Tutor**?`,
         {messages.map((message) => (
           <div
             key={message.id}
-            className={`flex gap-3 ${message.role === 'user' ? 'flex-row-reverse' : ''}`}
+            className={`flex gap-3 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
           >
-            <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
-              message.role === 'user' 
-                ? 'bg-emerald-100 text-emerald-600' 
-                : 'bg-gray-100 text-gray-600'
-            }`}>
-              {message.role === 'user' ? (
-                <User className="w-4 h-4" />
-              ) : (
-                <Bot className="w-4 h-4" />
+            {message.role === 'assistant' && (
+              <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0">
+                <Bot className="w-4 h-4 text-emerald-600" />
+              </div>
+            )}
+            <div
+              className={`max-w-[80%] rounded-2xl px-4 py-3 ${
+                message.role === 'user'
+                  ? 'bg-emerald-600 text-white'
+                  : 'bg-gray-100 text-gray-900'
+              }`}
+            >
+              <p className="text-sm whitespace-pre-wrap">{message.content}</p>
+              {message.isStreaming && (
+                <Loader2 className="w-4 h-4 animate-spin mt-2 text-gray-400" />
               )}
             </div>
-            
-            <div className={`max-w-[80%] rounded-2xl px-4 py-3 ${
-              message.role === 'user'
-                ? 'bg-emerald-600 text-white'
-                : 'bg-gray-100 text-gray-800'
-            }`}>
-              <div className="whitespace-pre-wrap text-sm leading-relaxed">
-                {message.content}
-                {message.isStreaming && (
-                  <span className="inline-block w-2 h-4 bg-current animate-pulse ml-1" />
-                )}
+            {message.role === 'user' && (
+              <div className="w-8 h-8 rounded-full bg-emerald-600 flex items-center justify-center flex-shrink-0">
+                <User className="w-4 h-4 text-white" />
               </div>
-            </div>
+            )}
           </div>
         ))}
         
