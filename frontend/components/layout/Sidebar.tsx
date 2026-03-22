@@ -38,9 +38,8 @@ export function Sidebar() {
         {/* Sidebar component, swap this element with another sidebar if you like */}
         <div className="flex flex-col h-0 flex-1 border-r border-gray-200 bg-white">
           <div className="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
-            <div className="flex flex-col items-start flex-shrink-0 px-4 mb-6 gap-1">
-                <KudegowoLogo size="md" variant="color" />
-                <div className="text-xs font-medium text-gray-400 tracking-wide pl-1">Safe School Monitor</div>
+            <div className="flex items-center justify-center flex-shrink-0 px-4 mb-6">
+                <KudegowoLogo size="lg" variant="color" />
             </div>
             <nav className="mt-5 flex-1 px-2 bg-white space-y-1">
               {navigation.map((item) => (

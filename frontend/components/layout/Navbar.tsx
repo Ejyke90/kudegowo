@@ -14,11 +14,8 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <Link href="/" className="flex-shrink-0 flex items-center gap-3">
-              <KudegowoLogo size="md" variant="color" />
-              <div className="hidden sm:block">
-                <div className="text-sm font-semibold text-gray-400 tracking-wide">Safe School Monitor</div>
-              </div>
+            <Link href="/" className="flex-shrink-0 flex items-center">
+              <KudegowoLogo size="lg" variant="color" />
             </Link>
           </div>
           
