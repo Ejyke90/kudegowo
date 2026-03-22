@@ -59,60 +59,45 @@ const demoSchools = [
     address: '10 Greensprings Road, Lekki',
     city: 'Lagos',
     state: 'Lagos',
-    schoolType: 'private',
+    schoolType: 'combined',
     contactEmail: 'info@greensprings.demo.com',
     contactPhone: '+2341234567890',
-    bankName: 'First Bank',
-    accountNumber: '1234567890',
-    accountName: 'Greensprings School',
   },
   {
     name: 'Corona Secondary School',
     address: '25 Corona Drive, Agbara',
     city: 'Lagos',
     state: 'Lagos',
-    schoolType: 'private',
+    schoolType: 'secondary',
     contactEmail: 'info@corona.demo.com',
     contactPhone: '+2341234567891',
-    bankName: 'GTBank',
-    accountNumber: '2345678901',
-    accountName: 'Corona Secondary School',
   },
   {
     name: 'Loyola Jesuit College',
     address: '15 Loyola Road, Gwarinpa',
     city: 'Abuja',
     state: 'FCT',
-    schoolType: 'private',
+    schoolType: 'secondary',
     contactEmail: 'info@loyola.demo.com',
     contactPhone: '+2341234567892',
-    bankName: 'Zenith Bank',
-    accountNumber: '3456789012',
-    accountName: 'Loyola Jesuit College',
   },
   {
     name: 'Hillcrest School',
     address: '8 Hillcrest Avenue, GRA',
     city: 'Port Harcourt',
     state: 'Rivers',
-    schoolType: 'private',
+    schoolType: 'primary',
     contactEmail: 'info@hillcrest.demo.com',
     contactPhone: '+2341234567893',
-    bankName: 'Access Bank',
-    accountNumber: '4567890123',
-    accountName: 'Hillcrest School',
   },
   {
     name: 'International School Ibadan',
     address: '20 University Road',
     city: 'Ibadan',
     state: 'Oyo',
-    schoolType: 'private',
+    schoolType: 'combined',
     contactEmail: 'info@isi.demo.com',
     contactPhone: '+2341234567894',
-    bankName: 'UBA',
-    accountNumber: '5678901234',
-    accountName: 'International School Ibadan',
   },
 ];
 
@@ -173,13 +158,12 @@ async function clearDatabase() {
 async function seedUsers() {
   console.log('👤 Seeding demo users...');
   
-  const hashedPassword = await bcrypt.hash(DEMO_PASSWORD, 10);
   const users = [];
   
   for (const userData of demoUsers) {
     const user = await User.create({
       ...userData,
-      password: hashedPassword,
+      password: DEMO_PASSWORD, // Will be hashed by pre-save hook
     });
     users.push(user);
     console.log(`   Created user: ${userData.email}`);
@@ -191,21 +175,16 @@ async function seedUsers() {
 async function seedSchools(users) {
   console.log('🏫 Seeding demo schools...');
   
-  const adminUser = users.find(u => u.role === 'school_admin');
   const parentUsers = users.filter(u => u.role === 'parent');
   const schools = [];
   
   for (let i = 0; i < demoSchools.length; i++) {
     const schoolData = demoSchools[i];
-    const parentId = parentUsers[i % parentUsers.length]._id;
+    const createdBy = parentUsers[i % parentUsers.length]._id;
     
     const school = await SchoolProfile.create({
       ...schoolData,
-      parentId,
-      fees: feeCategories.map(fee => ({
-        ...fee,
-        amount: fee.amount + (i * 10000), // Vary amounts slightly per school
-      })),
+      createdBy,
     });
     schools.push(school);
     console.log(`   Created school: ${schoolData.name}`);
@@ -222,13 +201,15 @@ async function seedChildren(users, schools) {
   
   for (let i = 0; i < childrenData.length; i++) {
     const childData = childrenData[i];
-    const parentId = parentUsers[i % parentUsers.length]._id;
-    const schoolId = schools[i % schools.length]._id;
+    const parent = parentUsers[i % parentUsers.length]._id;
+    const schoolProfile = schools[i % schools.length]._id;
     
     const child = await Child.create({
-      ...childData,
-      parentId,
-      schoolId,
+      firstName: childData.firstName,
+      lastName: childData.lastName,
+      grade: childData.className,
+      parent,
+      schoolProfile,
       dateOfBirth: new Date(childData.dateOfBirth),
     });
     children.push(child);
@@ -243,28 +224,28 @@ async function seedTransactions(children, schools) {
   
   const statuses = ['completed', 'completed', 'completed', 'pending', 'failed'];
   const feeTypes = ['tuition', 'meals', 'transport', 'books'];
+  const amounts = [450000, 35000, 50000, 15000];
   const transactions = [];
   
   // Generate 50+ transactions over the last 6 months
   for (let i = 0; i < 55; i++) {
     const child = children[i % children.length];
-    const school = schools.find(s => s._id.toString() === child.schoolId.toString());
+    const school = schools[i % schools.length];
     const feeType = feeTypes[i % feeTypes.length];
     const status = statuses[i % statuses.length];
+    const amount = amounts[i % amounts.length];
     
     // Random date in last 6 months
     const daysAgo = Math.floor(Math.random() * 180);
     const transactionDate = new Date();
     transactionDate.setDate(transactionDate.getDate() - daysAgo);
     
-    const fee = school.fees.find(f => f.type === feeType) || school.fees[0];
-    
     const payment = await ScheduledPayment.create({
-      parentId: child.parentId,
-      childId: child._id,
-      schoolId: school._id,
+      parent: child.parent,
+      child: child._id,
+      schoolProfile: school._id,
       feeType,
-      amount: fee.amount,
+      amount,
       status,
       dueDate: transactionDate,
       processedAt: status === 'completed' ? transactionDate : null,
@@ -461,7 +442,7 @@ async function seedKudiCoins(children) {
       totalEarned,
       totalSpent: totalEarned - balance,
       transactions: [
-        { type: 'earn', amount: 50, reason: 'Welcome bonus', referenceType: 'bonus' },
+        { type: 'bonus', amount: 50, reason: 'Welcome bonus', referenceType: 'behavior' },
         { type: 'earn', amount: 25, reason: 'Quiz: Saving Basics', referenceType: 'quiz' },
         { type: 'earn', amount: 15, reason: 'Quiz: Smart Spending', referenceType: 'quiz' },
       ],
@@ -602,8 +583,9 @@ async function seed() {
     const users = await seedUsers();
     const schools = await seedSchools(users);
     const children = await seedChildren(users, schools);
-    await seedTransactions(children, schools);
-    await seedScheduledPayments(children, schools);
+    // Skip transactions and scheduled payments for now - model mismatch
+    // await seedTransactions(children, schools);
+    // await seedScheduledPayments(children, schools);
     await seedQuizzes();
     await seedKudiCoins(children);
     await seedMenus(schools);

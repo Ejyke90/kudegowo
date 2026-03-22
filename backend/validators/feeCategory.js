@@ -28,12 +28,12 @@ const createFeeCategory = [
     .optional()
     .isObject().withMessage('Recurrence rule must be an object'),
   body('recurrenceRule.frequency')
-    .if(body('isRecurring').equals('true').or(body('isRecurring').equals(true)))
+    .if(body('isRecurring').equals(true))
     .notEmpty().withMessage('Frequency is required for recurring fees')
     .isIn(['weekly', 'biweekly', 'monthly', 'termly', 'annually'])
     .withMessage('Frequency must be one of: weekly, biweekly, monthly, termly, annually'),
   body('recurrenceRule.startDate')
-    .if(body('isRecurring').equals('true').or(body('isRecurring').equals(true)))
+    .if(body('isRecurring').equals(true))
     .notEmpty().withMessage('Start date is required for recurring fees')
     .isISO8601().withMessage('Start date must be a valid ISO 8601 date'),
   body('recurrenceRule.endDate')

@@ -40,10 +40,10 @@ services:
       dockerfile: Dockerfile
     container_name: kudegowo-backend
     ports:
-      - "5000:5000"
+      - "5001:5001"
     environment:
       - NODE_ENV=development
-      - PORT=5000
+      - PORT=5001
       - MONGODB_URI=mongodb://mongodb:27017/kudegowo
       - REDIS_URL=redis://redis:6379
       - JWT_SECRET=${JWT_SECRET:-kudegowo-demo-secret-key-change-in-production}
@@ -65,7 +65,7 @@ services:
       redis:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:5000/api/health"]
+      test: ["CMD", "curl", "-f", "http://localhost:5001/api/health"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -79,10 +79,10 @@ services:
       dockerfile: Dockerfile
     container_name: kudegowo-frontend
     ports:
-      - "3000:3000"
+      - "3001:3000"
     environment:
       - NODE_ENV=development
-      - NEXT_PUBLIC_API_URL=http://localhost:5000/api
+      - NEXT_PUBLIC_API_URL=http://localhost:5001/api
       - NEXT_PUBLIC_AI_AGENT_URL=http://localhost:8000
       - NEXT_PUBLIC_DEMO_MODE=true
     volumes:
