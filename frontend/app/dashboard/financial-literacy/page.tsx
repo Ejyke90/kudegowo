@@ -98,33 +98,35 @@ export default function FinancialLiteracyPage() {
     try {
       const token = localStorage.getItem('token');
       
-      // Fetch KudiCoins
-      const kudiRes = await fetch(`${API_URL}/kudi-coins/child/${childId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const kudiData = await kudiRes.json();
-      if (kudiData.status) setKudiCoins(kudiData.data);
+      // Fetch all data with timeout and error handling
+      const fetchWithTimeout = async (url: string, timeout = 3000) => {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), timeout);
+        try {
+          const response = await fetch(url, {
+            headers: { Authorization: `Bearer ${token}` },
+            signal: controller.signal,
+          });
+          clearTimeout(timeoutId);
+          return response.ok ? await response.json() : null;
+        } catch (error) {
+          clearTimeout(timeoutId);
+          return null;
+        }
+      };
 
-      // Fetch Savings Goals
-      const goalsRes = await fetch(`${API_URL}/savings-goals/child/${childId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const goalsData = await goalsRes.json();
-      if (goalsData.status) setSavingsGoals(goalsData.data);
+      // Fetch all in parallel with fallbacks
+      const [kudiData, goalsData, achieveData, quizData] = await Promise.all([
+        fetchWithTimeout(`${API_URL}/kudi-coins/child/${childId}`),
+        fetchWithTimeout(`${API_URL}/savings-goals/child/${childId}`),
+        fetchWithTimeout(`${API_URL}/achievements/child/${childId}/recent?limit=5`),
+        fetchWithTimeout(`${API_URL}/quizzes`),
+      ]);
 
-      // Fetch Achievements
-      const achieveRes = await fetch(`${API_URL}/achievements/child/${childId}/recent?limit=5`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const achieveData = await achieveRes.json();
-      if (achieveData.status) setAchievements(achieveData.data);
-
-      // Fetch Quizzes
-      const quizRes = await fetch(`${API_URL}/quizzes`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const quizData = await quizRes.json();
-      if (quizData.status) setQuizzes(quizData.data);
+      if (kudiData?.status) setKudiCoins(kudiData.data);
+      if (goalsData?.status) setSavingsGoals(goalsData.data);
+      if (achieveData?.status) setAchievements(achieveData.data);
+      if (quizData?.status) setQuizzes(quizData.data);
     } catch (error) {
       console.error('Fetch child data error:', error);
     } finally {

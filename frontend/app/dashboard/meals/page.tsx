@@ -98,6 +98,22 @@ export default function MealsPage() {
     setIsLoading(true);
     try {
       const token = localStorage.getItem('token');
+      
+      const fetchWithTimeout = async (url: string, timeout = 3000) => {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), timeout);
+        try {
+          const response = await fetch(url, {
+            headers: { Authorization: `Bearer ${token}` },
+            signal: controller.signal,
+          });
+          clearTimeout(timeoutId);
+          return response.ok ? await response.json() : null;
+        } catch (error) {
+          clearTimeout(timeoutId);
+          return null;
+        }
+      };
       const child = children.find(c => c._id === selectedChild);
       if (!child) return;
 
