@@ -14,8 +14,8 @@ export function Hero() {
                 <div className="flex items-center gap-3">
                   <KudegowoLogo size="lg" variant="color" />
                   <div className="flex flex-col leading-none">
-                    <span className="font-black tracking-tight text-gray-900 text-2xl">Kudegowo</span>
-                    <span className="font-semibold text-kd-blue text-sm mt-0.5">SafeNet</span>
+                    <span className="font-black tracking-tight text-gray-900 text-2xl">KudEgOwo</span>
+                    <span className="font-semibold text-gray-500 text-sm mt-0.5">Safe School Monitor</span>
                   </div>
                 </div>
               </div>
