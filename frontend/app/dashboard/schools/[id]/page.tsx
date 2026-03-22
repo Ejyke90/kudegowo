@@ -194,16 +194,16 @@ export default function SchoolDetailPage({ params }: { params: Promise<{ id: str
               <form onSubmit={handleAddChild} className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <input required placeholder="First Name *" value={childForm.firstName}
                   onChange={(e) => setChildForm({ ...childForm, firstName: e.target.value })}
-                  className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" />
+                  className="border border-gray-300 rounded-md px-3 py-2 text-sm text-gray-900 bg-white placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500" />
                 <input required placeholder="Last Name *" value={childForm.lastName}
                   onChange={(e) => setChildForm({ ...childForm, lastName: e.target.value })}
-                  className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" />
+                  className="border border-gray-300 rounded-md px-3 py-2 text-sm text-gray-900 bg-white placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500" />
                 <input placeholder="Grade (e.g. Year 5)" value={childForm.grade}
                   onChange={(e) => setChildForm({ ...childForm, grade: e.target.value })}
-                  className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" />
+                  className="border border-gray-300 rounded-md px-3 py-2 text-sm text-gray-900 bg-white placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500" />
                 <input placeholder="Student ID (optional)" value={childForm.studentId}
                   onChange={(e) => setChildForm({ ...childForm, studentId: e.target.value })}
-                  className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" />
+                  className="border border-gray-300 rounded-md px-3 py-2 text-sm text-gray-900 bg-white placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500" />
                 <div className="sm:col-span-2 flex justify-end space-x-2">
                   <button type="button" onClick={() => setShowChildForm(false)}
                     className="px-3 py-1.5 text-sm border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">Cancel</button>
