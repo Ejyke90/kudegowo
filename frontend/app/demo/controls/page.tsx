@@ -12,7 +12,13 @@ import {
   Coins,
   UtensilsCrossed,
   LogIn,
-  Loader2
+  Loader2,
+  BookOpen,
+  Award,
+  GraduationCap,
+  Video,
+  FileText,
+  Lightbulb
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -43,7 +49,22 @@ const DEMO_USERS = [
   },
 ];
 
-const JOURNEYS = [
+interface JourneyStep {
+  title: string;
+  description: string;
+  link?: string;
+  icon?: React.ComponentType<{ className?: string }>;
+}
+
+interface Journey {
+  title: string;
+  persona: string;
+  icon: React.ComponentType<{ className?: string }>;
+  color: string;
+  steps: JourneyStep[];
+}
+
+const JOURNEYS: Journey[] = [
   {
     title: 'Parent Journey',
     persona: 'Ada Okonkwo',
@@ -53,6 +74,9 @@ const JOURNEYS = [
       { title: 'Login', description: 'Use ada.okonkwo@demo.com / Demo123!', link: '/login' },
       { title: 'View Dashboard', description: 'See children, payments, and notifications', link: '/dashboard' },
       { title: 'Safe School', description: 'Check today\'s passphrase and attendance', link: '/dashboard/safe-school', icon: Shield },
+      { title: 'Training Modules', description: 'Access safety training materials and modules', link: '/dashboard/safe-school#training', icon: BookOpen },
+      { title: 'Certification', description: 'Track safety certifications and achievements', link: '/dashboard/safe-school#certification', icon: Award },
+      { title: 'Workshops', description: 'Join upcoming safety workshops and events', link: '/dashboard/safe-school#workshops', icon: GraduationCap },
       { title: 'Financial Literacy', description: 'View KudiCoins balance and savings goals', link: '/dashboard/financial-literacy', icon: Coins },
       { title: 'Meal Management', description: 'Pre-order meals for children', link: '/dashboard/meals', icon: UtensilsCrossed },
       { title: 'My Schools', description: 'Manage school profiles and fees', link: '/dashboard/schools' },
@@ -81,6 +105,9 @@ const JOURNEYS = [
       { title: 'Login', description: 'Use admin@greensprings.edu.ng / Demo123!', link: '/login' },
       { title: 'View Dashboard', description: 'See school overview and metrics', link: '/dashboard' },
       { title: 'Safe School Monitor', description: 'View attendance board and emergency alerts', link: '/dashboard/safe-school', icon: Shield },
+      { title: 'Training Materials', description: 'Manage safety training content and resources', link: '/dashboard/safe-school#training', icon: BookOpen },
+      { title: 'Certification Tracking', description: 'Monitor student and staff certifications', link: '/dashboard/safe-school#certification', icon: Award },
+      { title: 'Workshop Management', description: 'Organize and track safety workshops', link: '/dashboard/safe-school#workshops', icon: GraduationCap },
       { title: 'Financial Overview', description: 'Track payments and KudiCoin distribution', link: '/dashboard/financial-literacy', icon: Coins },
       { title: 'Meal Planning', description: 'Manage menu and meal orders', link: '/dashboard/meals', icon: UtensilsCrossed },
       { title: 'School Management', description: 'Manage students and fee categories', link: '/dashboard/schools' },
@@ -101,6 +128,44 @@ export default function DemoControlsPage() {
   const loginAs = async (email: string, password: string, name: string) => {
     setLoading(email);
     try {
+      // For demo mode, we'll set mock user data directly
+      // This allows the demo to work without a running backend
+      const demoUsers: Record<string, { _id: string; email: string; firstName: string; lastName: string; role: string }> = {
+        'ada.okonkwo@demo.com': {
+          _id: 'demo-user-ada',
+          email: 'ada.okonkwo@demo.com',
+          firstName: 'Ada',
+          lastName: 'Okonkwo',
+          role: 'parent',
+        },
+        'chidi.eze@demo.com': {
+          _id: 'demo-user-chidi',
+          email: 'chidi.eze@demo.com',
+          firstName: 'Chidi',
+          lastName: 'Eze',
+          role: 'parent',
+        },
+        'admin@greensprings.edu.ng': {
+          _id: 'demo-user-admin',
+          email: 'admin@greensprings.edu.ng',
+          firstName: 'School',
+          lastName: 'Administrator',
+          role: 'admin',
+        },
+      };
+
+      const demoUser = demoUsers[email];
+      if (demoUser) {
+        // Set demo token and user directly
+        localStorage.setItem('token', 'demo-token-' + demoUser._id);
+        localStorage.setItem('user', JSON.stringify(demoUser));
+        
+        showNotification('success', `Logged in as ${name}`);
+        setTimeout(() => router.push('/dashboard'), 1000);
+        return;
+      }
+
+      // Fallback to real API if not a demo user
       const response = await fetch('http://localhost:5001/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -252,6 +317,10 @@ export default function DemoControlsPage() {
                 <li>• Real-time attendance tracking</li>
                 <li>• Emergency alerts</li>
                 <li>• Parent notifications</li>
+                <li>• Training materials & modules</li>
+                <li>• Certification tracking</li>
+                <li>• Safety workshops</li>
+                <li>• Resource library</li>
               </ul>
             </div>
             <div>

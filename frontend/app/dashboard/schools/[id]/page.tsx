@@ -11,6 +11,7 @@ import {
   type SchoolProfile, type Child, type ScheduledPayment,
   PaymentStatus,
 } from '@/lib/api';
+import { isDemoMode, getDemoSchools, DEMO_CHILDREN, DEMO_SCHEDULED_PAYMENTS } from '@/lib/demo-data';
 
 const FEE_TYPE_COLORS: Record<string, string> = {
   tuition: 'bg-blue-100 text-blue-700',
@@ -42,6 +43,25 @@ export default function SchoolDetailPage({ params }: { params: Promise<{ id: str
   }, [id]);
 
   async function loadData() {
+    if (isDemoMode()) {
+      setLoading(true);
+      // Use demo data
+      const schools = getDemoSchools();
+      const school = schools.find(s => s._id === id);
+      const children = DEMO_CHILDREN.filter(c => c.schoolId === id);
+      const payments = DEMO_SCHEDULED_PAYMENTS.filter(p => p.schoolProfile._id === id);
+      
+      if (school) {
+        setSchool(school);
+        setChildren(children);
+        setPayments(payments);
+      } else {
+        setError('School not found');
+      }
+      setLoading(false);
+      return;
+    }
+
     try {
       setLoading(true);
       const [schoolData, childrenData, paymentsData] = await Promise.all([
@@ -62,6 +82,12 @@ export default function SchoolDetailPage({ params }: { params: Promise<{ id: str
   async function handleAddChild(e: React.FormEvent) {
     e.preventDefault();
     setChildFormError(null);
+    
+    if (isDemoMode()) {
+      alert('This feature is available in the full version');
+      return;
+    }
+    
     try {
       await childApi.create({ ...childForm, schoolProfile: id });
       setShowChildForm(false);
@@ -74,6 +100,12 @@ export default function SchoolDetailPage({ params }: { params: Promise<{ id: str
 
   async function handleDeactivateChild(childId: string) {
     if (!confirm('Deactivate this child? Pending scheduled payments will be cancelled.')) return;
+    
+    if (isDemoMode()) {
+      alert('This feature is available in the full version');
+      return;
+    }
+    
     try {
       await childApi.deactivate(childId);
       loadData();
@@ -84,6 +116,12 @@ export default function SchoolDetailPage({ params }: { params: Promise<{ id: str
 
   async function handleCancelPayment(paymentId: string) {
     if (!confirm('Cancel this scheduled payment?')) return;
+    
+    if (isDemoMode()) {
+      alert('This feature is available in the full version');
+      return;
+    }
+    
     try {
       await scheduledPaymentApi.cancel(paymentId);
       loadData();

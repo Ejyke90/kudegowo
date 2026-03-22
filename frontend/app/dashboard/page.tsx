@@ -11,12 +11,26 @@ import {
   PaymentStatus,
   type SchoolProfile, type ScheduledPayment, type ScheduledPaymentSummary
 } from '@/lib/api';
+import { 
+  isDemoMode, 
+  getDemoSchools, 
+  getDemoPayments, 
+  DEMO_PAYMENT_SUMMARY, 
+} from '@/lib/demo-data';
+import { getAuthUser } from '@/lib/auth';
 
 export default function DashboardPage() {
   const [schools, setSchools] = useState<SchoolProfile[]>([]);
   const [pendingPayments, setPendingPayments] = useState<ScheduledPayment[]>([]);
   const [paymentSummary, setPaymentSummary] = useState<ScheduledPaymentSummary | null>(null);
   const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<any>(null);
+
+  useEffect(() => {
+    setUser(getAuthUser());
+  }, []);
+
+  const isSchoolAdmin = user?.role === 'admin' || user?.role === 'school_admin';
 
   useEffect(() => {
     loadDashboardData();
@@ -25,6 +39,18 @@ export default function DashboardPage() {
   async function loadDashboardData() {
     try {
       setLoading(true);
+      
+      // Use demo data if in demo mode
+      if (isDemoMode()) {
+        const demoSchools = getDemoSchools() as unknown as SchoolProfile[];
+        const demoPayments = getDemoPayments().filter(p => p.status === PaymentStatus.PENDING) as unknown as ScheduledPayment[];
+        setSchools(demoSchools);
+        setPendingPayments(demoPayments);
+        setPaymentSummary(DEMO_PAYMENT_SUMMARY);
+        setLoading(false);
+        return;
+      }
+      
       const [schoolsData, paymentsData, summaryData] = await Promise.all([
         schoolProfileApi.list({ limit: 5 }).catch(() => ({ schoolProfiles: [] })),
         scheduledPaymentApi.list({ status: PaymentStatus.PENDING, limit: 10 }).catch(() => ({ scheduledPayments: [], pagination: { page: 1, limit: 10, total: 0, pages: 0 } })),
@@ -151,31 +177,32 @@ export default function DashboardPage() {
         </div>
       )}
 
-      {/* My Schools Quick Summary */}
-      <div className="mt-8">
-        <div className="flex items-center justify-between">
-          <h2 className="text-lg leading-6 font-medium text-gray-900">My Schools</h2>
-          <Link href="/dashboard/schools" className="text-sm font-medium text-blue-600 hover:text-blue-500 flex items-center">
-            View all <ChevronRight className="h-4 w-4 ml-0.5" />
-          </Link>
-        </div>
+      {/* My Schools Quick Summary - Only for parents */}
+      {!isSchoolAdmin && (
+        <div className="mt-8">
+          <div className="flex items-center justify-between">
+            <h2 className="text-lg leading-6 font-medium text-gray-900">My Schools</h2>
+            <Link href="/dashboard/schools" className="text-sm font-medium text-blue-600 hover:text-blue-500 flex items-center">
+              View all <ChevronRight className="h-4 w-4 ml-0.5" />
+            </Link>
+          </div>
 
-        {loading ? (
-          <div className="mt-4 text-center py-8 text-gray-500 text-sm">Loading...</div>
-        ) : schools.length === 0 ? (
-          <div className="mt-4 text-center py-10 bg-white rounded-lg shadow">
-            <Building2 className="mx-auto h-12 w-12 text-gray-400" />
-            <h3 className="mt-2 text-sm font-medium text-gray-900">No schools yet</h3>
-            <p className="mt-1 text-sm text-gray-500">
-              Add your first school to start managing fees and payments.
-            </p>
-            <div className="mt-4">
-              <Link
-                href="/dashboard/schools"
-                className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
-              >
-                <Plus className="h-4 w-4 mr-2" />
-                Add Your First School
+          {loading ? (
+            <div className="mt-4 text-center py-8 text-gray-500 text-sm">Loading...</div>
+          ) : schools.length === 0 ? (
+            <div className="mt-4 text-center py-10 bg-white rounded-lg shadow">
+              <Building2 className="mx-auto h-12 w-12 text-gray-400" />
+              <h3 className="mt-2 text-sm font-medium text-gray-900">No schools yet</h3>
+              <p className="mt-1 text-sm text-gray-500">
+                Add your first school to start managing fees and payments.
+              </p>
+              <div className="mt-4">
+                <Link
+                  href="/dashboard/schools"
+                  className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
+                >
+                  <Plus className="h-4 w-4 mr-2" />
+                  Add Your First School
               </Link>
             </div>
           </div>
@@ -207,7 +234,8 @@ export default function DashboardPage() {
             ))}
           </div>
         )}
-      </div>
+        </div>
+      )}
 
       {/* Pending Payments Table */}
       <div className="mt-8">

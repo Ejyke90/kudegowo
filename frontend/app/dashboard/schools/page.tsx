@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Building2, Plus, Search, ChevronRight, Users, BookOpen, AlertCircle } from 'lucide-react';
 import { schoolProfileApi, SchoolType, type SchoolProfile } from '@/lib/api';
+import { isDemoMode, getDemoSchools } from '@/lib/demo-data';
+import { getAuthUser } from '@/lib/auth';
 
 const SCHOOL_TYPE_LABELS: Record<string, string> = {
   primary: 'Primary',
@@ -25,6 +27,13 @@ export default function SchoolsPage() {
   const [error, setError] = useState<string | null>(null);
   const [search, setSearch] = useState('');
   const [showCreateForm, setShowCreateForm] = useState(false);
+  const [user, setUser] = useState<any>(null);
+
+  useEffect(() => {
+    setUser(getAuthUser());
+  }, []);
+
+  const isSchoolAdmin = user?.role === 'admin' || user?.role === 'school_admin';
 
   // Form state
   const [formData, setFormData] = useState({
@@ -46,6 +55,20 @@ export default function SchoolsPage() {
   async function loadSchools() {
     try {
       setLoading(true);
+      
+      // Use demo data if in demo mode
+      if (isDemoMode()) {
+        let demoSchools = getDemoSchools() as unknown as SchoolProfile[];
+        if (search) {
+          demoSchools = demoSchools.filter(s => 
+            s.name.toLowerCase().includes(search.toLowerCase())
+          );
+        }
+        setSchools(demoSchools);
+        setLoading(false);
+        return;
+      }
+      
       const data = await schoolProfileApi.list({ search: search || undefined });
       setSchools(data.schoolProfiles);
     } catch (err) {
@@ -75,9 +98,14 @@ export default function SchoolsPage() {
     <div>
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold text-gray-900">My Schools</h1>
+          <h1 className="text-2xl font-semibold text-gray-900">
+            {isSchoolAdmin ? 'School Management' : 'My Schools'}
+          </h1>
           <p className="mt-1 text-sm text-gray-500">
-            Manage school profiles for your children&apos;s schools
+            {isSchoolAdmin 
+              ? 'Manage your school profile and settings'
+              : 'Manage school profiles for your children\'s schools'
+            }
           </p>
         </div>
         <button

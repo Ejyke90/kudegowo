@@ -6,6 +6,7 @@ import {
   SkipForward, Ban, RefreshCw
 } from 'lucide-react';
 import { scheduledPaymentApi, PaymentStatus, type ScheduledPayment, type ScheduledPaymentSummary } from '@/lib/api';
+import { isDemoMode, getDemoPayments, DEMO_PAYMENT_SUMMARY } from '@/lib/demo-data';
 
 const STATUS_CONFIG: Record<string, { label: string; color: string; icon: React.ElementType }> = {
   pending: { label: 'Pending', color: 'bg-yellow-100 text-yellow-700', icon: Clock },
@@ -31,6 +32,19 @@ export default function ScheduledPaymentsPage() {
   async function loadPayments() {
     try {
       setLoading(true);
+      
+      // Use demo data if in demo mode
+      if (isDemoMode()) {
+        let demoPayments = getDemoPayments() as unknown as ScheduledPayment[];
+        if (statusFilter) {
+          demoPayments = demoPayments.filter(p => p.status === statusFilter);
+        }
+        setPayments(demoPayments);
+        setSummary(DEMO_PAYMENT_SUMMARY);
+        setLoading(false);
+        return;
+      }
+      
       const [data, summaryData] = await Promise.all([
         scheduledPaymentApi.list({
           status: (statusFilter as PaymentStatus) || undefined,

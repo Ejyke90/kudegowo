@@ -12,6 +12,14 @@ import {
   Plus,
   RefreshCw
 } from 'lucide-react';
+import {
+  isDemoMode,
+  getDemoChildren,
+  DEMO_KUDICOINS,
+  DEMO_SAVINGS_GOALS,
+  DEMO_ACHIEVEMENTS,
+  DEMO_QUIZZES,
+} from '@/lib/demo-data';
 
 interface Child {
   _id: string;
@@ -75,6 +83,20 @@ export default function FinancialLiteracyPage() {
   }, [selectedChild]);
 
   const fetchChildren = async () => {
+    // Use demo data if in demo mode
+    if (isDemoMode()) {
+      const demoChildren = getDemoChildren().map(c => ({
+        _id: c._id,
+        firstName: c.firstName,
+        lastName: c.lastName,
+      }));
+      setChildren(demoChildren);
+      if (demoChildren.length > 0) {
+        setSelectedChild(demoChildren[0]._id);
+      }
+      return;
+    }
+    
     try {
       const token = localStorage.getItem('token');
       const res = await fetch(`${API_URL}/children`, {
@@ -95,6 +117,17 @@ export default function FinancialLiteracyPage() {
 
   const fetchChildData = async (childId: string) => {
     setIsLoading(true);
+    
+    // Use demo data if in demo mode
+    if (isDemoMode()) {
+      setKudiCoins(DEMO_KUDICOINS[childId] || { balance: 0, totalEarned: 0, totalSpent: 0 });
+      setSavingsGoals(DEMO_SAVINGS_GOALS[childId] || []);
+      setAchievements(DEMO_ACHIEVEMENTS[childId] || []);
+      setQuizzes(DEMO_QUIZZES);
+      setIsLoading(false);
+      return;
+    }
+    
     try {
       const token = localStorage.getItem('token');
       

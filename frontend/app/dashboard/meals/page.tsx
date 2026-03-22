@@ -13,6 +13,12 @@ import {
   ChevronLeft,
   ChevronRight
 } from 'lucide-react';
+import {
+  isDemoMode,
+  getDemoChildren,
+  DEMO_WEEKLY_MENU,
+  DEMO_MEAL_ORDERS,
+} from '@/lib/demo-data';
 
 interface Child {
   _id: string;
@@ -76,6 +82,21 @@ export default function MealsPage() {
   }, [selectedChild]);
 
   const fetchChildren = async () => {
+    // Use demo data if in demo mode
+    if (isDemoMode()) {
+      const demoChildren = getDemoChildren().map(c => ({
+        _id: c._id,
+        firstName: c.firstName,
+        lastName: c.lastName,
+        schoolId: c.schoolId,
+      }));
+      setChildren(demoChildren);
+      if (demoChildren.length > 0) {
+        setSelectedChild(demoChildren[0]._id);
+      }
+      return;
+    }
+    
     try {
       const token = localStorage.getItem('token');
       const res = await fetch(`${API_URL}/children`, {
@@ -96,24 +117,17 @@ export default function MealsPage() {
 
   const fetchMenu = async () => {
     setIsLoading(true);
+    
+    // Use demo data if in demo mode
+    if (isDemoMode()) {
+      setMenu(DEMO_WEEKLY_MENU);
+      setIsLoading(false);
+      return;
+    }
+    
     try {
       const token = localStorage.getItem('token');
       
-      const fetchWithTimeout = async (url: string, timeout = 3000) => {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), timeout);
-        try {
-          const response = await fetch(url, {
-            headers: { Authorization: `Bearer ${token}` },
-            signal: controller.signal,
-          });
-          clearTimeout(timeoutId);
-          return response.ok ? await response.json() : null;
-        } catch (error) {
-          clearTimeout(timeoutId);
-          return null;
-        }
-      };
       const child = children.find(c => c._id === selectedChild);
       if (!child) return;
 
@@ -133,6 +147,12 @@ export default function MealsPage() {
   };
 
   const fetchOrders = async () => {
+    // Use demo data if in demo mode
+    if (isDemoMode() && selectedChild) {
+      setOrders(DEMO_MEAL_ORDERS[selectedChild] || []);
+      return;
+    }
+    
     try {
       const token = localStorage.getItem('token');
       const res = await fetch(`${API_URL}/meal-orders/child/${selectedChild}?limit=10`, {

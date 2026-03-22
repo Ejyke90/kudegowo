@@ -6,18 +6,35 @@ import { Home, CreditCard, History, Users, User, LogOut, Building2, CalendarCloc
 import { KudegowoLogo } from '@/components/ui/KudegowoLogo';
 import { getAuthUser, logout } from '@/lib/auth';
 
-const navigation = [
-  { name: 'Overview', href: '/dashboard', icon: Home },
-  { name: 'My Schools', href: '/dashboard/schools', icon: Building2 },
-  { name: 'Scheduled Payments', href: '/dashboard/scheduled-payments', icon: CalendarClock },
-  { name: 'Safe School', href: '/dashboard/safe-school', icon: Shield },
-  { name: 'Financial Literacy', href: '/dashboard/financial-literacy', icon: Coins },
-  { name: 'Meals', href: '/dashboard/meals', icon: UtensilsCrossed },
-  { name: 'Payment Items', href: '/dashboard/items', icon: CreditCard },
-  { name: 'Transaction History', href: '/dashboard/history', icon: History },
-  { name: 'My Children', href: '/dashboard/children', icon: Users },
-  { name: 'Profile', href: '/dashboard/profile', icon: User },
-];
+const getNavigationForRole = (role: string) => {
+  const baseNavigation = [
+    { name: 'Overview', href: '/dashboard', icon: Home },
+    { name: 'Scheduled Payments', href: '/dashboard/scheduled-payments', icon: CalendarClock },
+    { name: 'Safe School', href: '/dashboard/safe-school', icon: Shield },
+    { name: 'Financial Literacy', href: '/dashboard/financial-literacy', icon: Coins },
+    { name: 'Meals', href: '/dashboard/meals', icon: UtensilsCrossed },
+    { name: 'Payment Items', href: '/dashboard/items', icon: CreditCard },
+    { name: 'Transaction History', href: '/dashboard/history', icon: History },
+    { name: 'Profile', href: '/dashboard/profile', icon: User },
+  ];
+
+  if (role === 'admin' || role === 'school_admin') {
+    return [
+      ...baseNavigation.slice(0, 2), // Overview, Scheduled Payments
+      ...baseNavigation.slice(2, 6), // Safe School, Financial Literacy, Meals, Payment Items
+      { name: 'My Students', href: '/dashboard/children', icon: Users },
+      ...baseNavigation.slice(6), // Transaction History, Profile
+    ];
+  } else {
+    return [
+      ...baseNavigation.slice(0, 1), // Overview
+      { name: 'My Schools', href: '/dashboard/schools', icon: Building2 },
+      ...baseNavigation.slice(1, 6), // Scheduled Payments, Safe School, Financial Literacy, Meals, Payment Items
+      { name: 'My Children', href: '/dashboard/children', icon: Users },
+      ...baseNavigation.slice(6), // Transaction History, Profile
+    ];
+  }
+};
 
 export function Sidebar() {
   const [user, setUser] = useState<any>(null);
@@ -25,6 +42,8 @@ export function Sidebar() {
   useEffect(() => {
     setUser(getAuthUser());
   }, []);
+
+  const navigation = getNavigationForRole(user?.role || 'parent');
 
   const handleLogout = () => {
     if (confirm('Are you sure you want to sign out?')) {
