@@ -25,7 +25,7 @@ export function KudegowoLogo({ size = 'md', variant = 'color', className = '' }:
 
   return (
     <Image
-      src="/images/kudegowo-logo.png"
+      src="/images/version_2.png"
       alt="KudEgOwo Logo"
       width={px}
       height={px}
