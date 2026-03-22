@@ -335,14 +335,43 @@ export default function SafeSchoolPage() {
         <div className="bg-white rounded-xl shadow-sm border p-12 text-center">
           <Shield className="w-16 h-16 mx-auto mb-4 text-gray-300" />
           <h3 className="text-lg font-semibold text-gray-900 mb-2">No Children Added</h3>
-          <p className="text-gray-600 mb-4">
-            Add your children to start using Safe School features
+          <p className="text-gray-600 mb-6">
+            To use Safe School features, you need to:
           </p>
+          <div className="max-w-md mx-auto text-left space-y-3 mb-6">
+            <div className="flex items-start gap-3">
+              <div className="w-6 h-6 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                <span className="text-emerald-600 text-sm font-bold">1</span>
+              </div>
+              <div>
+                <p className="font-medium text-gray-900">Create or select a school</p>
+                <p className="text-sm text-gray-600">Go to My Schools and add your child's school</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <div className="w-6 h-6 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                <span className="text-emerald-600 text-sm font-bold">2</span>
+              </div>
+              <div>
+                <p className="font-medium text-gray-900">Add your child</p>
+                <p className="text-sm text-gray-600">Click on the school and use "Add Child" button</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <div className="w-6 h-6 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                <span className="text-emerald-600 text-sm font-bold">3</span>
+              </div>
+              <div>
+                <p className="font-medium text-gray-900">Return here</p>
+                <p className="text-sm text-gray-600">Safe School features will be available</p>
+              </div>
+            </div>
+          </div>
           <a
             href="/dashboard/schools"
-            className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 font-medium"
           >
-            Add Child
+            Go to My Schools
           </a>
         </div>
       )}
