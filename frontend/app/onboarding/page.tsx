@@ -28,7 +28,7 @@ export default function OnboardingPage() {
           <div className="flex items-center gap-3">
             <KudegowoLogo size="sm" variant="color" />
             <div className="flex flex-col leading-none">
-              <span className="font-bold text-lg text-gray-900">KudEgOwo</span>
+              <span className="font-bold text-lg bg-gradient-to-r from-purple-600 via-blue-500 to-green-500 bg-clip-text text-transparent">KudEgOwo</span>
               <span className="text-xs text-gray-500 font-medium">Safe School Monitor</span>
             </div>
           </div>

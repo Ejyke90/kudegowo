@@ -17,7 +17,7 @@ export function Navbar() {
             <Link href="/" className="flex-shrink-0 flex items-center gap-3">
               <KudegowoLogo size="md" variant="color" />
               <div className="flex flex-col">
-                <span className="font-bold text-xl text-gray-900">KudEgOwo</span>
+                <span className="font-bold text-xl bg-gradient-to-r from-purple-600 via-blue-500 to-green-500 bg-clip-text text-transparent">KudEgOwo</span>
                 <span className="text-xs text-gray-500 font-medium">Safe School Monitor</span>
               </div>
             </Link>

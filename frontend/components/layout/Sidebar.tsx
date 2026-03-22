@@ -41,7 +41,7 @@ export function Sidebar() {
             <div className="flex flex-col items-center flex-shrink-0 px-4 mb-6 gap-1">
                 <KudegowoLogo size="md" variant="color" />
                 <div className="text-center">
-                  <div className="font-bold text-base text-gray-900">KudEgOwo</div>
+                  <div className="font-bold text-base bg-gradient-to-r from-purple-600 via-blue-500 to-green-500 bg-clip-text text-transparent">KudEgOwo</div>
                   <div className="text-xs text-gray-500 font-medium">Safe School Monitor</div>
                 </div>
             </div>
