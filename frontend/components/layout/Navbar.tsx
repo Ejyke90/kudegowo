@@ -15,10 +15,7 @@ export function Navbar() {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link href="/" className="flex-shrink-0 flex items-center">
-              <div className="flex items-center gap-2.5">
-                <KudegowoLogo size="md" variant="color" />
-                <span className="font-black tracking-tight text-gray-900 text-xl">Kudegowo</span>
-              </div>
+              <KudegowoLogo size="lg" variant="color" />
             </Link>
           </div>
           

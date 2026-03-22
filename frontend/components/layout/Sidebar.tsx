@@ -38,9 +38,8 @@ export function Sidebar() {
         {/* Sidebar component, swap this element with another sidebar if you like */}
         <div className="flex flex-col h-0 flex-1 border-r border-gray-200 bg-white">
           <div className="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
-            <div className="flex items-center flex-shrink-0 px-4 mb-6 gap-2.5">
-                <KudegowoLogo size="sm" variant="color" />
-                <span className="text-xl font-bold text-primary">Kudegowo</span>
+            <div className="flex items-center flex-shrink-0 px-4 mb-6">
+                <KudegowoLogo size="lg" variant="color" />
             </div>
             <nav className="mt-5 flex-1 px-2 bg-white space-y-1">
               {navigation.map((item) => (
