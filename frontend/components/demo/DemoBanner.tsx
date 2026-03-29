@@ -1,28 +1,54 @@
 'use client';
 
-import { useState } from 'react';
-import { AlertTriangle, X, Settings, RotateCcw, Users } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { AlertTriangle, X, Settings, RotateCcw, Users, Building2 } from 'lucide-react';
 import Link from 'next/link';
+import { getDemoSchoolContext, type DemoSchoolContext } from '@/lib/demo-data';
 
 interface DemoBannerProps {
   onReset?: () => void;
 }
 
+const SCHOOL_NAMES: Record<DemoSchoolContext, string> = {
+  default: 'Chrisland Schools', // Default to Chrisland
+  chrisland: 'Chrisland Schools',
+  riverside: 'Riverside Schools',
+};
+
+const SCHOOL_COLORS: Record<DemoSchoolContext, string> = {
+  default: 'bg-blue-500 text-white', // Default to Chrisland color
+  chrisland: 'bg-blue-500 text-white',
+  riverside: 'bg-cyan-500 text-white',
+};
+
 export default function DemoBanner({ onReset }: DemoBannerProps) {
   const [isVisible, setIsVisible] = useState(true);
   const [showCredentials, setShowCredentials] = useState(false);
+  const [schoolContext, setSchoolContext] = useState<DemoSchoolContext>('default');
+
+  useEffect(() => {
+    setSchoolContext(getDemoSchoolContext());
+  }, []);
 
   if (!isVisible) return null;
 
+  const bannerColor = SCHOOL_COLORS[schoolContext];
+  const schoolName = SCHOOL_NAMES[schoolContext];
+
   return (
     <>
-      <div className="bg-amber-500 text-amber-950">
+      <div className={bannerColor}>
         <div className="max-w-7xl mx-auto px-4 py-2 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <AlertTriangle className="w-4 h-4" />
             <span className="text-sm font-medium">
-              Demo Mode - Data will reset periodically
+              Demo Mode - {schoolName}
             </span>
+            {schoolContext !== 'default' && (
+              <span className="ml-2 px-2 py-0.5 bg-white/20 rounded text-xs">
+                Beta Tester
+              </span>
+            )}
           </div>
           
           <div className="flex items-center gap-3">
@@ -52,7 +78,7 @@ export default function DemoBanner({ onReset }: DemoBannerProps) {
             
             <button
               onClick={() => setIsVisible(false)}
-              className="p-1 hover:bg-amber-600 rounded"
+              className="p-1 hover:opacity-80 rounded"
             >
               <X className="w-4 h-4" />
             </button>
@@ -63,9 +89,9 @@ export default function DemoBanner({ onReset }: DemoBannerProps) {
       {/* Credentials Modal */}
       {showCredentials && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-xl shadow-xl max-w-md w-full mx-4">
+          <div className="bg-white rounded-xl shadow-xl max-w-lg w-full mx-4">
             <div className="px-6 py-4 border-b flex items-center justify-between">
-              <h2 className="text-lg font-semibold">Demo Credentials</h2>
+              <h2 className="text-lg font-semibold">Demo Credentials - {schoolName}</h2>
               <button
                 onClick={() => setShowCredentials(false)}
                 className="p-1 hover:bg-gray-100 rounded"
@@ -76,26 +102,22 @@ export default function DemoBanner({ onReset }: DemoBannerProps) {
             
             <div className="p-6 space-y-4">
               <div className="space-y-3">
-                <CredentialRow
-                  role="Parent 1"
-                  email="ada.okonkwo@demo.com"
-                  password="Demo123!"
-                />
-                <CredentialRow
-                  role="Parent 2"
-                  email="chidi.eze@demo.com"
-                  password="Demo123!"
-                />
-                <CredentialRow
-                  role="School Admin"
-                  email="admin@greensprings.demo.com"
-                  password="Demo123!"
-                />
-                <CredentialRow
-                  role="Tutor"
-                  email="tutor@demo.com"
-                  password="Demo123!"
-                />
+                {(schoolContext === 'default' || schoolContext === 'chrisland') && (
+                  <>
+                    <CredentialRow role="Parent (Amaka)" email="amaka.obi@chrisland.demo.com" password="Demo123!" />
+                    <CredentialRow role="Parent (Tunde)" email="tunde.adeyemi@chrisland.demo.com" password="Demo123!" />
+                    <CredentialRow role="Parent (Funke)" email="funke.williams@chrisland.demo.com" password="Demo123!" />
+                    <CredentialRow role="School Admin" email="admin@chrisland.demo.com" password="Demo123!" />
+                  </>
+                )}
+                {schoolContext === 'riverside' && (
+                  <>
+                    <CredentialRow role="Parent (Bola)" email="bola.johnson@riverside.demo.com" password="Demo123!" />
+                    <CredentialRow role="Parent (Kemi)" email="kemi.adekunle@riverside.demo.com" password="Demo123!" />
+                    <CredentialRow role="Parent (Segun)" email="segun.bakare@riverside.demo.com" password="Demo123!" />
+                    <CredentialRow role="School Admin" email="admin@riverside.demo.com" password="Demo123!" />
+                  </>
+                )}
               </div>
 
               <div className="pt-4 border-t">

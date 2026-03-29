@@ -4,7 +4,9 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import {
   AlertCircle, Building2, CalendarClock, Users,
-  ChevronRight, Plus, AlertTriangle, Clock
+  ChevronRight, Plus, AlertTriangle, Clock,
+  Shield, Coins, UtensilsCrossed, CreditCard,
+  TrendingUp, Bell, Sparkles, ArrowUpRight
 } from 'lucide-react';
 import {
   schoolProfileApi, scheduledPaymentApi,
@@ -18,6 +20,42 @@ import {
   DEMO_PAYMENT_SUMMARY, 
 } from '@/lib/demo-data';
 import { getAuthUser } from '@/lib/auth';
+
+// Quick action cards for the dashboard
+const quickActions = [
+  {
+    title: 'Safe School',
+    description: 'Check passphrases & attendance',
+    icon: Shield,
+    href: '/dashboard/safe-school',
+    color: 'from-emerald-500 to-teal-600',
+    bgColor: 'bg-emerald-50',
+  },
+  {
+    title: 'Payments',
+    description: 'View scheduled payments',
+    icon: CreditCard,
+    href: '/dashboard/scheduled-payments',
+    color: 'from-blue-500 to-indigo-600',
+    bgColor: 'bg-blue-50',
+  },
+  {
+    title: 'Financial Literacy',
+    description: 'KudiCoins & savings goals',
+    icon: Coins,
+    href: '/dashboard/financial-literacy',
+    color: 'from-amber-500 to-orange-600',
+    bgColor: 'bg-amber-50',
+  },
+  {
+    title: 'Meals',
+    description: 'Pre-order school meals',
+    icon: UtensilsCrossed,
+    href: '/dashboard/meals',
+    color: 'from-rose-500 to-pink-600',
+    bgColor: 'bg-rose-50',
+  },
+];
 
 export default function DashboardPage() {
   const [schools, setSchools] = useState<SchoolProfile[]>([]);
@@ -81,52 +119,71 @@ export default function DashboardPage() {
   }
 
   return (
-    <div>
-      <h1 className="text-2xl font-semibold text-gray-900">Dashboard</h1>
+    <div className="space-y-8">
+      {/* Welcome Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900">
+            Welcome back{user?.firstName ? `, ${user.firstName}` : ''}
+          </h1>
+          <p className="text-gray-600 mt-1">Here's what's happening with your children's schools</p>
+        </div>
+        <div className="flex items-center gap-3">
+          <button className="p-2 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors">
+            <Bell className="w-5 h-5 text-gray-600" />
+          </button>
+          <Link
+            href="/dashboard/scheduled-payments"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-medium hover:shadow-lg transition-all"
+          >
+            <Plus className="w-4 h-4" />
+            New Payment
+          </Link>
+        </div>
+      </div>
 
       {/* Overdue Alerts Banner */}
       {overduePayments.length > 0 && (
-        <div className="mt-4 rounded-md bg-red-50 p-4 border border-red-200">
-          <div className="flex">
-            <div className="flex-shrink-0">
-              <AlertTriangle className="h-5 w-5 text-red-500" aria-hidden="true" />
+        <div className="rounded-2xl bg-gradient-to-r from-red-500 to-rose-600 p-6 text-white shadow-lg">
+          <div className="flex items-start gap-4">
+            <div className="p-3 bg-white/20 rounded-xl">
+              <AlertTriangle className="h-6 w-6" />
             </div>
-            <div className="ml-3">
-              <h3 className="text-sm font-medium text-red-800">
+            <div className="flex-1">
+              <h3 className="text-lg font-semibold">
                 {overduePayments.length} Overdue Payment{overduePayments.length > 1 ? 's' : ''}
               </h3>
-              <div className="mt-2 text-sm text-red-700 space-y-1">
+              <div className="mt-2 space-y-1 text-red-100">
                 {overduePayments.slice(0, 3).map((payment) => (
                   <p key={payment._id}>
                     {payment.feeType} for {getChildName(payment)} — ₦{payment.amount.toLocaleString()}
                   </p>
                 ))}
                 {overduePayments.length > 3 && (
-                  <p className="font-medium">
-                    + {overduePayments.length - 3} more overdue items
-                  </p>
+                  <p className="font-medium">+ {overduePayments.length - 3} more overdue items</p>
                 )}
               </div>
-              <div className="mt-3">
-                <Link href="/dashboard/scheduled-payments" className="text-sm font-medium text-red-800 hover:text-red-600 underline">
-                  View all scheduled payments →
-                </Link>
-              </div>
+              <Link 
+                href="/dashboard/scheduled-payments" 
+                className="inline-flex items-center gap-1 mt-4 px-4 py-2 bg-white text-red-600 rounded-lg font-medium hover:bg-red-50 transition-colors"
+              >
+                Pay Now <ArrowUpRight className="w-4 h-4" />
+              </Link>
             </div>
           </div>
         </div>
       )}
 
       {/* Upcoming Due Alerts */}
-      {upcomingPayments.length > 0 && (
-        <div className="mt-4 rounded-md bg-yellow-50 p-4 border border-yellow-200">
-          <div className="flex">
-            <div className="flex-shrink-0">
-              <AlertCircle className="h-5 w-5 text-yellow-400" aria-hidden="true" />
+      {upcomingPayments.length > 0 && overduePayments.length === 0 && (
+        <div className="rounded-2xl bg-gradient-to-r from-amber-400 to-orange-500 p-6 text-white shadow-lg">
+          <div className="flex items-start gap-4">
+            <div className="p-3 bg-white/20 rounded-xl">
+              <Clock className="h-6 w-6" />
             </div>
-            <div className="ml-3">
-              <h3 className="text-sm font-medium text-yellow-800">Upcoming Payments</h3>
-              <div className="mt-2 text-sm text-yellow-700 space-y-1">
+            <div className="flex-1">
+              <h3 className="text-lg font-semibold">Upcoming Payments</h3>
+              <div className="mt-2 space-y-1 text-amber-100">
                 {upcomingPayments.slice(0, 3).map((payment) => {
                   const daysUntil = Math.ceil((new Date(payment.scheduledDate).getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
                   return (
@@ -142,170 +199,189 @@ export default function DashboardPage() {
         </div>
       )}
 
+      {/* Quick Actions */}
+      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {quickActions.map((action) => {
+          const ActionIcon = action.icon;
+          return (
+            <Link
+              key={action.title}
+              href={action.href}
+              className={`${action.bgColor} rounded-2xl p-5 border border-gray-100 hover:shadow-lg transition-all group`}
+            >
+              <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${action.color} flex items-center justify-center mb-4 shadow-lg group-hover:scale-105 transition-transform`}>
+                <ActionIcon className="w-6 h-6 text-white" />
+              </div>
+              <h3 className="font-semibold text-gray-900">{action.title}</h3>
+              <p className="text-sm text-gray-600 mt-1">{action.description}</p>
+            </Link>
+          );
+        })}
+      </div>
+
       {/* Summary Stats */}
       {paymentSummary && (
-        <div className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-4">
-          <div className="bg-white rounded-lg shadow p-4">
-            <div className="flex items-center">
-              <Building2 className="h-5 w-5 text-blue-500" />
-              <span className="ml-2 text-sm text-gray-500">Schools</span>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
+            <div className="flex items-center justify-between">
+              <div className="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center">
+                <Building2 className="h-5 w-5 text-blue-600" />
+              </div>
+              <span className="text-xs text-gray-400 font-medium">SCHOOLS</span>
             </div>
-            <p className="mt-2 text-2xl font-semibold text-gray-900">{schools.length}</p>
+            <p className="mt-4 text-3xl font-bold text-gray-900">{schools.length}</p>
+            <p className="text-sm text-gray-500">Enrolled</p>
           </div>
-          <div className="bg-white rounded-lg shadow p-4">
-            <div className="flex items-center">
-              <Clock className="h-5 w-5 text-yellow-500" />
-              <span className="ml-2 text-sm text-gray-500">Pending Payments</span>
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
+            <div className="flex items-center justify-between">
+              <div className="w-10 h-10 bg-amber-100 rounded-xl flex items-center justify-center">
+                <Clock className="h-5 w-5 text-amber-600" />
+              </div>
+              <span className="text-xs text-gray-400 font-medium">PENDING</span>
             </div>
-            <p className="mt-2 text-2xl font-semibold text-gray-900">{paymentSummary.pendingCount}</p>
-            <p className="text-xs text-gray-500">₦{paymentSummary.pendingAmount.toLocaleString()}</p>
+            <p className="mt-4 text-3xl font-bold text-gray-900">{paymentSummary.pendingCount}</p>
+            <p className="text-sm text-gray-500">₦{paymentSummary.pendingAmount.toLocaleString()}</p>
           </div>
-          <div className="bg-white rounded-lg shadow p-4">
-            <div className="flex items-center">
-              <AlertTriangle className={`h-5 w-5 ${overduePayments.length > 0 ? 'text-red-500' : 'text-gray-400'}`} />
-              <span className="ml-2 text-sm text-gray-500">Overdue</span>
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
+            <div className="flex items-center justify-between">
+              <div className={`w-10 h-10 ${overduePayments.length > 0 ? 'bg-red-100' : 'bg-gray-100'} rounded-xl flex items-center justify-center`}>
+                <AlertTriangle className={`h-5 w-5 ${overduePayments.length > 0 ? 'text-red-600' : 'text-gray-400'}`} />
+              </div>
+              <span className="text-xs text-gray-400 font-medium">OVERDUE</span>
             </div>
-            <p className="mt-2 text-2xl font-semibold text-gray-900">{overduePayments.length}</p>
+            <p className={`mt-4 text-3xl font-bold ${overduePayments.length > 0 ? 'text-red-600' : 'text-gray-900'}`}>{overduePayments.length}</p>
+            <p className="text-sm text-gray-500">Payments</p>
           </div>
-          <div className="bg-white rounded-lg shadow p-4">
-            <div className="flex items-center">
-              <CalendarClock className="h-5 w-5 text-green-500" />
-              <span className="ml-2 text-sm text-gray-500">Failed</span>
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
+            <div className="flex items-center justify-between">
+              <div className="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center">
+                <TrendingUp className="h-5 w-5 text-green-600" />
+              </div>
+              <span className="text-xs text-gray-400 font-medium">COMPLETED</span>
             </div>
-            <p className="mt-2 text-2xl font-semibold text-gray-900">{paymentSummary.failedCount}</p>
+            <p className="mt-4 text-3xl font-bold text-gray-900">{paymentSummary.completedCount}</p>
+            <p className="text-sm text-gray-500">This month</p>
           </div>
         </div>
       )}
 
       {/* My Schools Quick Summary - Only for parents */}
       {!isSchoolAdmin && (
-        <div className="mt-8">
-          <div className="flex items-center justify-between">
-            <h2 className="text-lg leading-6 font-medium text-gray-900">My Schools</h2>
-            <Link href="/dashboard/schools" className="text-sm font-medium text-blue-600 hover:text-blue-500 flex items-center">
-              View all <ChevronRight className="h-4 w-4 ml-0.5" />
+        <div>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-xl font-bold text-gray-900">My Schools</h2>
+            <Link href="/dashboard/schools" className="text-sm font-medium text-blue-600 hover:text-blue-500 flex items-center gap-1">
+              View all <ChevronRight className="h-4 w-4" />
             </Link>
           </div>
 
           {loading ? (
-            <div className="mt-4 text-center py-8 text-gray-500 text-sm">Loading...</div>
+            <div className="text-center py-12 text-gray-500">
+              <div className="w-8 h-8 border-2 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-3" />
+              Loading schools...
+            </div>
           ) : schools.length === 0 ? (
-            <div className="mt-4 text-center py-10 bg-white rounded-lg shadow">
-              <Building2 className="mx-auto h-12 w-12 text-gray-400" />
-              <h3 className="mt-2 text-sm font-medium text-gray-900">No schools yet</h3>
-              <p className="mt-1 text-sm text-gray-500">
+            <div className="text-center py-12 bg-white rounded-2xl border border-gray-100 shadow-sm">
+              <div className="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <Building2 className="w-8 h-8 text-blue-600" />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">No schools yet</h3>
+              <p className="text-gray-600 mb-6 max-w-sm mx-auto">
                 Add your first school to start managing fees and payments.
               </p>
-              <div className="mt-4">
-                <Link
-                  href="/dashboard/schools"
-                  className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
-                >
-                  <Plus className="h-4 w-4 mr-2" />
-                  Add Your First School
+              <Link
+                href="/dashboard/schools"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-medium hover:shadow-lg transition-all"
+              >
+                <Plus className="h-5 w-5" />
+                Add Your First School
               </Link>
             </div>
-          </div>
-        ) : (
-          <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {schools.map((school) => (
-              <Link
-                key={school._id}
-                href={`/dashboard/schools/${school._id}`}
-                className="bg-white overflow-hidden shadow rounded-lg hover:shadow-md transition-shadow"
-              >
-                <div className="p-5">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center">
-                      <div className="h-10 w-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                        <Building2 className="h-5 w-5 text-blue-600" />
-                      </div>
-                      <div className="ml-3">
-                        <h3 className="text-sm font-medium text-gray-900">{school.name}</h3>
-                        <p className="text-xs text-gray-500 mt-0.5">
-                          {school.city}{school.state ? `, ${school.state}` : ''}
-                        </p>
-                      </div>
+          ) : (
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {schools.map((school) => (
+                <Link
+                  key={school._id}
+                  href={`/dashboard/schools/${school._id}`}
+                  className="bg-white rounded-2xl border border-gray-100 p-5 hover:shadow-lg hover:border-blue-200 transition-all group"
+                >
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
+                      <Building2 className="w-6 h-6 text-white" />
                     </div>
-                    <ChevronRight className="h-5 w-5 text-gray-400" />
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-semibold text-gray-900 truncate">{school.name}</h3>
+                      <p className="text-sm text-gray-500">
+                        {school.city}{school.state ? `, ${school.state}` : ''}
+                      </p>
+                    </div>
+                    <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-blue-600 transition-colors" />
                   </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        )}
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
       )}
 
-      {/* Pending Payments Table */}
-      <div className="mt-8">
-        <div className="flex items-center justify-between">
-          <h2 className="text-lg leading-6 font-medium text-gray-900">Pending Payments</h2>
-          <Link href="/dashboard/scheduled-payments" className="text-sm font-medium text-blue-600 hover:text-blue-500 flex items-center">
-            View all <ChevronRight className="h-4 w-4 ml-0.5" />
+      {/* Pending Payments */}
+      <div>
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-xl font-bold text-gray-900">Pending Payments</h2>
+          <Link href="/dashboard/scheduled-payments" className="text-sm font-medium text-blue-600 hover:text-blue-500 flex items-center gap-1">
+            View all <ChevronRight className="h-4 w-4" />
           </Link>
         </div>
 
         {pendingPayments.length === 0 ? (
-          <div className="mt-4 text-center py-8 bg-white rounded-lg shadow">
-            <CalendarClock className="mx-auto h-10 w-10 text-gray-400" />
-            <p className="mt-2 text-sm text-gray-500">No pending payments</p>
+          <div className="text-center py-12 bg-white rounded-2xl border border-gray-100 shadow-sm">
+            <div className="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <CalendarClock className="w-8 h-8 text-green-600" />
+            </div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">All caught up!</h3>
+            <p className="text-gray-600">No pending payments at the moment</p>
           </div>
         ) : (
-          <div className="flex flex-col mt-4">
-            <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Fee Type
-                    </th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Child
-                    </th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      School
-                    </th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Scheduled
-                    </th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Amount
-                    </th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Status
-                    </th>
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="bg-gray-50 border-b border-gray-100">
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Fee Type</th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Child</th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider hidden md:table-cell">School</th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Due Date</th>
+                    <th className="px-6 py-4 text-right text-xs font-semibold text-gray-500 uppercase tracking-wider">Amount</th>
+                    <th className="px-6 py-4 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider">Status</th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody className="divide-y divide-gray-100">
                   {pendingPayments.slice(0, 10).map((payment) => {
                     const isOverdue = new Date(payment.scheduledDate) < now;
                     return (
-                      <tr key={payment._id}>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 capitalize">
-                          {payment.feeType}
+                      <tr key={payment._id} className="hover:bg-gray-50 transition-colors">
+                        <td className="px-6 py-4">
+                          <span className="font-medium text-gray-900 capitalize">{payment.feeType}</span>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                          {getChildName(payment)}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                          {getSchoolName(payment)}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <td className="px-6 py-4 text-gray-600">{getChildName(payment)}</td>
+                        <td className="px-6 py-4 text-gray-600 hidden md:table-cell">{getSchoolName(payment)}</td>
+                        <td className="px-6 py-4 text-gray-600">
                           {new Date(payment.scheduledDate).toLocaleDateString('en-NG', {
-                            month: 'short', day: 'numeric'
+                            month: 'short', day: 'numeric', year: 'numeric'
                           })}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                          ₦{payment.amount.toLocaleString()}
+                        <td className="px-6 py-4 text-right">
+                          <span className="font-semibold text-gray-900">₦{payment.amount.toLocaleString()}</span>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
+                        <td className="px-6 py-4 text-center">
                           {isOverdue ? (
-                            <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                            <span className="inline-flex items-center gap-1 px-3 py-1 bg-red-100 text-red-700 rounded-full text-xs font-semibold">
+                              <span className="w-1.5 h-1.5 bg-red-500 rounded-full" />
                               Overdue
                             </span>
                           ) : (
-                            <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                            <span className="inline-flex items-center gap-1 px-3 py-1 bg-amber-100 text-amber-700 rounded-full text-xs font-semibold">
+                              <span className="w-1.5 h-1.5 bg-amber-500 rounded-full" />
                               Pending
                             </span>
                           )}

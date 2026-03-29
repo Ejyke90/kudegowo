@@ -15,15 +15,15 @@ export function Hero() {
                   <KudegowoLogo size="lg" variant="color" />
                   <div className="flex flex-col leading-none">
                     <span className="font-black tracking-tight text-2xl bg-gradient-to-r from-purple-600 via-blue-500 to-green-500 bg-clip-text text-transparent">KudEgOwo</span>
-                    <span className="font-semibold text-gray-500 text-sm mt-0.5">Safe School Monitor</span>
+                    <span className="font-semibold text-gray-500 text-sm mt-0.5">Cashless..Safe..Innovative</span>
                   </div>
                 </div>
               </div>
               <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
-                <span className="block xl:inline">Smart School Payments</span>
+                <span className="block xl:inline">Safe Schools. Smart Payments.</span>
               </h1>
               <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
-                Africa's leading digital payment platform for Nigerian schools. Manage meals, trips, clubs, and fees all in one place. Trusted by parents and schools nationwide.
+                A modern school safety and payments platform built for Africa. Combining safety management, cashless payments, financial literacy, and meal management — designed for schools and parents across the continent.
               </p>
               <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
                 {features.enableAuth && (
@@ -55,7 +55,7 @@ export function Hero() {
         <img
           className="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full"
           src="/images/nigerian-school-kids.jpg"
-          alt="Happy Nigerian school children"
+          alt="Happy African school children"
         />
       </div>
     </div>

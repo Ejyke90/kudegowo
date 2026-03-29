@@ -61,7 +61,7 @@ export function Sidebar() {
                 <KudegowoLogo size="md" variant="color" />
                 <div className="text-center">
                   <div className="font-bold text-base bg-gradient-to-r from-purple-600 via-blue-500 to-green-500 bg-clip-text text-transparent">KudEgOwo</div>
-                  <div className="text-xs text-gray-500 font-medium">Safe School Monitor</div>
+                  <div className="text-xs text-gray-500 font-medium">Cashless..Safe..Innovative</div>
                 </div>
             </div>
             <nav className="mt-5 flex-1 px-2 bg-white space-y-1">

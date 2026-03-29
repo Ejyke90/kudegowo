@@ -3,8 +3,10 @@
 import { useState, useEffect } from 'react';
 import {
   CalendarClock, Clock, CheckCircle2, XCircle, AlertTriangle,
-  SkipForward, Ban, RefreshCw
+  SkipForward, Ban, RefreshCw, CreditCard, TrendingUp, Filter,
+  Plus, ArrowUpRight
 } from 'lucide-react';
+import Link from 'next/link';
 import { scheduledPaymentApi, PaymentStatus, type ScheduledPayment, type ScheduledPaymentSummary } from '@/lib/api';
 import { isDemoMode, getDemoPayments, DEMO_PAYMENT_SUMMARY } from '@/lib/demo-data';
 
@@ -87,83 +89,122 @@ export default function ScheduledPaymentsPage() {
   }
 
   return (
-    <div>
-      <div className="flex items-center justify-between">
+    <div className="space-y-8">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-semibold text-gray-900">Scheduled Payments</h1>
-          <p className="mt-1 text-sm text-gray-500">Manage your recurring and scheduled payment obligations</p>
+          <h1 className="text-3xl font-bold text-gray-900">Scheduled Payments</h1>
+          <p className="text-gray-600 mt-1">Manage your recurring and scheduled payment obligations</p>
         </div>
+        <Link
+          href="/dashboard/schools"
+          className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-medium hover:shadow-lg transition-all"
+        >
+          <Plus className="w-4 h-4" />
+          Schedule Payment
+        </Link>
       </div>
 
       {/* Summary Cards */}
       {summary && (
-        <div className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-4">
-          <div className="bg-white rounded-lg shadow p-4">
-            <div className="flex items-center">
-              <Clock className="h-5 w-5 text-yellow-500" />
-              <span className="ml-2 text-sm text-gray-500">Pending</span>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
+            <div className="flex items-center justify-between">
+              <div className="w-10 h-10 bg-amber-100 rounded-xl flex items-center justify-center">
+                <Clock className="h-5 w-5 text-amber-600" />
+              </div>
+              <span className="text-xs text-gray-400 font-medium">PENDING</span>
             </div>
-            <p className="mt-2 text-2xl font-semibold text-gray-900">{summary.pendingCount}</p>
-            <p className="text-xs text-gray-500">₦{summary.pendingAmount.toLocaleString()}</p>
+            <p className="mt-4 text-3xl font-bold text-gray-900">{summary.pendingCount}</p>
+            <p className="text-sm text-gray-500">₦{summary.pendingAmount.toLocaleString()}</p>
           </div>
-          <div className="bg-white rounded-lg shadow p-4">
-            <div className="flex items-center">
-              <CheckCircle2 className="h-5 w-5 text-green-500" />
-              <span className="ml-2 text-sm text-gray-500">Completed</span>
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
+            <div className="flex items-center justify-between">
+              <div className="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center">
+                <CheckCircle2 className="h-5 w-5 text-green-600" />
+              </div>
+              <span className="text-xs text-gray-400 font-medium">COMPLETED</span>
             </div>
-            <p className="mt-2 text-2xl font-semibold text-gray-900">{summary.completedCount}</p>
+            <p className="mt-4 text-3xl font-bold text-gray-900">{summary.completedCount}</p>
+            <p className="text-sm text-gray-500">This month</p>
           </div>
-          <div className="bg-white rounded-lg shadow p-4">
-            <div className="flex items-center">
-              <XCircle className="h-5 w-5 text-red-500" />
-              <span className="ml-2 text-sm text-gray-500">Failed</span>
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
+            <div className="flex items-center justify-between">
+              <div className="w-10 h-10 bg-red-100 rounded-xl flex items-center justify-center">
+                <XCircle className="h-5 w-5 text-red-600" />
+              </div>
+              <span className="text-xs text-gray-400 font-medium">FAILED</span>
             </div>
-            <p className="mt-2 text-2xl font-semibold text-gray-900">{summary.failedCount}</p>
+            <p className="mt-4 text-3xl font-bold text-red-600">{summary.failedCount}</p>
+            <p className="text-sm text-gray-500">Needs attention</p>
           </div>
-          <div className="bg-white rounded-lg shadow p-4">
-            <div className="flex items-center">
-              <CalendarClock className="h-5 w-5 text-blue-500" />
-              <span className="ml-2 text-sm text-gray-500">Total Due</span>
+          <div className="bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl shadow-lg p-5 text-white">
+            <div className="flex items-center justify-between">
+              <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
+                <CreditCard className="h-5 w-5 text-white" />
+              </div>
+              <span className="text-xs text-blue-200 font-medium">TOTAL DUE</span>
             </div>
-            <p className="mt-2 text-2xl font-semibold text-gray-900">₦{summary.pendingAmount.toLocaleString()}</p>
+            <p className="mt-4 text-3xl font-bold">₦{summary.pendingAmount.toLocaleString()}</p>
+            <p className="text-sm text-blue-200">Outstanding balance</p>
           </div>
         </div>
       )}
 
       {/* Filter */}
-      <div className="mt-6 flex items-center space-x-2">
-        <span className="text-sm text-gray-500">Filter:</span>
-        {['', 'pending', 'completed', 'failed', 'cancelled', 'skipped'].map((status) => (
-          <button
-            key={status}
-            onClick={() => setStatusFilter(status)}
-            className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
-              statusFilter === status
-                ? 'bg-blue-600 text-white'
-                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-            }`}
-          >
-            {status || 'All'}
-          </button>
-        ))}
+      <div className="flex items-center gap-3 flex-wrap">
+        <div className="flex items-center gap-2 text-gray-500">
+          <Filter className="w-4 h-4" />
+          <span className="text-sm font-medium">Filter:</span>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {['', 'pending', 'completed', 'failed', 'cancelled', 'skipped'].map((status) => (
+            <button
+              key={status}
+              onClick={() => setStatusFilter(status)}
+              className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${
+                statusFilter === status
+                  ? 'bg-blue-600 text-white shadow-md'
+                  : 'bg-white border border-gray-200 text-gray-600 hover:border-blue-300 hover:text-blue-600'
+              }`}
+            >
+              {status ? status.charAt(0).toUpperCase() + status.slice(1) : 'All'}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Payment List */}
-      <div className="mt-6">
+      <div>
         {loading ? (
-          <div className="text-center py-12 text-gray-500">Loading payments...</div>
+          <div className="text-center py-12 text-gray-500">
+            <div className="w-8 h-8 border-2 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-3" />
+            Loading payments...
+          </div>
         ) : error ? (
-          <div className="text-center py-12 text-red-500">{error}</div>
+          <div className="text-center py-12 bg-red-50 rounded-2xl border border-red-100">
+            <XCircle className="mx-auto h-12 w-12 text-red-400 mb-3" />
+            <p className="text-red-600">{error}</p>
+          </div>
         ) : payments.length === 0 ? (
-          <div className="text-center py-12 bg-white rounded-lg shadow">
-            <CalendarClock className="mx-auto h-12 w-12 text-gray-400" />
-            <h3 className="mt-2 text-sm font-medium text-gray-900">No scheduled payments</h3>
-            <p className="mt-1 text-sm text-gray-500">
-              Schedule payments from your school fee categories.
+          <div className="text-center py-16 bg-white rounded-2xl border border-gray-100 shadow-sm">
+            <div className="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <CalendarClock className="w-8 h-8 text-blue-600" />
+            </div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">No scheduled payments</h3>
+            <p className="text-gray-600 mb-6 max-w-sm mx-auto">
+              Schedule payments from your school fee categories to see them here.
             </p>
+            <Link
+              href="/dashboard/schools"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-medium hover:shadow-lg transition-all"
+            >
+              <Plus className="w-5 h-5" />
+              Schedule Your First Payment
+            </Link>
           </div>
         ) : (
-          <div className="space-y-3">
+          <div className="space-y-4">
             {payments.map((payment) => {
               const config = STATUS_CONFIG[payment.status] || STATUS_CONFIG.pending;
               const StatusIcon = config.icon;
@@ -173,70 +214,92 @@ export default function ScheduledPaymentsPage() {
               const isProcessing = actionLoading === payment._id;
 
               return (
-                <div key={payment._id} className={`bg-white shadow rounded-lg p-4 ${isOverdue ? 'border-l-4 border-red-400' : ''}`}>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-3">
-                      <div className="flex-shrink-0">
-                        <StatusIcon className={`h-5 w-5 ${
-                          payment.status === 'completed' ? 'text-green-500' :
-                          payment.status === 'failed' ? 'text-red-500' :
-                          payment.status === 'pending' ? 'text-yellow-500' : 'text-gray-400'
+                <div 
+                  key={payment._id} 
+                  className={`bg-white rounded-2xl border shadow-sm p-5 transition-all hover:shadow-md ${
+                    isOverdue ? 'border-l-4 border-l-red-500 border-red-100' : 'border-gray-100'
+                  }`}
+                >
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div className="flex items-start gap-4">
+                      <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
+                        payment.status === 'completed' ? 'bg-green-100' :
+                        payment.status === 'failed' ? 'bg-red-100' :
+                        payment.status === 'pending' ? 'bg-amber-100' : 'bg-gray-100'
+                      }`}>
+                        <StatusIcon className={`w-6 h-6 ${
+                          payment.status === 'completed' ? 'text-green-600' :
+                          payment.status === 'failed' ? 'text-red-600' :
+                          payment.status === 'pending' ? 'text-amber-600' : 'text-gray-400'
                         }`} />
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-gray-900 capitalize">
+                        <p className="font-semibold text-gray-900 capitalize">
                           {payment.feeType}
-                          {childObj && (
-                            <span className="text-gray-500 font-normal"> — {childObj.firstName} {childObj.lastName}</span>
-                          )}
                         </p>
-                        <div className="flex items-center space-x-2 mt-1">
-                          <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${config.color}`}>
+                        {childObj && (
+                          <p className="text-sm text-gray-500">{childObj.firstName} {childObj.lastName}</p>
+                        )}
+                        <div className="flex items-center flex-wrap gap-2 mt-2">
+                          <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium ${config.color}`}>
+                            <span className="w-1.5 h-1.5 rounded-full bg-current" />
                             {config.label}
                           </span>
                           <span className="text-xs text-gray-500">
-                            {new Date(payment.scheduledDate).toLocaleDateString('en-NG', {
+                            Due: {new Date(payment.scheduledDate).toLocaleDateString('en-NG', {
                               year: 'numeric', month: 'short', day: 'numeric'
                             })}
                           </span>
                           {isOverdue && (
-                            <span className="text-xs text-red-600 font-medium flex items-center">
-                              <AlertTriangle className="h-3 w-3 mr-0.5" /> Overdue
+                            <span className="inline-flex items-center gap-1 text-xs text-red-600 font-medium">
+                              <AlertTriangle className="h-3 w-3" /> Overdue
                             </span>
                           )}
                           {payment.retryCount > 0 && (
-                            <span className="text-xs text-orange-600">Retry {payment.retryCount}/3</span>
+                            <span className="text-xs text-orange-600 bg-orange-50 px-2 py-0.5 rounded">
+                              Retry {payment.retryCount}/3
+                            </span>
                           )}
                           {payment.isAutoGenerated && (
-                            <span className="text-xs text-blue-500">Auto-generated</span>
+                            <span className="text-xs text-blue-600 bg-blue-50 px-2 py-0.5 rounded">
+                              Auto-generated
+                            </span>
                           )}
                         </div>
                         {payment.failureReason && (
-                          <p className="text-xs text-red-500 mt-1">{payment.failureReason}</p>
+                          <p className="text-xs text-red-500 mt-2 bg-red-50 px-2 py-1 rounded">
+                            {payment.failureReason}
+                          </p>
                         )}
                       </div>
                     </div>
 
-                    <div className="flex items-center space-x-3">
-                      <span className="text-lg font-semibold text-gray-900">₦{payment.amount.toLocaleString()}</span>
+                    <div className="flex items-center gap-4 sm:flex-col sm:items-end">
+                      <span className="text-xl font-bold text-gray-900">₦{payment.amount.toLocaleString()}</span>
 
                       {isPending && (
-                        <div className="flex items-center space-x-1">
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => alert('Pay Now functionality coming soon!')}
+                            className="px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg text-sm font-medium hover:shadow-md transition-all flex items-center gap-1"
+                          >
+                            Pay Now <ArrowUpRight className="w-4 h-4" />
+                          </button>
                           <button
                             onClick={() => handleSkip(payment._id)}
                             disabled={isProcessing}
-                            title="Skip"
-                            className="p-1.5 text-purple-600 hover:bg-purple-50 rounded-md disabled:opacity-50"
+                            title="Skip this payment"
+                            className="p-2 text-purple-600 hover:bg-purple-50 rounded-lg disabled:opacity-50 transition-colors"
                           >
-                            <SkipForward className="h-4 w-4" />
+                            <SkipForward className="h-5 w-5" />
                           </button>
                           <button
                             onClick={() => handleCancel(payment._id)}
                             disabled={isProcessing}
-                            title="Cancel"
-                            className="p-1.5 text-red-500 hover:bg-red-50 rounded-md disabled:opacity-50"
+                            title="Cancel this payment"
+                            className="p-2 text-red-500 hover:bg-red-50 rounded-lg disabled:opacity-50 transition-colors"
                           >
-                            <Ban className="h-4 w-4" />
+                            <Ban className="h-5 w-5" />
                           </button>
                         </div>
                       )}

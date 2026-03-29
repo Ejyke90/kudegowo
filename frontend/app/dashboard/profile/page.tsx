@@ -9,7 +9,12 @@ import {
   Bell,
   CreditCard,
   Save,
-  AlertCircle
+  AlertCircle,
+  Camera,
+  Key,
+  Smartphone,
+  ChevronRight,
+  Check
 } from 'lucide-react';
 import { isDemoMode, getDemoUser } from '@/lib/demo-data';
 
@@ -133,132 +138,142 @@ export default function ProfilePage() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+        <div className="w-8 h-8 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
 
   if (!profile) {
     return (
-      <div className="text-center py-12">
-        <AlertCircle className="mx-auto h-12 w-12 text-gray-400" />
-        <h3 className="mt-2 text-sm font-medium text-gray-900">Profile not found</h3>
-        <p className="mt-1 text-sm text-gray-500">Unable to load your profile information</p>
+      <div className="text-center py-16 bg-white rounded-2xl border border-gray-100 shadow-sm">
+        <div className="w-16 h-16 bg-red-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+          <AlertCircle className="w-8 h-8 text-red-600" />
+        </div>
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">Profile not found</h3>
+        <p className="text-gray-600">Unable to load your profile information</p>
       </div>
     );
   }
 
   return (
-    <div>
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-semibold text-gray-900">My Profile</h1>
-          <p className="mt-1 text-sm text-gray-500">Manage your account settings and preferences</p>
-        </div>
+    <div className="space-y-8">
+      {/* Header */}
+      <div>
+        <h1 className="text-3xl font-bold text-gray-900">My Profile</h1>
+        <p className="text-gray-600 mt-1">Manage your account settings and preferences</p>
       </div>
 
-      <div className="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Profile Card */}
-        <div className="lg:col-span-2">
-          <div className="bg-white shadow rounded-lg">
-            <div className="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
-              <h2 className="text-lg font-medium text-gray-900">Personal Information</h2>
+        <div className="lg:col-span-2 space-y-6">
+          {/* Avatar & Basic Info */}
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+            <div className="bg-gradient-to-r from-blue-500 to-indigo-600 p-8">
+              <div className="flex items-center gap-6">
+                <div className="relative">
+                  <div className="w-24 h-24 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
+                    <span className="text-3xl font-bold text-white">
+                      {profile.firstName[0]}{profile.lastName[0]}
+                    </span>
+                  </div>
+                  <button className="absolute -bottom-2 -right-2 w-8 h-8 bg-white rounded-lg shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors">
+                    <Camera className="w-4 h-4 text-gray-600" />
+                  </button>
+                </div>
+                <div className="text-white">
+                  <h2 className="text-2xl font-bold">{profile.firstName} {profile.lastName}</h2>
+                  <p className="text-blue-100 capitalize">{profile.role}</p>
+                  {profile.createdAt && (
+                    <p className="text-blue-200 text-sm mt-1">
+                      Member since {new Date(profile.createdAt).toLocaleDateString('en-NG', {
+                        year: 'numeric',
+                        month: 'long',
+                      })}
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Personal Information */}
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm">
+            <div className="px-6 py-5 border-b border-gray-100 flex items-center justify-between">
+              <h2 className="text-lg font-bold text-gray-900">Personal Information</h2>
               {!isEditing ? (
                 <button
                   onClick={() => setIsEditing(true)}
-                  className="text-sm text-blue-600 hover:text-blue-700 font-medium"
+                  className="px-4 py-2 text-sm text-blue-600 hover:bg-blue-50 rounded-lg font-medium transition-colors"
                 >
-                  Edit
+                  Edit Profile
                 </button>
               ) : (
                 <button
                   onClick={handleSave}
-                  className="inline-flex items-center text-sm text-blue-600 hover:text-blue-700 font-medium"
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg text-sm font-medium hover:shadow-md transition-all"
                 >
-                  <Save className="h-4 w-4 mr-1" />
-                  Save
+                  <Check className="h-4 w-4" />
+                  Save Changes
                 </button>
               )}
             </div>
-            <div className="p-6 space-y-6">
-              <div className="flex items-center space-x-4">
-                <div className="h-20 w-20 bg-blue-100 rounded-full flex items-center justify-center">
-                  <span className="text-2xl font-bold text-blue-600">
-                    {profile.firstName[0]}{profile.lastName[0]}
-                  </span>
-                </div>
+            <div className="p-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
-                  <h3 className="text-xl font-semibold text-gray-900">
-                    {profile.firstName} {profile.lastName}
-                  </h3>
-                  <p className="text-sm text-gray-500 capitalize">{profile.role}</p>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">First Name</label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">First Name</label>
                   {isEditing ? (
                     <input
                       type="text"
                       value={formData.firstName}
                       onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
-                      className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                     />
                   ) : (
-                    <p className="mt-1 text-sm text-gray-900">{profile.firstName}</p>
+                    <p className="text-gray-900 py-3">{profile.firstName}</p>
                   )}
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Last Name</label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Last Name</label>
                   {isEditing ? (
                     <input
                       type="text"
                       value={formData.lastName}
                       onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
-                      className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                     />
                   ) : (
-                    <p className="mt-1 text-sm text-gray-900">{profile.lastName}</p>
+                    <p className="text-gray-900 py-3">{profile.lastName}</p>
                   )}
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Email</label>
-                  <div className="mt-1 flex items-center">
-                    <Mail className="h-4 w-4 text-gray-400 mr-2" />
-                    <p className="text-sm text-gray-900">{profile.email}</p>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
+                  <div className="flex items-center gap-3 py-3">
+                    <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center">
+                      <Mail className="h-5 w-5 text-blue-600" />
+                    </div>
+                    <p className="text-gray-900">{profile.email}</p>
                   </div>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Phone</label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Phone Number</label>
                   {isEditing ? (
                     <input
                       type="tel"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                       placeholder="+234..."
                     />
                   ) : (
-                    <div className="mt-1 flex items-center">
-                      <Phone className="h-4 w-4 text-gray-400 mr-2" />
-                      <p className="text-sm text-gray-900">{profile.phone || 'Not set'}</p>
+                    <div className="flex items-center gap-3 py-3">
+                      <div className="w-10 h-10 bg-green-50 rounded-lg flex items-center justify-center">
+                        <Phone className="h-5 w-5 text-green-600" />
+                      </div>
+                      <p className="text-gray-900">{profile.phone || 'Not set'}</p>
                     </div>
                   )}
                 </div>
               </div>
-
-              {profile.createdAt && (
-                <div className="pt-4 border-t border-gray-200">
-                  <p className="text-xs text-gray-500">
-                    Member since {new Date(profile.createdAt).toLocaleDateString('en-NG', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric',
-                    })}
-                  </p>
-                </div>
-              )}
             </div>
           </div>
         </div>
@@ -266,16 +281,21 @@ export default function ProfilePage() {
         {/* Settings Sidebar */}
         <div className="space-y-6">
           {/* Notification Preferences */}
-          <div className="bg-white shadow rounded-lg">
-            <div className="px-6 py-4 border-b border-gray-200">
-              <h2 className="text-lg font-medium text-gray-900 flex items-center">
-                <Bell className="h-5 w-5 mr-2 text-gray-400" />
-                Notifications
-              </h2>
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm">
+            <div className="px-6 py-5 border-b border-gray-100">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-amber-100 rounded-xl flex items-center justify-center">
+                  <Bell className="h-5 w-5 text-amber-600" />
+                </div>
+                <h2 className="text-lg font-bold text-gray-900">Notifications</h2>
+              </div>
             </div>
-            <div className="p-6 space-y-4">
+            <div className="p-6 space-y-5">
               <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-700">Email notifications</span>
+                <div className="flex items-center gap-3">
+                  <Mail className="w-5 h-5 text-gray-400" />
+                  <span className="text-sm text-gray-700">Email notifications</span>
+                </div>
                 <button className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
                   profile.notificationPreferences?.email ? 'bg-blue-600' : 'bg-gray-200'
                 }`}>
@@ -285,7 +305,10 @@ export default function ProfilePage() {
                 </button>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-700">SMS alerts</span>
+                <div className="flex items-center gap-3">
+                  <Phone className="w-5 h-5 text-gray-400" />
+                  <span className="text-sm text-gray-700">SMS alerts</span>
+                </div>
                 <button className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
                   profile.notificationPreferences?.sms ? 'bg-blue-600' : 'bg-gray-200'
                 }`}>
@@ -295,7 +318,10 @@ export default function ProfilePage() {
                 </button>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-700">Push notifications</span>
+                <div className="flex items-center gap-3">
+                  <Smartphone className="w-5 h-5 text-gray-400" />
+                  <span className="text-sm text-gray-700">Push notifications</span>
+                </div>
                 <button className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
                   profile.notificationPreferences?.push ? 'bg-blue-600' : 'bg-gray-200'
                 }`}>
@@ -308,36 +334,51 @@ export default function ProfilePage() {
           </div>
 
           {/* Security */}
-          <div className="bg-white shadow rounded-lg">
-            <div className="px-6 py-4 border-b border-gray-200">
-              <h2 className="text-lg font-medium text-gray-900 flex items-center">
-                <Shield className="h-5 w-5 mr-2 text-gray-400" />
-                Security
-              </h2>
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm">
+            <div className="px-6 py-5 border-b border-gray-100">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center">
+                  <Shield className="h-5 w-5 text-emerald-600" />
+                </div>
+                <h2 className="text-lg font-bold text-gray-900">Security</h2>
+              </div>
             </div>
-            <div className="p-6 space-y-4">
-              <button className="w-full text-left text-sm text-blue-600 hover:text-blue-700 font-medium">
-                Change password
+            <div className="divide-y divide-gray-100">
+              <button className="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors">
+                <div className="flex items-center gap-3">
+                  <Key className="w-5 h-5 text-gray-400" />
+                  <span className="text-sm text-gray-700">Change password</span>
+                </div>
+                <ChevronRight className="w-5 h-5 text-gray-400" />
               </button>
-              <button className="w-full text-left text-sm text-blue-600 hover:text-blue-700 font-medium">
-                Enable two-factor authentication
+              <button className="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors">
+                <div className="flex items-center gap-3">
+                  <Smartphone className="w-5 h-5 text-gray-400" />
+                  <span className="text-sm text-gray-700">Two-factor authentication</span>
+                </div>
+                <ChevronRight className="w-5 h-5 text-gray-400" />
               </button>
             </div>
           </div>
 
           {/* Payment Methods */}
-          <div className="bg-white shadow rounded-lg">
-            <div className="px-6 py-4 border-b border-gray-200">
-              <h2 className="text-lg font-medium text-gray-900 flex items-center">
-                <CreditCard className="h-5 w-5 mr-2 text-gray-400" />
-                Payment Methods
-              </h2>
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm">
+            <div className="px-6 py-5 border-b border-gray-100">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-purple-100 rounded-xl flex items-center justify-center">
+                  <CreditCard className="h-5 w-5 text-purple-600" />
+                </div>
+                <h2 className="text-lg font-bold text-gray-900">Payment Methods</h2>
+              </div>
             </div>
             <div className="p-6">
-              <p className="text-sm text-gray-500">No payment methods saved</p>
-              <button className="mt-3 text-sm text-blue-600 hover:text-blue-700 font-medium">
-                + Add payment method
-              </button>
+              <div className="text-center py-4">
+                <p className="text-sm text-gray-500 mb-4">No payment methods saved</p>
+                <button className="inline-flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
+                  <CreditCard className="w-4 h-4" />
+                  Add payment method
+                </button>
+              </div>
             </div>
           </div>
         </div>

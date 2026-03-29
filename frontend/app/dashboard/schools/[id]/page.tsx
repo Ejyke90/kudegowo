@@ -48,8 +48,8 @@ export default function SchoolDetailPage({ params }: { params: Promise<{ id: str
       // Use demo data
       const schools = getDemoSchools();
       const school = schools.find(s => s._id === id);
-      const children = DEMO_CHILDREN.filter(c => c.schoolId === id);
-      const payments = DEMO_SCHEDULED_PAYMENTS.filter(p => p.schoolProfile._id === id);
+      const children = DEMO_CHILDREN.filter(c => c.schoolId === id) as Child[];
+      const payments = DEMO_SCHEDULED_PAYMENTS.filter(p => p.schoolProfile._id === id) as ScheduledPayment[];
       
       if (school) {
         setSchool(school);

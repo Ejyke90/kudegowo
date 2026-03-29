@@ -101,6 +101,169 @@ const demoSchools = [
   },
 ];
 
+// =============================================================================
+// CHRISLAND SCHOOLS DEMO DATA (Beta Tester)
+// =============================================================================
+const chrislandUsers = [
+  {
+    email: 'amaka.obi@chrisland.demo.com',
+    firstName: 'Amaka',
+    lastName: 'Obi',
+    phone: '+2348034567890',
+    role: 'parent',
+    balance: 285000,
+  },
+  {
+    email: 'tunde.adeyemi@chrisland.demo.com',
+    firstName: 'Tunde',
+    lastName: 'Adeyemi',
+    phone: '+2348056789012',
+    role: 'parent',
+    balance: 420000,
+  },
+  {
+    email: 'funke.williams@chrisland.demo.com',
+    firstName: 'Funke',
+    lastName: 'Williams',
+    phone: '+2348078901234',
+    role: 'parent',
+    balance: 175000,
+  },
+  {
+    email: 'admin@chrisland.demo.com',
+    firstName: 'School',
+    lastName: 'Administrator',
+    phone: '+2349012345678',
+    role: 'school_admin',
+    balance: 0,
+  },
+];
+
+const chrislandSchools = [
+  {
+    name: 'Chrisland Nursery School VGC',
+    address: 'VGC Estate, Lekki-Epe Expressway',
+    city: 'Lagos',
+    state: 'Lagos',
+    schoolType: 'nursery',
+    contactEmail: 'nursery.vgc@chrisland.demo.com',
+    contactPhone: '+2348172013114',
+  },
+  {
+    name: 'Chrisland Primary School VGC',
+    address: 'VGC Estate, Lekki-Epe Expressway',
+    city: 'Lagos',
+    state: 'Lagos',
+    schoolType: 'primary',
+    contactEmail: 'primary.vgc@chrisland.demo.com',
+    contactPhone: '+2348172013145',
+  },
+  {
+    name: 'Chrisland High School VGC',
+    address: 'VGC Estate, Lekki-Epe Expressway',
+    city: 'Lagos',
+    state: 'Lagos',
+    schoolType: 'secondary',
+    contactEmail: 'high.vgc@chrisland.demo.com',
+    contactPhone: '+2348130101818',
+  },
+  {
+    name: 'Chrisland School Lekki',
+    address: 'Lekki Phase 1, Lagos',
+    city: 'Lagos',
+    state: 'Lagos',
+    schoolType: 'combined',
+    contactEmail: 'lekki@chrisland.demo.com',
+    contactPhone: '+2347088088408',
+  },
+];
+
+const chrislandChildren = [
+  // Parent 1 (Amaka Obi) children
+  { firstName: 'Chukwuemeka', lastName: 'Obi', className: 'Primary 5', dateOfBirth: '2014-03-15', parentIndex: 0, schoolIndex: 1 },
+  { firstName: 'Adaeze', lastName: 'Obi', className: 'KG 2', dateOfBirth: '2019-07-22', parentIndex: 0, schoolIndex: 0 },
+  // Parent 2 (Tunde Adeyemi) children
+  { firstName: 'Oluwaseun', lastName: 'Adeyemi', className: 'SS 2', dateOfBirth: '2008-11-08', parentIndex: 1, schoolIndex: 2 },
+  { firstName: 'Temiloluwa', lastName: 'Adeyemi', className: 'JSS 3', dateOfBirth: '2011-05-30', parentIndex: 1, schoolIndex: 2 },
+  { firstName: 'Ayomide', lastName: 'Adeyemi', className: 'Primary 3', dateOfBirth: '2016-09-12', parentIndex: 1, schoolIndex: 1 },
+  // Parent 3 (Funke Williams) children
+  { firstName: 'David', lastName: 'Williams', className: 'Primary 4', dateOfBirth: '2015-04-18', parentIndex: 2, schoolIndex: 3 },
+  { firstName: 'Grace', lastName: 'Williams', className: 'Primary 1', dateOfBirth: '2018-08-05', parentIndex: 2, schoolIndex: 3 },
+  { firstName: 'Emmanuel', lastName: 'Williams', className: 'Crèche', dateOfBirth: '2022-02-14', parentIndex: 2, schoolIndex: 0 },
+];
+
+// =============================================================================
+// RIVERSIDE SCHOOLS DEMO DATA (Beta Tester)
+// =============================================================================
+const riversideUsers = [
+  {
+    email: 'bola.johnson@riverside.demo.com',
+    firstName: 'Bola',
+    lastName: 'Johnson',
+    phone: '+2348023456789',
+    role: 'parent',
+    balance: 195000,
+  },
+  {
+    email: 'kemi.adekunle@riverside.demo.com',
+    firstName: 'Kemi',
+    lastName: 'Adekunle',
+    phone: '+2348045678901',
+    role: 'parent',
+    balance: 320000,
+  },
+  {
+    email: 'segun.bakare@riverside.demo.com',
+    firstName: 'Segun',
+    lastName: 'Bakare',
+    phone: '+2348067890123',
+    role: 'parent',
+    balance: 145000,
+  },
+  {
+    email: 'admin@riverside.demo.com',
+    firstName: 'School',
+    lastName: 'Administrator',
+    phone: '+2347059695895',
+    role: 'school_admin',
+    balance: 0,
+  },
+];
+
+const riversideSchools = [
+  {
+    name: 'Riverside Elementary School',
+    address: 'Plot 8, Channels TV Avenue, OPIC Estate, Isheri',
+    city: 'Isheri',
+    state: 'Ogun',
+    schoolType: 'primary',
+    contactEmail: 'elementary@riverside.demo.com',
+    contactPhone: '+2347059695895',
+  },
+  {
+    name: 'Riverside College',
+    address: 'Plot 8, Channels TV Avenue, OPIC Estate, Isheri',
+    city: 'Isheri',
+    state: 'Ogun',
+    schoolType: 'secondary',
+    contactEmail: 'college@riverside.demo.com',
+    contactPhone: '+2349030009520',
+  },
+];
+
+const riversideChildren = [
+  // Parent 1 (Bola Johnson) children
+  { firstName: 'Oluwafemi', lastName: 'Johnson', className: 'Grade 4', dateOfBirth: '2015-06-20', parentIndex: 0, schoolIndex: 0 },
+  { firstName: 'Oluwadamilola', lastName: 'Johnson', className: 'Grade 1', dateOfBirth: '2018-09-15', parentIndex: 0, schoolIndex: 0 },
+  // Parent 2 (Kemi Adekunle) children
+  { firstName: 'Adeola', lastName: 'Adekunle', className: 'SS 1', dateOfBirth: '2009-03-12', parentIndex: 1, schoolIndex: 1 },
+  { firstName: 'Adebayo', lastName: 'Adekunle', className: 'JSS 2', dateOfBirth: '2012-07-25', parentIndex: 1, schoolIndex: 1 },
+  { firstName: 'Adetola', lastName: 'Adekunle', className: 'Grade 5', dateOfBirth: '2014-11-08', parentIndex: 1, schoolIndex: 0 },
+  // Parent 3 (Segun Bakare) children
+  { firstName: 'Tolulope', lastName: 'Bakare', className: 'Grade 3', dateOfBirth: '2016-04-30', parentIndex: 2, schoolIndex: 0 },
+  { firstName: 'Tobiloba', lastName: 'Bakare', className: 'Reception', dateOfBirth: '2019-12-10', parentIndex: 2, schoolIndex: 0 },
+];
+
 const feeCategories = [
   { type: 'tuition', name: 'Tuition Fee', amount: 450000, frequency: 'termly' },
   { type: 'meals', name: 'Meal Fee', amount: 35000, frequency: 'termly' },
@@ -568,6 +731,98 @@ async function seedScheduledPayments(children, schools) {
   return payments;
 }
 
+async function seedChrislandData() {
+  console.log('\n🏫 Seeding Chrisland Schools data (Beta Tester)...');
+  
+  // Seed Chrisland users
+  const users = [];
+  for (const userData of chrislandUsers) {
+    const user = await User.create({
+      ...userData,
+      password: DEMO_PASSWORD,
+    });
+    users.push(user);
+    console.log(`   Created Chrisland user: ${userData.email}`);
+  }
+  
+  // Seed Chrisland schools
+  const adminUser = users.find(u => u.role === 'school_admin');
+  const schools = [];
+  for (const schoolData of chrislandSchools) {
+    const school = await SchoolProfile.create({
+      ...schoolData,
+      createdBy: adminUser._id,
+    });
+    schools.push(school);
+    console.log(`   Created Chrisland school: ${schoolData.name}`);
+  }
+  
+  // Seed Chrisland children
+  const parentUsers = users.filter(u => u.role === 'parent');
+  for (const childData of chrislandChildren) {
+    const parent = parentUsers[childData.parentIndex]._id;
+    const schoolProfile = schools[childData.schoolIndex]._id;
+    
+    await Child.create({
+      firstName: childData.firstName,
+      lastName: childData.lastName,
+      grade: childData.className,
+      parent,
+      schoolProfile,
+      dateOfBirth: new Date(childData.dateOfBirth),
+    });
+    console.log(`   Created Chrisland child: ${childData.firstName} ${childData.lastName}`);
+  }
+  
+  return { users, schools };
+}
+
+async function seedRiversideData() {
+  console.log('\n🏫 Seeding Riverside Schools data (Beta Tester)...');
+  
+  // Seed Riverside users
+  const users = [];
+  for (const userData of riversideUsers) {
+    const user = await User.create({
+      ...userData,
+      password: DEMO_PASSWORD,
+    });
+    users.push(user);
+    console.log(`   Created Riverside user: ${userData.email}`);
+  }
+  
+  // Seed Riverside schools
+  const adminUser = users.find(u => u.role === 'school_admin');
+  const schools = [];
+  for (const schoolData of riversideSchools) {
+    const school = await SchoolProfile.create({
+      ...schoolData,
+      createdBy: adminUser._id,
+    });
+    schools.push(school);
+    console.log(`   Created Riverside school: ${schoolData.name}`);
+  }
+  
+  // Seed Riverside children
+  const parentUsers = users.filter(u => u.role === 'parent');
+  for (const childData of riversideChildren) {
+    const parent = parentUsers[childData.parentIndex]._id;
+    const schoolProfile = schools[childData.schoolIndex]._id;
+    
+    await Child.create({
+      firstName: childData.firstName,
+      lastName: childData.lastName,
+      grade: childData.className,
+      parent,
+      schoolProfile,
+      dateOfBirth: new Date(childData.dateOfBirth),
+    });
+    console.log(`   Created Riverside child: ${childData.firstName} ${childData.lastName}`);
+  }
+  
+  return { users, schools };
+}
+
 async function seed() {
   try {
     console.log('🌱 Starting KudEgOwo seed process...\n');
@@ -579,27 +834,45 @@ async function seed() {
     // Clear existing demo data
     await clearDatabase();
     
-    // Seed in order
+    // Seed default demo data
     const users = await seedUsers();
     const schools = await seedSchools(users);
     const children = await seedChildren(users, schools);
-    // Skip transactions and scheduled payments for now - model mismatch
-    // await seedTransactions(children, schools);
-    // await seedScheduledPayments(children, schools);
     await seedQuizzes();
     await seedKudiCoins(children);
     await seedMenus(schools);
     
+    // Seed Beta Tester schools
+    const chrislandData = await seedChrislandData();
+    const riversideData = await seedRiversideData();
+    
+    // Seed menus for beta tester schools
+    await seedMenus(chrislandData.schools);
+    await seedMenus(riversideData.schools);
+    
     console.log('\n🎉 Seed completed successfully!\n');
-    console.log('Demo Credentials:');
-    console.log('─────────────────────────────────────────');
-    console.log('| Role         | Email                          | Password  |');
-    console.log('─────────────────────────────────────────');
-    console.log('| Parent 1     | ada.okonkwo@demo.com           | Demo123!  |');
-    console.log('| Parent 2     | chidi.eze@demo.com             | Demo123!  |');
-    console.log('| School Admin | admin@greensprings.demo.com    | Demo123!  |');
-    console.log('| Tutor        | tutor@demo.com                 | Demo123!  |');
-    console.log('─────────────────────────────────────────\n');
+    console.log('═══════════════════════════════════════════════════════════════');
+    console.log('                        DEMO CREDENTIALS                        ');
+    console.log('═══════════════════════════════════════════════════════════════');
+    console.log('\n📚 DEFAULT DEMO (Greensprings):');
+    console.log('───────────────────────────────────────────────────────────────');
+    console.log('| Parent 1     | ada.okonkwo@demo.com              | Demo123! |');
+    console.log('| Parent 2     | chidi.eze@demo.com                | Demo123! |');
+    console.log('| School Admin | admin@greensprings.demo.com       | Demo123! |');
+    console.log('| Tutor        | tutor@demo.com                    | Demo123! |');
+    console.log('\n🏫 CHRISLAND SCHOOLS (Beta Tester):');
+    console.log('───────────────────────────────────────────────────────────────');
+    console.log('| Parent 1     | amaka.obi@chrisland.demo.com      | Demo123! |');
+    console.log('| Parent 2     | tunde.adeyemi@chrisland.demo.com  | Demo123! |');
+    console.log('| Parent 3     | funke.williams@chrisland.demo.com | Demo123! |');
+    console.log('| School Admin | admin@chrisland.demo.com          | Demo123! |');
+    console.log('\n🏫 RIVERSIDE SCHOOLS (Beta Tester):');
+    console.log('───────────────────────────────────────────────────────────────');
+    console.log('| Parent 1     | bola.johnson@riverside.demo.com   | Demo123! |');
+    console.log('| Parent 2     | kemi.adekunle@riverside.demo.com  | Demo123! |');
+    console.log('| Parent 3     | segun.bakare@riverside.demo.com   | Demo123! |');
+    console.log('| School Admin | admin@riverside.demo.com          | Demo123! |');
+    console.log('═══════════════════════════════════════════════════════════════\n');
     
   } catch (error) {
     console.error('❌ Seed failed:', error);

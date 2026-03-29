@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { 
   Users,
@@ -16,138 +16,285 @@ import {
   BookOpen,
   Award,
   GraduationCap,
-  Video,
-  FileText,
-  Lightbulb
+  Building2,
+  Play,
+  Sparkles,
+  ChevronRight,
+  MapPin,
+  Clock,
+  Eye,
+  Copy,
+  Check,
+  Zap,
+  Star,
+  ArrowUpRight,
+  Layout,
+  CreditCard,
+  Bell,
+  Settings
 } from 'lucide-react';
 import Link from 'next/link';
+import { 
+  setDemoSchoolContext, 
+  getDemoSchoolContext,
+  type DemoSchoolContext 
+} from '@/lib/demo-data';
 
-const DEMO_USERS = [
+
+// Chrisland Schools demo users
+const CHRISLAND_DEMO_USERS = [
   {
-    name: 'Ada Okonkwo',
+    name: 'Amaka Obi',
     role: 'Parent',
-    email: 'ada.okonkwo@demo.com',
+    children: 2,
+    email: 'amaka.obi@chrisland.demo.com',
     password: 'Demo123!',
     icon: UserCircle,
-    color: 'emerald',
+    avatar: 'AO',
+    color: 'from-emerald-500 to-teal-600',
   },
   {
-    name: 'Chidi Eze',
+    name: 'Abubakar Sani',
     role: 'Parent',
-    email: 'chidi.eze@demo.com',
+    children: 3,
+    email: 'abubakar.sani@chrisland.demo.com',
     password: 'Demo123!',
     icon: Users,
-    color: 'blue',
+    avatar: 'AS',
+    color: 'from-blue-500 to-indigo-600',
+  },
+  {
+    name: 'Funke Williams',
+    role: 'Parent',
+    children: 3,
+    email: 'funke.williams@chrisland.demo.com',
+    password: 'Demo123!',
+    icon: UserCircle,
+    avatar: 'FW',
+    color: 'from-violet-500 to-purple-600',
   },
   {
     name: 'School Admin',
-    role: 'School Administrator',
-    email: 'admin@greensprings.edu.ng',
+    role: 'Administrator',
+    children: 0,
+    email: 'admin@chrisland.demo.com',
     password: 'Demo123!',
     icon: School,
-    color: 'purple',
+    avatar: 'SA',
+    color: 'from-amber-500 to-orange-600',
   },
 ];
 
-interface JourneyStep {
-  title: string;
-  description: string;
-  link?: string;
-  icon?: React.ComponentType<{ className?: string }>;
-}
-
-interface Journey {
-  title: string;
-  persona: string;
-  icon: React.ComponentType<{ className?: string }>;
-  color: string;
-  steps: JourneyStep[];
-}
-
-const JOURNEYS: Journey[] = [
+// Riverside Schools demo users
+const RIVERSIDE_DEMO_USERS = [
   {
-    title: 'Parent Journey',
-    persona: 'Ada Okonkwo',
+    name: 'Bola Johnson',
+    role: 'Parent',
+    children: 2,
+    email: 'bola.johnson@riverside.demo.com',
+    password: 'Demo123!',
     icon: UserCircle,
-    color: 'emerald',
-    steps: [
-      { title: 'Login', description: 'Use ada.okonkwo@demo.com / Demo123!', link: '/login' },
-      { title: 'View Dashboard', description: 'See children, payments, and notifications', link: '/dashboard' },
-      { title: 'Safe School', description: 'Check today\'s passphrase and attendance', link: '/dashboard/safe-school', icon: Shield },
-      { title: 'Training Modules', description: 'Access safety training materials and modules', link: '/dashboard/safe-school#training', icon: BookOpen },
-      { title: 'Certification', description: 'Track safety certifications and achievements', link: '/dashboard/safe-school#certification', icon: Award },
-      { title: 'Workshops', description: 'Join upcoming safety workshops and events', link: '/dashboard/safe-school#workshops', icon: GraduationCap },
-      { title: 'Financial Literacy', description: 'View KudiCoins balance and savings goals', link: '/dashboard/financial-literacy', icon: Coins },
-      { title: 'Meal Management', description: 'Pre-order meals for children', link: '/dashboard/meals', icon: UtensilsCrossed },
-      { title: 'My Schools', description: 'Manage school profiles and fees', link: '/dashboard/schools' },
-    ],
+    avatar: 'BJ',
+    color: 'from-emerald-500 to-teal-600',
   },
   {
-    title: 'Child Journey',
-    persona: 'Hope Sola (Child)',
+    name: 'Kemi Adekunle',
+    role: 'Parent',
+    children: 3,
+    email: 'kemi.adekunle@riverside.demo.com',
+    password: 'Demo123!',
     icon: Users,
-    color: 'blue',
-    steps: [
-      { title: 'Morning Check-in', description: 'Child arrives at school, gives passphrase to teacher', icon: Shield },
-      { title: 'Attendance Recorded', description: 'Teacher marks attendance, parent gets notification', icon: CheckCircle },
-      { title: 'Lunch Time', description: 'Child uses pre-ordered meal or selects from menu', icon: UtensilsCrossed },
-      { title: 'Earn KudiCoins', description: 'Complete quizzes and good behavior to earn rewards', icon: Coins },
-      { title: 'Savings Goals', description: 'Track progress toward savings goals with parent', icon: Coins },
-      { title: 'Evening Check-out', description: 'Parent picks up child, attendance updated', icon: Shield },
-    ],
+    avatar: 'KA',
+    color: 'from-blue-500 to-indigo-600',
   },
   {
-    title: 'School Admin Journey',
-    persona: 'School Administrator',
-    icon: School,
-    color: 'purple',
-    steps: [
-      { title: 'Login', description: 'Use admin@greensprings.edu.ng / Demo123!', link: '/login' },
-      { title: 'View Dashboard', description: 'See school overview and metrics', link: '/dashboard' },
-      { title: 'Safe School Monitor', description: 'View attendance board and emergency alerts', link: '/dashboard/safe-school', icon: Shield },
-      { title: 'Training Materials', description: 'Manage safety training content and resources', link: '/dashboard/safe-school#training', icon: BookOpen },
-      { title: 'Certification Tracking', description: 'Monitor student and staff certifications', link: '/dashboard/safe-school#certification', icon: Award },
-      { title: 'Workshop Management', description: 'Organize and track safety workshops', link: '/dashboard/safe-school#workshops', icon: GraduationCap },
-      { title: 'Financial Overview', description: 'Track payments and KudiCoin distribution', link: '/dashboard/financial-literacy', icon: Coins },
-      { title: 'Meal Planning', description: 'Manage menu and meal orders', link: '/dashboard/meals', icon: UtensilsCrossed },
-      { title: 'School Management', description: 'Manage students and fee categories', link: '/dashboard/schools' },
-    ],
+    name: 'Segun Bakare',
+    role: 'Parent',
+    children: 2,
+    email: 'segun.bakare@riverside.demo.com',
+    password: 'Demo123!',
+    icon: UserCircle,
+    avatar: 'SB',
+    color: 'from-violet-500 to-purple-600',
   },
+  {
+    name: 'School Admin',
+    role: 'Administrator',
+    children: 0,
+    email: 'admin@riverside.demo.com',
+    password: 'Demo123!',
+    icon: School,
+    avatar: 'SA',
+    color: 'from-amber-500 to-orange-600',
+  },
+];
+
+// School context options (Beta testers only)
+const SCHOOL_CONTEXTS = [
+  {
+    id: 'chrisland' as DemoSchoolContext,
+    name: 'Chrisland Schools',
+    description: "Nigeria's Leading Private School",
+    tagline: '15 campuses across Nigeria',
+    location: 'Lagos & Abuja',
+    students: '12,000+',
+    established: '1977',
+    color: 'from-blue-600 to-indigo-700',
+    bgPattern: 'bg-gradient-to-br from-blue-50 to-indigo-50',
+  },
+  {
+    id: 'riverside' as DemoSchoolContext,
+    name: 'Riverside Schools',
+    description: 'Nigerian + British Curricula',
+    tagline: 'Cambridge Accredited Institution',
+    location: 'Ogun State',
+    students: '3,500+',
+    established: '2005',
+    color: 'from-cyan-600 to-teal-700',
+    bgPattern: 'bg-gradient-to-br from-cyan-50 to-teal-50',
+  },
+];
+
+// Feature highlights for the demo
+const FEATURE_HIGHLIGHTS = [
+  {
+    title: 'Safe School',
+    description: 'Daily passphrases, attendance tracking, and emergency alerts',
+    icon: Shield,
+    color: 'bg-emerald-100 text-emerald-600',
+    link: '/dashboard/safe-school',
+  },
+  {
+    title: 'Financial Literacy',
+    description: 'KudiCoins rewards, savings goals, and educational quizzes',
+    icon: Coins,
+    color: 'bg-amber-100 text-amber-600',
+    link: '/dashboard/financial-literacy',
+  },
+  {
+    title: 'Meal Management',
+    description: 'Digital menus, pre-ordering, and dietary preferences',
+    icon: UtensilsCrossed,
+    color: 'bg-rose-100 text-rose-600',
+    link: '/dashboard/meals',
+  },
+  {
+    title: 'School Payments',
+    description: 'Fee schedules, automated payments, and transaction history',
+    icon: CreditCard,
+    color: 'bg-blue-100 text-blue-600',
+    link: '/dashboard/scheduled-payments',
+  },
+];
+
+// Quick actions for navigation
+const QUICK_ACTIONS = [
+  { title: 'Dashboard', icon: Layout, link: '/dashboard', description: 'Overview & alerts' },
+  { title: 'My Schools', icon: Building2, link: '/dashboard/schools', description: 'Manage schools' },
+  { title: 'Payments', icon: CreditCard, link: '/dashboard/scheduled-payments', description: 'View payments' },
+  { title: 'Safe School', icon: Shield, link: '/dashboard/safe-school', description: 'Safety features' },
 ];
 
 export default function DemoControlsPage() {
   const router = useRouter();
   const [notification, setNotification] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
   const [loading, setLoading] = useState<string | null>(null);
+  const [schoolContext, setSchoolContext] = useState<DemoSchoolContext>('chrisland');
+  const [copiedEmail, setCopiedEmail] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<'personas' | 'features' | 'credentials'>('personas');
+
+  useEffect(() => {
+    const savedContext = getDemoSchoolContext();
+    if (savedContext === 'chrisland' || savedContext === 'riverside') {
+      setSchoolContext(savedContext);
+    } else {
+      setSchoolContext('chrisland');
+    }
+  }, []);
+
+  const handleSchoolContextChange = (context: DemoSchoolContext) => {
+    setDemoSchoolContext(context);
+    setSchoolContext(context);
+  };
+
+  const getDemoUsersForContext = () => {
+    switch (schoolContext) {
+      case 'chrisland':
+        return CHRISLAND_DEMO_USERS;
+      case 'riverside':
+        return RIVERSIDE_DEMO_USERS;
+      default:
+        return CHRISLAND_DEMO_USERS;
+    }
+  };
 
   const showNotification = (type: 'success' | 'error', message: string) => {
     setNotification({ type, message });
     setTimeout(() => setNotification(null), 3000);
   };
 
+  const copyToClipboard = (email: string) => {
+    navigator.clipboard.writeText(email);
+    setCopiedEmail(email);
+    setTimeout(() => setCopiedEmail(null), 2000);
+  };
+
   const loginAs = async (email: string, password: string, name: string) => {
     setLoading(email);
     try {
-      // For demo mode, we'll set mock user data directly
-      // This allows the demo to work without a running backend
       const demoUsers: Record<string, { _id: string; email: string; firstName: string; lastName: string; role: string }> = {
-        'ada.okonkwo@demo.com': {
-          _id: 'demo-user-ada',
-          email: 'ada.okonkwo@demo.com',
-          firstName: 'Ada',
-          lastName: 'Okonkwo',
+        'amaka.obi@chrisland.demo.com': {
+          _id: 'chrisland-user-parent1',
+          email: 'amaka.obi@chrisland.demo.com',
+          firstName: 'Amaka',
+          lastName: 'Obi',
           role: 'parent',
         },
-        'chidi.eze@demo.com': {
-          _id: 'demo-user-chidi',
-          email: 'chidi.eze@demo.com',
-          firstName: 'Chidi',
-          lastName: 'Eze',
+        'abubakar.sani@chrisland.demo.com': {
+          _id: 'chrisland-user-parent2',
+          email: 'abubakar.sani@chrisland.demo.com',
+          firstName: 'Abubakar',
+          lastName: 'Sani',
           role: 'parent',
         },
-        'admin@greensprings.edu.ng': {
-          _id: 'demo-user-admin',
-          email: 'admin@greensprings.edu.ng',
+        'funke.williams@chrisland.demo.com': {
+          _id: 'chrisland-user-parent3',
+          email: 'funke.williams@chrisland.demo.com',
+          firstName: 'Funke',
+          lastName: 'Williams',
+          role: 'parent',
+        },
+        'admin@chrisland.demo.com': {
+          _id: 'chrisland-user-admin',
+          email: 'admin@chrisland.demo.com',
+          firstName: 'School',
+          lastName: 'Administrator',
+          role: 'admin',
+        },
+        'bola.johnson@riverside.demo.com': {
+          _id: 'riverside-user-parent1',
+          email: 'bola.johnson@riverside.demo.com',
+          firstName: 'Bola',
+          lastName: 'Johnson',
+          role: 'parent',
+        },
+        'kemi.adekunle@riverside.demo.com': {
+          _id: 'riverside-user-parent2',
+          email: 'kemi.adekunle@riverside.demo.com',
+          firstName: 'Kemi',
+          lastName: 'Adekunle',
+          role: 'parent',
+        },
+        'segun.bakare@riverside.demo.com': {
+          _id: 'riverside-user-parent3',
+          email: 'segun.bakare@riverside.demo.com',
+          firstName: 'Segun',
+          lastName: 'Bakare',
+          role: 'parent',
+        },
+        'admin@riverside.demo.com': {
+          _id: 'riverside-user-admin',
+          email: 'admin@riverside.demo.com',
           firstName: 'School',
           lastName: 'Administrator',
           role: 'admin',
@@ -156,16 +303,14 @@ export default function DemoControlsPage() {
 
       const demoUser = demoUsers[email];
       if (demoUser) {
-        // Set demo token and user directly
         localStorage.setItem('token', 'demo-token-' + demoUser._id);
         localStorage.setItem('user', JSON.stringify(demoUser));
         
-        showNotification('success', `Logged in as ${name}`);
-        setTimeout(() => router.push('/dashboard'), 1000);
+        showNotification('success', `Welcome, ${name}!`);
+        setTimeout(() => router.push('/dashboard'), 800);
         return;
       }
 
-      // Fallback to real API if not a demo user
       const response = await fetch('http://localhost:5001/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -178,199 +323,412 @@ export default function DemoControlsPage() {
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
       
-      showNotification('success', `Logged in as ${name}`);
-      setTimeout(() => router.push('/dashboard'), 1000);
-    } catch (error) {
+      showNotification('success', `Welcome, ${name}!`);
+      setTimeout(() => router.push('/dashboard'), 800);
+    } catch {
       showNotification('error', 'Failed to switch persona');
     } finally {
       setLoading(null);
     }
   };
 
+  const currentDemoUsers = getDemoUsersForContext();
+  const currentSchool = SCHOOL_CONTEXTS.find(s => s.id === schoolContext);
+
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Notification */}
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50">
+      {/* Notification Toast */}
       {notification && (
-        <div className={`fixed top-4 right-4 z-50 px-4 py-3 rounded-lg shadow-lg flex items-center gap-2 ${
-          notification.type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+        <div className={`fixed top-6 right-6 z-50 px-5 py-4 rounded-2xl shadow-2xl flex items-center gap-3 transform transition-all duration-300 ${
+          notification.type === 'success' 
+            ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white' 
+            : 'bg-gradient-to-r from-red-500 to-rose-500 text-white'
         }`}>
           {notification.type === 'success' ? (
             <CheckCircle className="w-5 h-5" />
           ) : (
-            <CheckCircle className="w-5 h-5" />
+            <Shield className="w-5 h-5" />
           )}
-          {notification.message}
+          <span className="font-medium">{notification.message}</span>
         </div>
       )}
 
-      {/* Header */}
-      <header className="bg-white border-b">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <Link href="/" className="text-gray-600 hover:text-gray-900">
-              ← Back to Home
-            </Link>
-            <h1 className="text-xl font-bold">Demo Journey Guide</h1>
+      {/* Hero Header */}
+      <header className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500" />
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIj48Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIyIi8+PC9nPjwvZz48L3N2Zz4=')] opacity-30" />
+        
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+            <div>
+              <Link 
+                href="/" 
+                className="inline-flex items-center gap-2 text-white/80 hover:text-white text-sm font-medium mb-4 transition-colors"
+              >
+                <ArrowRight className="w-4 h-4 rotate-180" />
+                Back to Home
+              </Link>
+              <div className="flex items-center gap-4">
+                <div className="w-14 h-14 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center">
+                  <Play className="w-7 h-7 text-white" />
+                </div>
+                <div>
+                  <h1 className="text-3xl font-bold text-white">Demo Experience</h1>
+                  <p className="text-white/80 mt-1">Explore Kudegowo's features with sample data</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="flex items-center gap-3">
+              <span className="px-4 py-2 bg-white/20 backdrop-blur-sm text-white rounded-full text-sm font-medium flex items-center gap-2">
+                <Sparkles className="w-4 h-4" />
+                Demo Mode Active
+              </span>
+            </div>
           </div>
-          <span className="px-3 py-1 bg-amber-100 text-amber-800 rounded-full text-sm font-medium">
-            Demo Mode
-          </span>
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-4 py-8">
-        {/* Quick Persona Switching */}
-        <div className="mb-8 bg-white rounded-xl shadow-sm border p-6">
-          <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
-            <LogIn className="w-5 h-5" />
-            Quick Login
-          </h2>
-          <div className="grid md:grid-cols-3 gap-4">
-            {DEMO_USERS.map((user) => {
-              const Icon = user.icon;
-              return (
-                <button
-                  key={user.email}
-                  onClick={() => loginAs(user.email, user.password, user.name)}
-                  disabled={loading === user.email}
-                  className={`p-4 border-2 rounded-lg hover:border-${user.color}-500 transition-colors text-left disabled:opacity-50`}
-                >
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className={`w-10 h-10 bg-${user.color}-100 rounded-full flex items-center justify-center`}>
-                      {loading === user.email ? (
-                        <Loader2 className="w-5 h-5 animate-spin text-gray-600" />
-                      ) : (
-                        <Icon className={`w-5 h-5 text-${user.color}-600`} />
-                      )}
-                    </div>
-                    <div>
-                      <div className="font-semibold">{user.name}</div>
-                      <div className="text-sm text-gray-500">{user.role}</div>
-                    </div>
-                  </div>
-                  <div className="text-xs text-gray-400 font-mono">{user.email}</div>
-                </button>
-              );
-            })}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        {/* School Selector Cards */}
+        <section className="mb-10">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-10 h-10 bg-indigo-100 rounded-xl flex items-center justify-center">
+              <Building2 className="w-5 h-5 text-indigo-600" />
+            </div>
+            <div>
+              <h2 className="text-xl font-bold text-gray-900">Select Demo School</h2>
+              <p className="text-sm text-gray-500">Choose a beta partner school to explore</p>
+            </div>
           </div>
-        </div>
-
-        {/* Journey Guides */}
-        <div className="grid lg:grid-cols-2 gap-8">
-          {JOURNEYS.map((journey) => {
-            const JourneyIcon = journey.icon;
-            return (
-              <div key={journey.title} className="bg-white rounded-xl shadow-sm border p-6">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className={`w-12 h-12 bg-${journey.color}-100 rounded-lg flex items-center justify-center`}>
-                    <JourneyIcon className={`w-6 h-6 text-${journey.color}-600`} />
+          
+          <div className="grid md:grid-cols-2 gap-6">
+            {SCHOOL_CONTEXTS.map((school) => (
+              <button
+                key={school.id}
+                onClick={() => handleSchoolContextChange(school.id)}
+                className={`relative group overflow-hidden rounded-2xl transition-all duration-300 text-left ${
+                  schoolContext === school.id 
+                    ? 'ring-2 ring-indigo-500 ring-offset-2 shadow-xl' 
+                    : 'hover:shadow-lg border border-gray-200'
+                }`}
+              >
+                <div className={`absolute inset-0 bg-gradient-to-r ${school.color} opacity-0 group-hover:opacity-5 transition-opacity`} />
+                
+                <div className={`p-6 ${school.bgPattern}`}>
+                  <div className="flex items-start justify-between mb-4">
+                    <div className={`w-14 h-14 rounded-2xl bg-gradient-to-r ${school.color} flex items-center justify-center shadow-lg`}>
+                      <School className="w-7 h-7 text-white" />
+                    </div>
+                    {schoolContext === school.id && (
+                      <span className="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs font-semibold flex items-center gap-1">
+                        <Check className="w-3 h-3" />
+                        Selected
+                      </span>
+                    )}
                   </div>
-                  <div>
-                    <h2 className="text-xl font-bold">{journey.title}</h2>
-                    <p className="text-sm text-gray-500">Login as {journey.persona}</p>
+                  
+                  <h3 className="text-xl font-bold text-gray-900 mb-1">{school.name}</h3>
+                  <p className="text-sm text-gray-600 mb-4">{school.description}</p>
+                  
+                  <div className="flex flex-wrap gap-4 text-xs">
+                    <div className="flex items-center gap-1.5 text-gray-500">
+                      <MapPin className="w-3.5 h-3.5" />
+                      {school.location}
+                    </div>
+                    <div className="flex items-center gap-1.5 text-gray-500">
+                      <Users className="w-3.5 h-3.5" />
+                      {school.students} students
+                    </div>
+                    <div className="flex items-center gap-1.5 text-gray-500">
+                      <Clock className="w-3.5 h-3.5" />
+                      Est. {school.established}
+                    </div>
                   </div>
                 </div>
+              </button>
+            ))}
+          </div>
+        </section>
 
-                <div className="space-y-3">
-                  {journey.steps.map((step, index) => {
-                    const StepIcon = step.icon;
-                    return (
-                      <div key={index} className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors">
-                        <div className="flex-shrink-0 w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center text-xs font-bold">
-                          {index + 1}
+        {/* Tab Navigation */}
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 mb-8 overflow-hidden">
+          <div className="border-b border-gray-100">
+            <nav className="flex">
+              {[
+                { id: 'personas', label: 'Demo Personas', icon: Users },
+                { id: 'features', label: 'Key Features', icon: Zap },
+                { id: 'credentials', label: 'Credentials', icon: Eye },
+              ].map((tab) => {
+                const TabIcon = tab.icon;
+                return (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id as typeof activeTab)}
+                    className={`flex-1 flex items-center justify-center gap-2 px-6 py-4 text-sm font-medium transition-all ${
+                      activeTab === tab.id
+                        ? 'text-indigo-600 border-b-2 border-indigo-600 bg-indigo-50/50'
+                        : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
+                    }`}
+                  >
+                    <TabIcon className="w-4 h-4" />
+                    {tab.label}
+                  </button>
+                );
+              })}
+            </nav>
+          </div>
+
+          <div className="p-6">
+            {/* Personas Tab */}
+            {activeTab === 'personas' && (
+              <div>
+                <div className="flex items-center justify-between mb-6">
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900">Quick Login</h3>
+                    <p className="text-sm text-gray-500">Select a persona to explore {currentSchool?.name}</p>
+                  </div>
+                </div>
+                
+                <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                  {currentDemoUsers.map((user) => (
+                    <button
+                      key={user.email}
+                      onClick={() => loginAs(user.email, user.password, user.name)}
+                      disabled={loading === user.email}
+                      className="group relative bg-white border border-gray-200 rounded-2xl p-5 text-left hover:border-indigo-300 hover:shadow-lg transition-all duration-300 disabled:opacity-60"
+                    >
+                      <div className="flex items-start gap-4">
+                        <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${user.color} flex items-center justify-center text-white font-bold text-sm shadow-lg`}>
+                          {loading === user.email ? (
+                            <Loader2 className="w-5 h-5 animate-spin" />
+                          ) : (
+                            user.avatar
+                          )}
                         </div>
-                        <div className="flex-1">
-                          <div className="flex items-center gap-2">
-                            {StepIcon && <StepIcon className="w-4 h-4 text-gray-400" />}
-                            <h3 className="font-semibold text-sm">{step.title}</h3>
-                          </div>
-                          <p className="text-xs text-gray-600 mt-1">{step.description}</p>
-                          {step.link && (
-                            <Link 
-                              href={step.link}
-                              className="text-xs text-blue-600 hover:text-blue-700 mt-1 inline-flex items-center gap-1"
-                            >
-                              Go to page <ArrowRight className="w-3 h-3" />
-                            </Link>
+                        <div className="flex-1 min-w-0">
+                          <h4 className="font-semibold text-gray-900 truncate">{user.name}</h4>
+                          <p className="text-sm text-gray-500">{user.role}</p>
+                          {user.children > 0 && (
+                            <span className="inline-flex items-center gap-1 mt-2 px-2 py-0.5 bg-gray-100 text-gray-600 rounded-full text-xs">
+                              <Users className="w-3 h-3" />
+                              {user.children} children
+                            </span>
                           )}
                         </div>
                       </div>
+                      
+                      <div className="mt-4 flex items-center justify-between">
+                        <span className="text-xs text-gray-400 truncate max-w-[140px]">{user.email}</span>
+                        <ChevronRight className="w-4 h-4 text-gray-400 group-hover:text-indigo-500 group-hover:translate-x-1 transition-all" />
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Features Tab */}
+            {activeTab === 'features' && (
+              <div>
+                <div className="mb-6">
+                  <h3 className="text-lg font-semibold text-gray-900">Platform Features</h3>
+                  <p className="text-sm text-gray-500">Explore what Kudegowo offers for schools and parents</p>
+                </div>
+                
+                <div className="grid sm:grid-cols-2 gap-4 mb-8">
+                  {FEATURE_HIGHLIGHTS.map((feature) => {
+                    const FeatureIcon = feature.icon;
+                    return (
+                      <Link
+                        key={feature.title}
+                        href={feature.link}
+                        className="group flex items-start gap-4 p-5 bg-gray-50 rounded-2xl hover:bg-white hover:shadow-lg border border-transparent hover:border-gray-200 transition-all"
+                      >
+                        <div className={`w-12 h-12 rounded-xl ${feature.color} flex items-center justify-center flex-shrink-0`}>
+                          <FeatureIcon className="w-6 h-6" />
+                        </div>
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2">
+                            <h4 className="font-semibold text-gray-900">{feature.title}</h4>
+                            <ArrowUpRight className="w-4 h-4 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+                          </div>
+                          <p className="text-sm text-gray-600 mt-1">{feature.description}</p>
+                        </div>
+                      </Link>
                     );
                   })}
                 </div>
-              </div>
-            );
-          })}
-        </div>
 
-        {/* Key Features */}
-        <div className="mt-8 bg-white rounded-xl shadow-sm border p-6">
-          <h2 className="text-lg font-semibold mb-4">Key Features to Demonstrate</h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            <div>
-              <div className="flex items-center gap-2 mb-2">
-                <Shield className="w-5 h-5 text-blue-600" />
-                <h3 className="font-semibold">Safe School</h3>
+                <div className="border-t border-gray-100 pt-6">
+                  <h4 className="text-sm font-semibold text-gray-900 mb-4">Quick Navigation</h4>
+                  <div className="flex flex-wrap gap-3">
+                    {QUICK_ACTIONS.map((action) => {
+                      const ActionIcon = action.icon;
+                      return (
+                        <Link
+                          key={action.title}
+                          href={action.link}
+                          className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-xl text-sm font-medium text-gray-700 hover:border-indigo-300 hover:text-indigo-600 transition-colors"
+                        >
+                          <ActionIcon className="w-4 h-4" />
+                          {action.title}
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </div>
               </div>
-              <ul className="text-sm text-gray-600 space-y-1">
-                <li>• Daily passphrase system</li>
-                <li>• Real-time attendance tracking</li>
-                <li>• Emergency alerts</li>
-                <li>• Parent notifications</li>
-                <li>• Training materials & modules</li>
-                <li>• Certification tracking</li>
-                <li>• Safety workshops</li>
-                <li>• Resource library</li>
-              </ul>
-            </div>
-            <div>
-              <div className="flex items-center gap-2 mb-2">
-                <Coins className="w-5 h-5 text-amber-600" />
-                <h3 className="font-semibold">Financial Literacy</h3>
+            )}
+
+            {/* Credentials Tab */}
+            {activeTab === 'credentials' && (
+              <div>
+                <div className="mb-6">
+                  <h3 className="text-lg font-semibold text-gray-900">Demo Credentials</h3>
+                  <p className="text-sm text-gray-500">Copy credentials to use in the login page</p>
+                </div>
+                
+                <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl p-6 border border-indigo-100">
+                  <div className="flex items-center gap-2 mb-4">
+                    <Star className="w-5 h-5 text-indigo-600" />
+                    <span className="font-semibold text-indigo-900">{currentSchool?.name}</span>
+                  </div>
+                  
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    {currentDemoUsers.map((user) => (
+                      <div
+                        key={user.email}
+                        className="bg-white rounded-xl p-4 border border-indigo-100"
+                      >
+                        <div className="flex items-center gap-3 mb-3">
+                          <div className={`w-10 h-10 rounded-lg bg-gradient-to-r ${user.color} flex items-center justify-center text-white font-bold text-xs`}>
+                            {user.avatar}
+                          </div>
+                          <div>
+                            <h4 className="font-semibold text-gray-900 text-sm">{user.name}</h4>
+                            <p className="text-xs text-gray-500">{user.role}</p>
+                          </div>
+                        </div>
+                        
+                        <div className="space-y-2">
+                          <div className="flex items-center justify-between bg-gray-50 rounded-lg px-3 py-2">
+                            <code className="text-xs text-gray-700 truncate flex-1">{user.email}</code>
+                            <button
+                              onClick={() => copyToClipboard(user.email)}
+                              className="ml-2 p-1 hover:bg-gray-200 rounded transition-colors"
+                            >
+                              {copiedEmail === user.email ? (
+                                <Check className="w-4 h-4 text-emerald-600" />
+                              ) : (
+                                <Copy className="w-4 h-4 text-gray-400" />
+                              )}
+                            </button>
+                          </div>
+                          <div className="flex items-center justify-between bg-gray-50 rounded-lg px-3 py-2">
+                            <code className="text-xs text-gray-700">{user.password}</code>
+                            <button
+                              onClick={() => copyToClipboard(user.password)}
+                              className="ml-2 p-1 hover:bg-gray-200 rounded transition-colors"
+                            >
+                              <Copy className="w-4 h-4 text-gray-400" />
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
-              <ul className="text-sm text-gray-600 space-y-1">
-                <li>• KudiCoins rewards system</li>
-                <li>• Savings goals tracking</li>
-                <li>• Educational quizzes</li>
-                <li>• Achievement badges</li>
-              </ul>
-            </div>
-            <div>
-              <div className="flex items-center gap-2 mb-2">
-                <UtensilsCrossed className="w-5 h-5 text-green-600" />
-                <h3 className="font-semibold">Meal Management</h3>
-              </div>
-              <ul className="text-sm text-gray-600 space-y-1">
-                <li>• Digital menu browsing</li>
-                <li>• Meal pre-ordering</li>
-                <li>• Dietary preferences</li>
-                <li>• Order history</li>
-              </ul>
-            </div>
+            )}
           </div>
         </div>
 
-        {/* Demo Credentials */}
-        <div className="mt-8 bg-blue-50 border border-blue-200 rounded-xl p-6">
-          <h2 className="text-lg font-semibold mb-4 text-blue-900">Demo Credentials</h2>
-          <div className="grid md:grid-cols-3 gap-4 text-sm">
-            <div>
-              <div className="font-semibold text-blue-900">Parent (Ada)</div>
-              <div className="font-mono text-xs text-blue-700">ada.okonkwo@demo.com</div>
-              <div className="font-mono text-xs text-blue-700">Demo123!</div>
+        {/* Feature Grid - Always Visible */}
+        <section className="grid md:grid-cols-3 gap-6">
+          <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
+            <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center mb-4">
+              <Shield className="w-6 h-6 text-emerald-600" />
             </div>
-            <div>
-              <div className="font-semibold text-blue-900">Parent (Chidi)</div>
-              <div className="font-mono text-xs text-blue-700">chidi.eze@demo.com</div>
-              <div className="font-mono text-xs text-blue-700">Demo123!</div>
-            </div>
-            <div>
-              <div className="font-semibold text-blue-900">School Admin</div>
-              <div className="font-mono text-xs text-blue-700">admin@greensprings.edu.ng</div>
-              <div className="font-mono text-xs text-blue-700">Demo123!</div>
-            </div>
+            <h3 className="font-bold text-gray-900 mb-2">Safe School</h3>
+            <ul className="space-y-2 text-sm text-gray-600">
+              <li className="flex items-center gap-2">
+                <CheckCircle className="w-4 h-4 text-emerald-500" />
+                Daily passphrase system
+              </li>
+              <li className="flex items-center gap-2">
+                <CheckCircle className="w-4 h-4 text-emerald-500" />
+                Real-time attendance
+              </li>
+              <li className="flex items-center gap-2">
+                <CheckCircle className="w-4 h-4 text-emerald-500" />
+                Emergency alerts
+              </li>
+              <li className="flex items-center gap-2">
+                <CheckCircle className="w-4 h-4 text-emerald-500" />
+                Safety certifications
+              </li>
+            </ul>
           </div>
-        </div>
+
+          <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
+            <div className="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center mb-4">
+              <Coins className="w-6 h-6 text-amber-600" />
+            </div>
+            <h3 className="font-bold text-gray-900 mb-2">Financial Literacy</h3>
+            <ul className="space-y-2 text-sm text-gray-600">
+              <li className="flex items-center gap-2">
+                <CheckCircle className="w-4 h-4 text-amber-500" />
+                KudiCoins rewards
+              </li>
+              <li className="flex items-center gap-2">
+                <CheckCircle className="w-4 h-4 text-amber-500" />
+                Savings goals
+              </li>
+              <li className="flex items-center gap-2">
+                <CheckCircle className="w-4 h-4 text-amber-500" />
+                Educational quizzes
+              </li>
+              <li className="flex items-center gap-2">
+                <CheckCircle className="w-4 h-4 text-amber-500" />
+                Achievement badges
+              </li>
+            </ul>
+          </div>
+
+          <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
+            <div className="w-12 h-12 bg-rose-100 rounded-xl flex items-center justify-center mb-4">
+              <UtensilsCrossed className="w-6 h-6 text-rose-600" />
+            </div>
+            <h3 className="font-bold text-gray-900 mb-2">Meal Management</h3>
+            <ul className="space-y-2 text-sm text-gray-600">
+              <li className="flex items-center gap-2">
+                <CheckCircle className="w-4 h-4 text-rose-500" />
+                Digital menu browsing
+              </li>
+              <li className="flex items-center gap-2">
+                <CheckCircle className="w-4 h-4 text-rose-500" />
+                Meal pre-ordering
+              </li>
+              <li className="flex items-center gap-2">
+                <CheckCircle className="w-4 h-4 text-rose-500" />
+                Dietary preferences
+              </li>
+              <li className="flex items-center gap-2">
+                <CheckCircle className="w-4 h-4 text-rose-500" />
+                Order history
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        {/* Footer CTA */}
+        <section className="mt-10 text-center">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 rounded-full text-sm text-gray-600">
+            <Sparkles className="w-4 h-4 text-indigo-500" />
+            <span>Ready to explore? Select a persona above to get started!</span>
+          </div>
+        </section>
       </main>
     </div>
   );

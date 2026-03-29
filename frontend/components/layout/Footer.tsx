@@ -14,17 +14,18 @@ export function Footer() {
               </div>
             </div>
             <p className="text-gray-400 text-sm">
-              Nigeria's safety net for schools — payments, safety, and education in one platform.
+              Africa's safety net for schools — payments, safety, and education in one platform.
             </p>
           </div>
           
           <div>
             <h4 className="text-lg font-semibold mb-4 text-secondary">Services</h4>
             <ul className="space-y-2 text-sm text-gray-400">
-              <li><Link href="#" className="hover:text-white transition-colors">Cashless Payments</Link></li>
-              <li><Link href="#" className="hover:text-white transition-colors">Meal Manager</Link></li>
-              <li><Link href="#" className="hover:text-white transition-colors">School Trips</Link></li>
-              <li><Link href="#" className="hover:text-white transition-colors">Club Management</Link></li>
+              <li><Link href="/dashboard/safe-school" className="hover:text-white transition-colors">Safe School</Link></li>
+              <li><Link href="/dashboard/scheduled-payments" className="hover:text-white transition-colors">School Payments</Link></li>
+              <li><Link href="/dashboard/financial-literacy" className="hover:text-white transition-colors">Financial Literacy</Link></li>
+              <li><Link href="/dashboard/meals" className="hover:text-white transition-colors">Meal Management</Link></li>
+              <li><Link href="#services" className="hover:text-white transition-colors">Safety & Compliance</Link></li>
             </ul>
           </div>
 

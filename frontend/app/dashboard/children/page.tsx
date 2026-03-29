@@ -8,7 +8,11 @@ import {
   Calendar,
   Edit,
   Trash2,
-  AlertCircle
+  AlertCircle,
+  GraduationCap,
+  X,
+  BadgeCheck,
+  Clock
 } from 'lucide-react';
 import { isDemoMode, getDemoChildren, getDemoSchools } from '@/lib/demo-data';
 import { getAuthUser } from '@/lib/auth';
@@ -95,19 +99,20 @@ export default function MyChildrenPage() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+        <div className="w-8 h-8 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
 
   return (
-    <div>
-      <div className="flex items-center justify-between">
+    <div className="space-y-8">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-semibold text-gray-900">
+          <h1 className="text-3xl font-bold text-gray-900">
             {isSchoolAdmin ? 'My Students' : 'My Children'}
           </h1>
-          <p className="mt-1 text-sm text-gray-500">
+          <p className="text-gray-600 mt-1">
             {isSchoolAdmin 
               ? 'Manage student profiles and school information'
               : 'Manage your children\'s profiles and school information'
@@ -116,106 +121,127 @@ export default function MyChildrenPage() {
         </div>
         <button
           onClick={() => setShowAddForm(true)}
-          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700"
+          className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-medium hover:shadow-lg transition-all"
         >
-          <Plus className="h-4 w-4 mr-2" />
+          <Plus className="h-5 w-5" />
           {isSchoolAdmin ? 'Add Student' : 'Add Child'}
         </button>
       </div>
 
       {/* Add Child Form Modal */}
       {showAddForm && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-xl p-6 w-full max-w-md mx-4">
-            <h2 className="text-lg font-medium text-gray-900 mb-4">Add New Child</h2>
-            <div className="bg-yellow-50 border border-yellow-200 rounded-md p-3 mb-4">
-              <div className="flex items-center text-sm text-yellow-700">
-                <AlertCircle className="h-4 w-4 mr-2" />
-                This feature is available in the full version
-              </div>
-            </div>
-            <div className="flex justify-end">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md">
+            <div className="flex items-center justify-between p-6 border-b border-gray-100">
+              <h2 className="text-xl font-bold text-gray-900">Add New Child</h2>
               <button
                 onClick={() => setShowAddForm(false)}
-                className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50"
+                className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
               >
-                Close
+                <X className="w-5 h-5 text-gray-500" />
               </button>
+            </div>
+            <div className="p-6">
+              <div className="bg-amber-50 border border-amber-100 rounded-xl p-4 mb-6">
+                <div className="flex items-center gap-3 text-amber-700">
+                  <AlertCircle className="h-5 w-5 flex-shrink-0" />
+                  <span className="text-sm">This feature is available in the full version</span>
+                </div>
+              </div>
+              <div className="flex justify-end">
+                <button
+                  onClick={() => setShowAddForm(false)}
+                  className="px-6 py-3 border border-gray-200 rounded-xl text-gray-700 font-medium hover:bg-gray-50 transition-colors"
+                >
+                  Close
+                </button>
+              </div>
             </div>
           </div>
         </div>
       )}
 
       {/* Children List */}
-      <div className="mt-6">
+      <div>
         {children.length === 0 ? (
-          <div className="text-center py-12 bg-white rounded-lg shadow">
-            <Users className="mx-auto h-12 w-12 text-gray-400" />
-            <h3 className="mt-2 text-sm font-medium text-gray-900">No children added</h3>
-            <p className="mt-1 text-sm text-gray-500">
-              Add your children to start managing their school payments
-            </p>
-            <div className="mt-6">
-              <button
-                onClick={() => setShowAddForm(true)}
-                className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
-              >
-                <Plus className="h-4 w-4 mr-2" />
-                Add Your First Child
-              </button>
+          <div className="text-center py-16 bg-white rounded-2xl border border-gray-100 shadow-sm">
+            <div className="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <GraduationCap className="w-8 h-8 text-blue-600" />
             </div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">No children added</h3>
+            <p className="text-gray-600 mb-6 max-w-sm mx-auto">
+              Add your children to start managing their school payments and activities
+            </p>
+            <button
+              onClick={() => setShowAddForm(true)}
+              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-medium hover:shadow-lg transition-all"
+            >
+              <Plus className="h-5 w-5" />
+              Add Your First Child
+            </button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {children.map((child) => {
               const age = calculateAge(child.dateOfBirth);
               return (
-                <div key={child._id} className="bg-white rounded-lg shadow overflow-hidden">
-                  <div className="p-5">
+                <div key={child._id} className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg transition-all group">
+                  {/* Card Header with Gradient */}
+                  <div className="bg-gradient-to-r from-blue-500 to-indigo-600 p-6 text-white">
                     <div className="flex items-start justify-between">
-                      <div className="flex items-center">
-                        <div className="flex-shrink-0 h-12 w-12 bg-blue-100 rounded-full flex items-center justify-center">
-                          <span className="text-lg font-semibold text-blue-600">
+                      <div className="flex items-center gap-4">
+                        <div className="w-14 h-14 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
+                          <span className="text-xl font-bold">
                             {child.firstName[0]}{child.lastName[0]}
                           </span>
                         </div>
-                        <div className="ml-3">
-                          <h3 className="text-lg font-medium text-gray-900">
+                        <div>
+                          <h3 className="text-lg font-bold">
                             {child.firstName} {child.lastName}
                           </h3>
                           {age && (
-                            <p className="text-sm text-gray-500">{age} years old</p>
+                            <p className="text-blue-100 text-sm">{age} years old</p>
                           )}
                         </div>
                       </div>
-                      <div className="flex space-x-1">
-                        <button className="p-1 text-gray-400 hover:text-blue-600">
-                          <Edit className="h-4 w-4" />
-                        </button>
-                      </div>
+                      <button className="p-2 hover:bg-white/20 rounded-lg transition-colors opacity-0 group-hover:opacity-100">
+                        <Edit className="h-4 w-4" />
+                      </button>
                     </div>
+                  </div>
 
-                    <div className="mt-4 space-y-2">
-                      <div className="flex items-center text-sm text-gray-600">
-                        <School className="h-4 w-4 mr-2 text-gray-400" />
-                        {child.schoolName}
+                  {/* Card Body */}
+                  <div className="p-6">
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-3 text-gray-600">
+                        <div className="w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center">
+                          <School className="h-4 w-4 text-blue-600" />
+                        </div>
+                        <span className="text-sm">{child.schoolName}</span>
                       </div>
-                      <div className="flex items-center text-sm text-gray-600">
-                        <Users className="h-4 w-4 mr-2 text-gray-400" />
-                        {child.className}
+                      <div className="flex items-center gap-3 text-gray-600">
+                        <div className="w-8 h-8 bg-purple-50 rounded-lg flex items-center justify-center">
+                          <GraduationCap className="h-4 w-4 text-purple-600" />
+                        </div>
+                        <span className="text-sm">{child.className}</span>
                       </div>
                       {child.studentId && (
-                        <div className="flex items-center text-sm text-gray-600">
-                          <Calendar className="h-4 w-4 mr-2 text-gray-400" />
-                          ID: {child.studentId}
+                        <div className="flex items-center gap-3 text-gray-600">
+                          <div className="w-8 h-8 bg-gray-50 rounded-lg flex items-center justify-center">
+                            <BadgeCheck className="h-4 w-4 text-gray-600" />
+                          </div>
+                          <span className="text-sm">ID: {child.studentId}</span>
                         </div>
                       )}
                     </div>
 
-                    <div className="mt-4 pt-4 border-t border-gray-200">
-                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                        child.isActive ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
+                    <div className="mt-5 pt-5 border-t border-gray-100 flex items-center justify-between">
+                      <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold ${
+                        child.isActive 
+                          ? 'bg-green-100 text-green-700' 
+                          : 'bg-gray-100 text-gray-600'
                       }`}>
+                        <span className={`w-1.5 h-1.5 rounded-full ${child.isActive ? 'bg-green-500' : 'bg-gray-400'}`} />
                         {child.isActive ? 'Active' : 'Inactive'}
                       </span>
                     </div>
